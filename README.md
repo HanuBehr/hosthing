@@ -11,18 +11,24 @@ Produção: https://seazone.vercel.app
 Fluxo de avaliação:
 
 - Acesse https://seazone.vercel.app
-- Digite o código do imóvel: `FLN001` ou `GRM001`
+- Digite o código do imóvel: `FLN001`, `CMP001`, `BNU001`, `BCA001` ou `GRM001`
 - O hóspede acessa o Guia Digital personalizado daquele imóvel
 - O César fica disponível no guia para responder dúvidas contextualizadas
 
 Links equivalentes a um QR Code no imóvel:
 
 - https://seazone.vercel.app/FLN001
+- https://seazone.vercel.app/CMP001
+- https://seazone.vercel.app/BNU001
+- https://seazone.vercel.app/BCA001
 - https://seazone.vercel.app/GRM001
 
 Rotas de compatibilidade para o guia:
 
 - https://seazone.vercel.app/FLN001/guia
+- https://seazone.vercel.app/CMP001/guia
+- https://seazone.vercel.app/BNU001/guia
+- https://seazone.vercel.app/BCA001/guia
 - https://seazone.vercel.app/GRM001/guia
 
 ## Stack
@@ -121,6 +127,9 @@ Acesse a home e informe um dos códigos de avaliação:
 
 - `http://localhost:3000`
 - `FLN001`
+- `CMP001`
+- `BNU001`
+- `BCA001`
 - `GRM001`
 
 ## Scripts

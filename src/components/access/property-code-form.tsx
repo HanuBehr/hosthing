@@ -4,7 +4,7 @@ import { FormEvent, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 
-const exampleCodes = ["FLN001", "GRM001"];
+const exampleCodes = ["FLN001", "CMP001", "BNU001", "BCA001", "GRM001"];
 
 export function PropertyCodeForm() {
   const router = useRouter();

@@ -47,6 +47,42 @@ const fallbackRestaurants: Record<
       description: "cozinha contemporânea em uma casa clássica da cidade",
     },
   ],
+  CMP001: [
+    {
+      name: "Pachamay",
+      distance: "aprox. 1 km",
+      description: "cozinha natural e pratos frescos perto da Praia do Campeche",
+    },
+    {
+      name: "Zeca Bar e Restaurante",
+      distance: "aprox. 3 km",
+      description: "opção tradicional para frutos do mar no sul da ilha",
+    },
+  ],
+  BNU001: [
+    {
+      name: "Moinho do Vale",
+      distance: "aprox. 3 km",
+      description: "restaurante conhecido à beira do rio Itajaí-Açu",
+    },
+    {
+      name: "Thapyoka Restaurante",
+      distance: "aprox. 4 km",
+      description: "cozinha regional em área histórica de Blumenau",
+    },
+  ],
+  BCA001: [
+    {
+      name: "Chaplin Restaurante",
+      distance: "aprox. 1 km",
+      description: "clássico da orla de Balneário Camboriú",
+    },
+    {
+      name: "Guacamole Cocina Mexicana",
+      distance: "aprox. 2 km",
+      description: "opção descontraída e conhecida para jantar na cidade",
+    },
+  ],
 };
 
 export async function POST(request: Request) {
