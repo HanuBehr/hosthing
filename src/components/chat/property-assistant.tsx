@@ -154,7 +154,7 @@ export function PropertyAssistant({ property }: { property: Property }) {
                 id="chat-title"
                 className="mt-2 text-2xl font-semibold tracking-[-0.02em] text-[var(--color-navy)]"
               >
-                Pergunte ao César
+                Tire suas dúvidas
               </h2>
               <p className="mt-2 text-sm leading-6 text-[var(--color-muted)]">
                 Escolha uma pergunta rápida ou digite sua dúvida sobre a estadia.

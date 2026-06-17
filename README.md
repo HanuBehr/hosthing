@@ -13,7 +13,7 @@ Fluxo de avaliação:
 - Acesse https://seazone.vercel.app
 - Digite o código do imóvel: `FLN001`, `CMP001`, `BNU001`, `BCA001` ou `GRM001`
 - O hóspede acessa o Guia Digital personalizado daquele imóvel
-- O César fica disponível no guia para responder dúvidas contextualizadas
+- O assistente virtual fica disponível no guia para responder dúvidas contextualizadas
 
 Links equivalentes a um QR Code no imóvel:
 
@@ -72,7 +72,7 @@ O que está dentro do escopo:
 - Contato do anfitrião
 - Guia de experiências contextualizado por IA
 - Assistente virtual que conhece aquele imóvel
-- Assistente virtual César disponível dentro do guia do imóvel
+- Assistente virtual disponível dentro do guia do imóvel
 
 O que ficou fora do escopo por não estar no documento:
 
@@ -212,7 +212,7 @@ O chat usa `streamText` e recebe um system prompt com:
 
 ## Segurança e produto
 
-O documento pede links por código do imóvel, como `/FLN001`. Nesta versão, esse link abre diretamente o Guia Digital do Hóspede daquele imóvel, com informações de acesso, WiFi, regras, contato, Guia de Experiências gerado por IA e chat contextual do César disponível na própria página.
+O documento pede links por código do imóvel, como `/FLN001`. Nesta versão, esse link abre diretamente o Guia Digital do Hóspede daquele imóvel, com informações de acesso, WiFi, regras, contato, Guia de Experiências gerado por IA e chat contextual disponível na própria página.
 
 A aplicação também define `robots: noindex` para evitar indexação dos guias públicos.
 

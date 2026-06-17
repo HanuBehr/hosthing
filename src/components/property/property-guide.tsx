@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import {
   Baby,
   BedDouble,
@@ -58,15 +57,7 @@ export function PropertyGuide({
 
         <div className="mx-auto flex min-h-[650px] max-w-7xl flex-col px-5 py-6 sm:px-8 lg:px-10">
           <header className="flex items-center justify-between">
-            <div className="rounded-2xl bg-white/90 px-4 py-3 backdrop-blur">
-              <SeazoneLogo />
-            </div>
-            <Link
-              href={`/${property.code}`}
-              className="rounded-full bg-white/15 px-4 py-2 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/25"
-            >
-              Falar com César
-            </Link>
+            <SeazoneLogo />
           </header>
 
           <div className="flex flex-1 flex-col justify-end">
