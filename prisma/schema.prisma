@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ExperienceGuideStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+model Property {
+  id               String           @id @default(cuid())
+  code             String           @unique
+  name             String
+  propertyType     String
+  bedroomQuantity  Int
+  bathroomQuantity Int
+  guestCapacity    Int
+  address          Json
+  operational      Json
+  rules            Json
+  amenities        Json
+  images           String[]
+  host             Json
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  experienceGuide  ExperienceGuide?
+}
+
+model ExperienceGuide {
+  id           String                @id @default(cuid())
+  propertyId   String                @unique
+  property     Property              @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  status       ExperienceGuideStatus @default(PENDING)
+  content      Json?
+  errorMessage String?
+  generatedAt  DateTime?
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+}
