@@ -1,25 +1,26 @@
 import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "@/generated/prisma/client";
+import { Prisma, PrismaClient } from "@/generated/prisma/client";
 
 const connectionString =
   process.env.DATABASE_URL ??
   "postgresql://user:password@localhost:5432/seazone_guest_guide";
 
-const adapter = new PrismaPg({ connectionString });
+const log: Prisma.LogLevel[] =
+  process.env.NODE_ENV === "development"
+    ? ["query", "error", "warn"]
+    : ["error"];
+
+function createPrismaClient() {
+  const adapter = new PrismaPg({ connectionString });
+  return new PrismaClient({ adapter, log });
+}
 
 const globalForPrisma = globalThis as unknown as {
   prisma?: PrismaClient;
 };
 
 export const prisma =
-  globalForPrisma.prisma ??
-  new PrismaClient({
-    adapter,
-    log:
-      process.env.NODE_ENV === "development"
-        ? ["query", "error", "warn"]
-        : ["error"],
-  });
+  globalForPrisma.prisma ?? createPrismaClient();
 
 if (process.env.NODE_ENV !== "production") {
   globalForPrisma.prisma = prisma;
