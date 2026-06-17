@@ -4,6 +4,15 @@ Guia Digital do Hóspede personalizado por imóvel, criado para o teste técnico
 
 A aplicação resolve o fluxo principal do hóspede: acessar um link único do imóvel, consultar dados da estadia, receber recomendações locais geradas por IA e tirar dúvidas em um chat com respostas em streaming.
 
+## URL pública
+
+Produção: https://seazone.vercel.app
+
+Guias de exemplo:
+
+- https://seazone.vercel.app/FLN001
+- https://seazone.vercel.app/GRM001
+
 ## Stack
 
 - Next.js 16 App Router
