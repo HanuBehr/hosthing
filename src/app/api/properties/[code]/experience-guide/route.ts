@@ -1,8 +1,7 @@
 import { generateExperienceGuide } from "@/lib/ai/experience-guide";
 import { prisma } from "@/lib/db/prisma";
 import { experienceGuideSchema } from "@/lib/validators/experience-guide";
-import { authorizeGuestGuideAccess } from "@/server/guest-access";
-import { z } from "zod";
+import { getPropertyByCode } from "@/server/properties";
 
 export const runtime = "nodejs";
 
@@ -10,28 +9,13 @@ type RouteParams = {
   params: Promise<{ code: string }>;
 };
 
-const experienceGuideRequestSchema = z.object({
-  guideAccessCode: z.string().min(1),
-});
-
-export async function POST(request: Request, { params }: RouteParams) {
+export async function POST(_request: Request, { params }: RouteParams) {
   const { code } = await params;
-  const body = experienceGuideRequestSchema.safeParse(await request.json());
+  const property = await getPropertyByCode(code);
 
-  if (!body.success) {
-    return Response.json({ error: "Código do guia inválido." }, { status: 400 });
+  if (!property) {
+    return Response.json({ error: "Imóvel não encontrado." }, { status: 404 });
   }
-
-  const access = await authorizeGuestGuideAccess(
-    code,
-    body.data.guideAccessCode,
-  );
-
-  if (!access) {
-    return Response.json({ error: "Guia não autorizado." }, { status: 403 });
-  }
-
-  const { property } = access;
 
   const existingGuide = await prisma.experienceGuide.findUnique({
     where: { propertyId: property.id },

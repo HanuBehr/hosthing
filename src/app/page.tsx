@@ -1,4 +1,4 @@
-import { GuideAccessForm } from "@/components/access/guide-access-form";
+import { PropertyCodeForm } from "@/components/access/property-code-form";
 
 export default function Home() {
   return (
@@ -9,24 +9,22 @@ export default function Home() {
             Guia Digital do Hóspede
           </p>
           <h1 className="max-w-2xl text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">
-            Acesse o guia da sua estadia
+            Fale com o César da Seazone
           </h1>
           <p className="max-w-2xl text-lg leading-8 text-slate-600">
-            Digite o código privado recebido com sua reserva ou escaneie o QR
-            Code disponível no imóvel para abrir o guia correto da propriedade.
+            Digite o código do imóvel reservado ou escaneie o QR Code no imóvel
+            para conversar com o assistente que conhece exatamente a sua estadia.
           </p>
         </div>
 
-        <GuideAccessForm />
+        <PropertyCodeForm />
 
         <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5 text-slate-700">
-          <p className="font-semibold text-slate-950">
-            Por que o código é necessário?
-          </p>
+          <p className="font-semibold text-slate-950">Como funciona?</p>
           <p className="mt-2 leading-7">
-            O guia contém dados práticos da estadia, como WiFi, instruções de
-            acesso e contato do anfitrião. Por isso, somente quem possui o
-            código do imóvel reservado consegue acessar as informações completas.
+            Cada código abre o atendimento daquele imóvel. O assistente responde
+            sobre WiFi, acesso, regras, contato e também envia o link do guia
+            completo da propriedade.
           </p>
         </div>
       </section>

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { PropertyAssistant } from "@/components/chat/property-assistant";
+import { PropertyGuide } from "@/components/property/property-guide";
+import { getExperienceGuideForProperty } from "@/server/experience-guides";
 import { getPropertyByCode } from "@/server/properties";
 
 export const dynamic = "force-dynamic";
@@ -21,12 +22,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   return {
-    title: `César da Seazone | ${property.code}`,
-    description: `Assistente virtual da estadia em ${property.name}.`,
+    title: `${property.name} | Guia do Hóspede`,
+    description: `Guia da estadia em ${property.address.city}/${property.address.state}.`,
   };
 }
 
-export default async function PropertyAssistantPage({ params }: PageProps) {
+export default async function GuestGuidePage({ params }: PageProps) {
   const { code } = await params;
   const property = await getPropertyByCode(code);
 
@@ -34,5 +35,7 @@ export default async function PropertyAssistantPage({ params }: PageProps) {
     notFound();
   }
 
-  return <PropertyAssistant property={property} />;
+  const guide = await getExperienceGuideForProperty(property.id);
+
+  return <PropertyGuide property={property} guide={guide} />;
 }

@@ -35,7 +35,6 @@ model Property {
   createdAt        DateTime         @default(now())
   updatedAt        DateTime         @updatedAt
   experienceGuide  ExperienceGuide?
-  guestAccesses    GuestGuideAccess[]
 }
 
 model ExperienceGuide {
@@ -48,18 +47,4 @@ model ExperienceGuide {
   generatedAt  DateTime?
   createdAt    DateTime              @default(now())
   updatedAt    DateTime              @updatedAt
-}
-
-model GuestGuideAccess {
-  id        String    @id @default(cuid())
-  propertyId String
-  property  Property  @relation(fields: [propertyId], references: [id], onDelete: Cascade)
-  tokenHash String    @unique
-  label     String
-  expiresAt DateTime?
-  revokedAt DateTime?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-
-  @@index([propertyId])
 }

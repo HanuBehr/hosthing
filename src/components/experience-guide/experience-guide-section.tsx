@@ -11,11 +11,9 @@ type Status = "idle" | "generating" | "ready" | "error";
 export function ExperienceGuideSection({
   propertyCode,
   initialGuide,
-  guideAccessCode,
 }: {
   propertyCode: string;
   initialGuide: ExperienceGuide | null;
-  guideAccessCode: string;
 }) {
   const [guide, setGuide] = useState(initialGuide);
   const [status, setStatus] = useState<Status>(initialGuide ? "ready" : "idle");
@@ -40,8 +38,6 @@ export function ExperienceGuideSection({
         `/api/properties/${propertyCode}/experience-guide`,
           {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ guideAccessCode }),
           },
         );
 
@@ -80,7 +76,7 @@ export function ExperienceGuideSection({
         window.clearTimeout(timeoutId);
       }
     };
-  }, [attempt, guideAccessCode, initialGuide, propertyCode]);
+  }, [attempt, initialGuide, propertyCode]);
 
   return (
     <Card>

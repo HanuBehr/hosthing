@@ -17,10 +17,8 @@ const suggestions = [
 
 export function ChatWidget({
   propertyCode,
-  guideAccessCode,
 }: {
   propertyCode: string;
-  guideAccessCode: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
@@ -51,7 +49,7 @@ export function ChatWidget({
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ propertyCode, guideAccessCode, messages: nextMessages }),
+        body: JSON.stringify({ propertyCode, messages: nextMessages }),
       });
 
       if (!response.ok || !response.body) {

@@ -11,14 +11,19 @@ Produção: https://seazone.vercel.app
 Fluxo de avaliação:
 
 - Acesse https://seazone.vercel.app
-- Digite um código privado de guia:
-- `FLN001-7KQ9-SEA`
-- `GRM001-4MZ8-SEA`
+- Digite o código do imóvel: `FLN001` ou `GRM001`
+- O hóspede entra primeiro no chat do César da Seazone
+- O assistente responde dúvidas daquele imóvel e oferece o link do guia completo
 
 Links equivalentes a um QR Code no imóvel:
 
-- https://seazone.vercel.app/FLN001/guest/FLN001-7KQ9-SEA
-- https://seazone.vercel.app/GRM001/guest/GRM001-4MZ8-SEA
+- https://seazone.vercel.app/FLN001
+- https://seazone.vercel.app/GRM001
+
+Guias completos:
+
+- https://seazone.vercel.app/FLN001/guia
+- https://seazone.vercel.app/GRM001/guia
 
 ## Stack
 
@@ -33,10 +38,10 @@ Links equivalentes a um QR Code no imóvel:
 
 ## Funcionalidades
 
-- Home com entrada de código privado do guia
-- Links de QR Code que abrem o guia exato do imóvel reservado
-- Página pública de código do imóvel protegida, sem dados sensíveis
-- Guia completo somente com código privado válido
+- Home com entrada de código do imóvel
+- QR Code ou link do imóvel abre o chat do César para aquela estadia
+- Chat inicial centralizado em `/FLN001` e `/GRM001`
+- Guia completo em `/FLN001/guia` e `/GRM001/guia`
 - Dados do imóvel, fotos, capacidade, amenidades e endereço
 - Informações de acesso, WiFi, estacionamento e contato do anfitrião
 - Regras da estadia com check-in, check-out, pets, fumantes, crianças e eventos
@@ -61,7 +66,7 @@ O que está dentro do escopo:
 - Contato do anfitrião
 - Guia de experiências contextualizado por IA
 - Assistente virtual que conhece aquele imóvel
-- Acesso ao guia completo somente por código privado/QR Code do imóvel
+- Primeiro contato do hóspede via chat do César da Seazone
 
 O que ficou fora do escopo por não estar no documento:
 
@@ -115,8 +120,8 @@ npm run dev
 Acesse a home e informe um dos códigos de avaliação:
 
 - `http://localhost:3000`
-- `FLN001-7KQ9-SEA`
-- `GRM001-4MZ8-SEA`
+- `FLN001`
+- `GRM001`
 
 ## Scripts
 
@@ -136,16 +141,13 @@ npm run db:seed
 
 ```txt
 src/app
-  Home com entrada de código privado do guia
+  Home com entrada de código do imóvel
 
 src/app/[code]
-  Página protegida sem dados sensíveis quando não há código privado
+  Primeiro contato do hóspede: chat do César para o imóvel
 
-src/app/[code]/guest/[guideAccessCode]
-  Guia completo da estadia para código privado válido
-
-src/app/api/guide-access/resolve
-  Resolve o código privado digitado na home para o guia correto
+src/app/[code]/guia
+  Guia completo da estadia do imóvel
 
 src/app/api/properties/[code]/experience-guide
   Geração e persistência do guia de experiências
@@ -166,11 +168,9 @@ prisma
   Schema e seed do banco
 ```
 
-O schema usa uma tabela `Property` para o imóvel, uma tabela `ExperienceGuide` com `propertyId` único e uma tabela `GuestGuideAccess` para códigos privados de acesso. Isso garante que cada imóvel tenha no máximo um guia persistido e que dados sensíveis da estadia sejam exibidos somente para quem possui o código correto.
+O schema usa uma tabela `Property` para o imóvel e uma tabela `ExperienceGuide` com `propertyId` único. Isso garante que cada imóvel tenha no máximo um guia de experiências persistido.
 
 Campos aninhados como `address`, `rules`, `operational`, `amenities` e `host` são armazenados como `Json` no Postgres. A segurança de tipo é mantida com Zod e TypeScript. Essa decisão reduz complexidade sem prejudicar o escopo do desafio, que não pede CRUD administrativo de imóveis.
-
-Os códigos privados são normalizados e armazenados como hash SHA-256. O valor em texto puro só aparece no seed de dados fictícios para permitir avaliação do desafio.
 
 ## IA
 
@@ -197,14 +197,13 @@ O chat usa `streamText` e recebe um system prompt com:
 ## Tratamento de falhas
 
 - Código de imóvel inexistente mostra uma tela amigável.
-- Código privado inexistente ou pertencente a outro imóvel não abre o guia completo.
 - Se a IA falhar, o guia exibe erro e botão de retry.
 - Se `OPENAI_API_KEY` não estiver configurada, a API retorna erro explícito.
 - O imóvel continua útil mesmo sem o guia de experiências, pois dados de acesso, WiFi, regras e contato são renderizados separadamente.
 
 ## Segurança e produto
 
-O documento usa exemplos como `/FLN001`, mas o guia contém informações sensíveis da estadia. Por isso, `/FLN001` existe apenas como página protegida e não mostra WiFi, endereço completo, códigos de entrada, contato ou chat. O guia completo usa o código do imóvel junto com um código privado, como aconteceria em um QR Code do imóvel ou link enviado ao hóspede confirmado.
+O documento pede links por código do imóvel, como `/FLN001`. Nesta versão, esse link funciona como a primeira tela do hóspede: um chat central com o César da Seazone, contextualizado para aquele imóvel. O guia completo fica em `/FLN001/guia` e pode ser enviado pelo próprio assistente.
 
 A aplicação também define `robots: noindex` para evitar indexação dos guias públicos.
 
@@ -220,7 +219,6 @@ Cobertura principal:
 - Rejeição de guia incompleto
 - Formatação de horário, regras, endereço e amenidades
 - Construção do prompt do chat com dados críticos do imóvel
-- Normalização e hash dos códigos privados do guia
 
 ## Deploy
 

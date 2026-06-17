@@ -1,7 +1,6 @@
 import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
-import { hashGuideAccessCode } from "../src/lib/guide-access";
 
 const connectionString =
   process.env.DATABASE_URL ??
@@ -120,46 +119,12 @@ const properties = [
   },
 ];
 
-const guideAccessCodes = [
-  {
-    propertyCode: "FLN001",
-    code: "FLN001-7KQ9-SEA",
-    label: "Acesso de avaliação FLN001",
-  },
-  {
-    propertyCode: "GRM001",
-    code: "GRM001-4MZ8-SEA",
-    label: "Acesso de avaliação GRM001",
-  },
-];
-
 async function main() {
   for (const property of properties) {
     await prisma.property.upsert({
       where: { code: property.code },
       update: property,
       create: property,
-    });
-  }
-
-  for (const access of guideAccessCodes) {
-    const property = await prisma.property.findUniqueOrThrow({
-      where: { code: access.propertyCode },
-    });
-
-    await prisma.guestGuideAccess.upsert({
-      where: { tokenHash: hashGuideAccessCode(access.code) },
-      update: {
-        propertyId: property.id,
-        label: access.label,
-        expiresAt: null,
-        revokedAt: null,
-      },
-      create: {
-        propertyId: property.id,
-        tokenHash: hashGuideAccessCode(access.code),
-        label: access.label,
-      },
     });
   }
 }
