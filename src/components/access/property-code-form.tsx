@@ -26,11 +26,14 @@ export function PropertyCodeForm() {
     <form onSubmit={handleSubmit} className="max-w-xl" noValidate>
       <label
         htmlFor="property-code"
-        className="block text-sm font-semibold text-[#06243d]"
+        className="block text-sm font-semibold text-[var(--color-navy)]"
       >
         Código do imóvel
       </label>
-      <p id="property-code-help" className="mt-2 text-sm leading-6 text-slate-500">
+      <p
+        id="property-code-help"
+        className="mt-2 text-sm leading-6 text-[var(--color-muted)]"
+      >
         Você encontra esse código na reserva ou no QR Code do imóvel.
       </p>
 
@@ -40,7 +43,7 @@ export function PropertyCodeForm() {
           value={propertyCode}
           onChange={(event) => setPropertyCode(event.target.value)}
           placeholder="Ex: FLN001"
-          className="h-12 min-w-0 flex-1 rounded-2xl border border-slate-200 bg-white px-4 text-base font-semibold tracking-wide text-[#06243d] shadow-sm outline-none transition placeholder:font-medium placeholder:text-slate-400 focus:border-[#0067b1] focus:ring-4 focus:ring-[#10b6d6]/15 sm:h-14"
+          className="h-12 min-w-0 flex-1 rounded-2xl border border-[var(--color-border)] bg-white px-4 text-base font-semibold tracking-wide text-[var(--color-navy)] shadow-sm outline-none transition placeholder:font-medium placeholder:text-slate-400 focus:border-[var(--seazone-blue,#0067b1)] focus:ring-4 focus:ring-cyan-500/10 sm:h-14"
           autoComplete="off"
           inputMode="text"
           aria-describedby="property-code-help property-code-examples"
@@ -48,24 +51,24 @@ export function PropertyCodeForm() {
         <button
           type="submit"
           disabled={isPending || !propertyCode.trim()}
-          className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#ff8a1c] px-6 font-semibold text-white shadow-sm transition hover:bg-[#f47c08] focus:ring-4 focus:ring-[#ff8a1c]/25 focus:outline-none disabled:cursor-not-allowed disabled:bg-[#e3d8cb] disabled:text-slate-500 sm:h-14 sm:w-auto sm:min-w-44"
+          className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[var(--color-coral)] px-6 font-semibold text-white shadow-sm transition hover:bg-[var(--color-coral-hover)] focus:ring-4 focus:ring-[var(--color-coral)]/25 focus:outline-none disabled:cursor-not-allowed disabled:bg-[#f2b9b3] disabled:text-white/80 sm:h-14 sm:w-auto sm:min-w-44"
         >
           {isPending ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> : null}
-          Iniciar conversa
+          Continuar
         </button>
       </div>
 
       <div
         id="property-code-examples"
-        className="mt-3 flex flex-wrap items-center gap-2 text-xs text-slate-500"
+        className="mt-3 flex flex-wrap items-center gap-2 text-xs text-[var(--color-muted)]"
       >
-        <span>Exemplos:</span>
+        <span>Exemplos para teste:</span>
         {exampleCodes.map((code) => (
           <button
             key={code}
             type="button"
             onClick={() => setPropertyCode(code)}
-            className="rounded-full border border-slate-200 bg-white/70 px-3 py-1.5 font-semibold text-slate-600 transition hover:border-[#0067b1]/30 hover:text-[#0067b1] focus:ring-4 focus:ring-[#10b6d6]/15 focus:outline-none"
+            className="rounded-full border border-[var(--color-border)] bg-white px-3 py-1.5 font-semibold text-[var(--color-muted)] transition hover:border-[var(--seazone-blue,#0067b1)]/30 hover:text-[var(--seazone-blue,#0067b1)] focus:ring-4 focus:ring-cyan-500/10 focus:outline-none"
           >
             {code}
           </button>

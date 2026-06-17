@@ -1,13 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fbf7f0;
-  --foreground: #082436;
-  --seazone-blue: #0067b1;
-  --seazone-navy: #06243d;
-  --seazone-cyan: #10b6d6;
-  --seazone-orange: #ff8a1c;
-  --seazone-soft: #e9f8fd;
+  --background: #fbfaf7;
+  --foreground: #082b44;
+  --color-navy: #062b45;
+  --color-navy-strong: #031f33;
+  --color-coral: #ff6b5f;
+  --color-coral-hover: #f45a4e;
+  --color-sand: #f7f2ea;
+  --color-bg: #fbfaf7;
+  --color-surface: #ffffff;
+  --color-soft-blue: #eaf8fb;
+  --color-border: #e3e8ee;
+  --color-text: #082b44;
+  --color-muted: #5e7185;
 }
 
 @theme inline {
@@ -37,9 +43,8 @@ textarea {
 
 .seazone-shell {
   background:
-    radial-gradient(circle at 8% 10%, rgba(16, 182, 214, 0.12), transparent 28rem),
-    radial-gradient(circle at 92% 18%, rgba(255, 138, 28, 0.1), transparent 24rem),
-    linear-gradient(135deg, #fffaf2 0%, #f6fbfb 52%, #ffffff 100%);
+    radial-gradient(circle at 12% 12%, rgba(234, 248, 251, 0.9), transparent 26rem),
+    linear-gradient(135deg, var(--color-bg) 0%, var(--color-sand) 100%);
 }
 
 .seazone-glass {
