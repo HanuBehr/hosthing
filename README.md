@@ -2,7 +2,7 @@
 
 Guia Digital do Hóspede personalizado por imóvel, criado para o teste técnico AI Builder da Seazone.
 
-A aplicação resolve o fluxo principal do hóspede: acessar um link único do imóvel, consultar dados da estadia, receber recomendações locais geradas por IA e tirar dúvidas em um chat com respostas em streaming.
+A aplicação resolve o fluxo principal descrito no desafio: o hóspede que reservou um imóvel acessa o link único daquele imóvel, consulta as informações da estadia que antes seriam impressas pelo anfitrião, recebe recomendações locais geradas por IA e tira dúvidas em um chat contextualizado.
 
 ## URL pública
 
@@ -26,7 +26,7 @@ Guias de exemplo:
 
 ## Funcionalidades
 
-- Guia público por código de imóvel: `/FLN001` e `/GRM001`
+- Guia por código de imóvel: `/FLN001` e `/GRM001`
 - Dados do imóvel, fotos, capacidade, amenidades e endereço
 - Informações de acesso, WiFi, estacionamento e contato do anfitrião
 - Regras da estadia com check-in, check-out, pets, fumantes, crianças e eventos
@@ -37,6 +37,30 @@ Guias de exemplo:
 - Assistente virtual com streaming de resposta
 - Chat contextualizado com dados do imóvel e guia de experiências
 - Testes de validação, formatação e construção de prompt
+
+## Escopo do produto
+
+Este projeto não é uma plataforma de reservas, busca de imóveis ou clone do Airbnb. O foco é o Guia Digital do Hóspede: uma página operacional para quem já reservou uma propriedade específica e precisa das informações práticas da estadia.
+
+O que está dentro do escopo:
+
+- Informações do imóvel reservado
+- Instruções de acesso
+- WiFi
+- Regras da estadia
+- Contato do anfitrião
+- Guia de experiências contextualizado por IA
+- Assistente virtual que conhece aquele imóvel
+
+O que ficou fora do escopo por não estar no documento:
+
+- Login
+- Admin
+- Busca de imóveis
+- Reserva ou pagamento
+- Calendário de disponibilidade
+- Avaliações
+- Mapa interativo
 
 ## Como rodar localmente
 
@@ -156,7 +180,7 @@ O chat usa `streamText` e recebe um system prompt com:
 
 ## Segurança e produto
 
-Os exemplos usam URLs previsíveis como `/FLN001` porque isso faz parte do desafio. Em produção, uma versão real deveria usar links não enumeráveis por reserva, como tokens únicos por hóspede, além de expiração e controle de acesso.
+Os exemplos usam URLs previsíveis como `/FLN001` porque o documento pede explicitamente um link único baseado no código do imóvel. Como os dados do teste são fictícios, a implementação segue esse requisito de forma direta. Em produção, uma versão real deveria usar links não enumeráveis por reserva, como tokens únicos por hóspede, além de expiração e controle de acesso.
 
 A aplicação também define `robots: noindex` para evitar indexação dos guias públicos.
 

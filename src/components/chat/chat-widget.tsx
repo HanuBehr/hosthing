@@ -21,7 +21,7 @@ export function ChatWidget({ propertyCode }: { propertyCode: string }) {
     {
       role: "assistant",
       content:
-        "Olá! Sou o assistente virtual deste imóvel. Posso ajudar com WiFi, acesso, regras e recomendações próximas.",
+        "Olá! Sou o assistente virtual deste imóvel. Posso responder sobre WiFi, acesso, regras da estadia e recomendações próximas.",
     },
   ]);
   const [input, setInput] = useState("");
@@ -95,8 +95,10 @@ export function ChatWidget({ propertyCode }: { propertyCode: string }) {
                 <Bot className="h-5 w-5" />
               </span>
               <div>
-                <p className="font-semibold">Assistente Seazone</p>
-                <p className="text-xs text-cyan-100">Contexto: {propertyCode}</p>
+                <p className="font-semibold">Assistente Virtual</p>
+                <p className="text-xs text-cyan-100">
+                  Conhece este imóvel: {propertyCode}
+                </p>
               </div>
             </div>
             <button
@@ -165,7 +167,7 @@ export function ChatWidget({ propertyCode }: { propertyCode: string }) {
         className="fixed right-4 bottom-4 z-40 flex items-center gap-2 rounded-full bg-slate-950 px-5 py-4 font-semibold text-white shadow-2xl transition hover:-translate-y-0.5 hover:bg-slate-800"
       >
         <Bot className="h-5 w-5 text-cyan-300" />
-        Tirar dúvida
+        Assistente virtual
       </button>
     </>
   );

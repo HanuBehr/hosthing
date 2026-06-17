@@ -52,7 +52,7 @@ export function PropertyGuide({
         <div className="mx-auto flex min-h-[620px] max-w-6xl flex-col justify-end px-5 py-8 sm:px-8 lg:px-10">
           <div className="max-w-3xl space-y-5">
             <p className="inline-flex rounded-full bg-white/15 px-4 py-2 text-sm font-medium backdrop-blur">
-              Guia do Hóspede · {property.code}
+              Guia da sua estadia · {property.code}
             </p>
             <h1 className="text-4xl font-semibold tracking-tight sm:text-6xl">
               {property.name}
@@ -61,6 +61,10 @@ export function PropertyGuide({
               <MapPin className="h-5 w-5" />
               {property.address.neighborhood}, {property.address.city}/
               {property.address.state}
+            </p>
+            <p className="max-w-2xl text-base leading-7 text-cyan-50/90">
+              Aqui estão as informações do imóvel reservado para sua chegada e
+              estadia: acesso, WiFi, regras, contato e recomendações próximas.
             </p>
           </div>
           <div className="mt-8 grid gap-3 sm:grid-cols-3">
@@ -87,9 +91,9 @@ export function PropertyGuide({
         <div className="space-y-6">
           <Card>
             <SectionTitle
-              eyebrow="Chegada"
-              title="Informações essenciais"
-              description="Tudo que você precisa para entrar, conectar e começar a estadia sem atrito."
+              eyebrow="Informações de acesso"
+              title="WiFi, horários e estacionamento"
+              description="Dados práticos para entrada, conexão e deslocamento durante a estadia."
             />
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               <InfoTile
@@ -120,7 +124,10 @@ export function PropertyGuide({
           </Card>
 
           <Card>
-            <SectionTitle eyebrow="Acesso" title="Como acessar o imóvel" />
+            <SectionTitle
+              eyebrow="Informações de acesso"
+              title="Instruções de acesso ao imóvel"
+            />
             <div className="mt-5 rounded-2xl bg-cyan-50 p-5">
               <p className="flex items-center gap-2 font-semibold text-slate-950">
                 <DoorOpen className="h-5 w-5 text-cyan-700" />
@@ -139,7 +146,7 @@ export function PropertyGuide({
           </Card>
 
           <Card>
-            <SectionTitle eyebrow="Regras" title="Regras da estadia" />
+            <SectionTitle eyebrow="Regras da estadia" title="Políticas do imóvel" />
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
               <RuleItem
                 icon={<PawPrint className="h-5 w-5" />}
@@ -184,11 +191,22 @@ export function PropertyGuide({
 
         <aside className="space-y-6 lg:sticky lg:top-6 lg:self-start">
           <Card>
-            <SectionTitle eyebrow="Imóvel" title="Detalhes" />
+            <SectionTitle eyebrow="Dados do imóvel" title="Resumo da propriedade" />
             <dl className="mt-5 space-y-4 text-sm">
               <Detail label="Tipo" value={property.propertyType} />
+              <Detail
+                label="Localização"
+                value={`${property.address.city}/${property.address.state}`}
+              />
               <Detail label="Endereço" value={getFullAddress(property)} />
-              <Detail label="Anfitrião" value={property.host.name} />
+            </dl>
+          </Card>
+
+          <Card>
+            <SectionTitle eyebrow="Contato" title="Anfitrião" />
+            <dl className="mt-5 space-y-4 text-sm">
+              <Detail label="Nome" value={property.host.name} />
+              <Detail label="Telefone" value={property.host.phone} />
             </dl>
             <a
               href={whatsappUrl}
@@ -201,7 +219,7 @@ export function PropertyGuide({
           </Card>
 
           <Card>
-            <SectionTitle eyebrow="Conforto" title="Amenidades" />
+            <SectionTitle eyebrow="Dados do imóvel" title="Amenidades" />
             <div className="mt-5 flex flex-wrap gap-2">
               {amenities.map((amenity) => (
                 <span
