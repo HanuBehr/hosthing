@@ -52,11 +52,11 @@ Rotas de compatibilidade para o guia:
 - Informações de acesso, WiFi, estacionamento e contato do anfitrião
 - Regras da estadia com check-in, check-out, pets, fumantes, crianças e eventos
 - Página amigável para código de imóvel inexistente
-- Guia de experiências gerado por IA com restaurantes, atrações, serviços essenciais e dica sazonal
-- Persistência do guia gerado para evitar nova geração a cada acesso
+- Recomendações locais no assistente com restaurantes, atrações, serviços essenciais e dica sazonal
+- Persistência opcional de guia local para reaproveitar conteúdo gerado por IA
 - Feedback visual durante a geração do guia
 - Assistente virtual com streaming de resposta
-- Chat contextualizado com dados do imóvel e guia de experiências
+- Chat contextualizado com dados do imóvel e recomendações locais
 - Testes de validação, formatação e construção de prompt
 
 ## Escopo do produto
@@ -70,7 +70,7 @@ O que está dentro do escopo:
 - WiFi
 - Regras da estadia
 - Contato do anfitrião
-- Guia de experiências contextualizado por IA
+- Recomendações locais contextualizadas por IA
 - Assistente virtual que conhece aquele imóvel
 - Assistente virtual disponível dentro do guia do imóvel
 
@@ -165,7 +165,7 @@ src/app/api/chat
   Assistente virtual com streaming
 
 src/components
-  Componentes de UI, guia, experiência e chat
+  Componentes de UI, guia do imóvel e chat
 
 src/lib
   Validações, formatação, Prisma e prompts de IA
@@ -200,19 +200,18 @@ O chat usa `streamText` e recebe um system prompt com:
 - Dados operacionais do imóvel
 - Regras da estadia
 - Contato do anfitrião
-- Guia de experiências persistido
+- Recomendações locais persistidas quando disponíveis
 - Instrução explícita para não inventar informações ausentes
 
 ## Tratamento de falhas
 
 - Código de imóvel inexistente mostra uma tela amigável.
-- Se a IA falhar, o guia exibe erro e botão de retry.
-- Se `OPENAI_API_KEY` não estiver configurada, a geração do Guia de Experiências retorna erro explícito e o chat usa respostas contextuais de fallback.
-- O imóvel continua útil mesmo sem o guia de experiências, pois dados de acesso, WiFi, regras e contato são renderizados separadamente.
+- Se `OPENAI_API_KEY` não estiver configurada, o chat usa respostas contextuais de fallback.
+- O imóvel continua útil mesmo sem IA, pois dados de acesso, WiFi, regras, contato e recomendações básicas são renderizados ou respondidos separadamente.
 
 ## Segurança e produto
 
-O documento pede links por código do imóvel, como `/FLN001`. Nesta versão, esse link abre diretamente o Guia Digital do Hóspede daquele imóvel, com informações de acesso, WiFi, regras, contato, Guia de Experiências gerado por IA e chat contextual disponível na própria página.
+O documento pede links por código do imóvel, como `/FLN001`. Nesta versão, esse link abre diretamente o Guia Digital do Hóspede daquele imóvel, com informações de acesso, WiFi, regras, contato e chat contextual disponível na própria página.
 
 A aplicação também define `robots: noindex` para evitar indexação dos guias públicos.
 
