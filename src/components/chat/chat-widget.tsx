@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { Bot, Send, X } from "lucide-react";
 
 type ChatMessage = {
@@ -10,10 +10,13 @@ type ChatMessage = {
 
 const suggestions = [
   "Qual a senha do WiFi?",
-  "Posso trazer meu cachorro?",
-  "A que horas posso fazer check-in?",
-  "Que restaurantes tem perto?",
+  "O que fazer por perto?",
+  "Restaurantes próximos",
+  "Mercado ou farmácia perto?",
 ];
+
+const initialAssistantMessage =
+  "Olá! Sou o assistente virtual deste imóvel. Posso responder sobre WiFi, acesso, regras da estadia, restaurantes e recomendações próximas.";
 
 export function ChatWidget({
   propertyCode,
@@ -21,16 +24,51 @@ export function ChatWidget({
   propertyCode: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      role: "assistant",
-      content:
-        "Olá! Sou o assistente virtual deste imóvel. Posso responder sobre WiFi, acesso, regras da estadia e recomendações próximas.",
-    },
-  ]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [hasUnreadIntro, setHasUnreadIntro] = useState(false);
   const [input, setInput] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const isOpenRef = useRef(isOpen);
+  const hasMessagesRef = useRef(false);
+
+  useEffect(() => {
+    isOpenRef.current = isOpen;
+  }, [isOpen]);
+
+  useEffect(() => {
+    hasMessagesRef.current = messages.length > 0;
+  }, [messages]);
+
+  useEffect(() => {
+    const timeoutId = window.setTimeout(() => {
+      if (hasMessagesRef.current) return;
+
+      setMessages([
+        {
+          role: "assistant",
+          content: initialAssistantMessage,
+        },
+      ]);
+      const shouldNotify = !isOpenRef.current;
+
+      setHasUnreadIntro(shouldNotify);
+
+      if (shouldNotify) {
+        playNotificationSound();
+      }
+    }, 2000);
+
+    return () => window.clearTimeout(timeoutId);
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    scrollRef.current?.scrollTo({
+      top: scrollRef.current.scrollHeight,
+    });
+  }, [messages, isOpen]);
 
   async function sendMessage(content: string) {
     const trimmed = content.trim();
@@ -92,87 +130,155 @@ export function ChatWidget({
   return (
     <>
       {isOpen ? (
-        <div className="fixed inset-x-3 bottom-3 z-50 mx-auto flex max-h-[82vh] max-w-md flex-col overflow-hidden rounded-[1.75rem] border border-cyan-100 bg-white shadow-2xl shadow-slate-900/20 sm:inset-x-auto sm:right-5 sm:bottom-5 sm:w-[420px]">
-          <div className="flex items-center justify-between bg-[#06243d] px-5 py-4 text-white">
-            <div className="flex items-center gap-3">
-              <span className="rounded-full bg-[#ff8a1c] p-2 text-white shadow-lg shadow-orange-500/20">
-                <Bot className="h-5 w-5" />
+        <div className="fixed inset-x-3 bottom-3 z-50 mx-auto flex max-h-[85dvh] max-w-md flex-col overflow-hidden rounded-card border border-line bg-surface shadow-pop pb-[env(safe-area-inset-bottom)] sm:inset-x-auto sm:right-5 sm:bottom-5 sm:w-[400px]">
+          <div className="flex items-center justify-between gap-3 bg-navy px-5 py-4 text-white">
+            <div className="flex min-w-0 items-center gap-3">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-field bg-orange text-white">
+                <Bot className="h-5 w-5" aria-hidden />
               </span>
-              <div>
-                <p className="font-semibold">Assistente Virtual</p>
-                <p className="text-xs text-cyan-100">
-                  Conhece este imóvel: {propertyCode}
+              <div className="min-w-0">
+                <p className="font-semibold tracking-[-0.01em]">
+                  Assistente virtual
+                </p>
+                <p className="truncate text-xs text-white/60">
+                  Código do imóvel: {propertyCode}
                 </p>
               </div>
             </div>
             <button
               type="button"
               onClick={() => setIsOpen(false)}
-              className="rounded-full p-2 transition hover:bg-white/10"
+              className="-mr-1 shrink-0 rounded-full p-2 text-white/80 transition hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
               aria-label="Fechar chat"
             >
-              <X className="h-5 w-5" />
+              <X className="h-5 w-5" aria-hidden />
             </button>
           </div>
 
-          <div className="flex-1 space-y-3 overflow-y-auto bg-gradient-to-b from-[#f8fdff] to-white p-4">
+          <div
+            ref={scrollRef}
+            className="seazone-scroll flex-1 space-y-3 overflow-y-auto bg-cream p-4"
+            role="log"
+            aria-live="polite"
+            aria-relevant="additions text"
+          >
             {messages.map((message, index) => (
               <div
                 key={index}
                 className={
                   message.role === "user"
-                    ? "ml-auto max-w-[85%] rounded-2xl rounded-br-md bg-[#0067b1] px-4 py-3 text-sm leading-6 text-white"
-                    : "mr-auto max-w-[85%] rounded-2xl rounded-bl-md border border-cyan-50 bg-white px-4 py-3 text-sm leading-6 text-slate-700 shadow-sm"
+                    ? "ml-auto max-w-[85%] rounded-panel rounded-br-md bg-navy px-4 py-3 text-sm leading-6 text-white"
+                    : "mr-auto max-w-[85%] rounded-panel rounded-bl-md border border-line bg-surface px-4 py-3 text-sm leading-6 text-ink shadow-card"
                 }
               >
-                {message.content || "..."}
+                {message.content || (
+                  <span className="text-muted">…</span>
+                )}
               </div>
             ))}
           </div>
 
-          <div className="border-t border-slate-200 bg-white p-4">
-            <div className="mb-3 flex gap-2 overflow-x-auto pb-1">
+          <div className="border-t border-line bg-surface p-4">
+            <div className="mb-3 flex flex-wrap gap-2">
               {suggestions.map((suggestion) => (
                 <button
                   type="button"
                   key={suggestion}
                   onClick={() => sendMessage(suggestion)}
                   disabled={isStreaming}
-                  className="shrink-0 rounded-full border border-cyan-100 bg-cyan-50 px-3 py-2 text-xs font-semibold text-[#0067b1] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
+                  className="rounded-full border border-line bg-surface px-3 py-1.5 text-xs font-semibold text-navy transition hover:border-coral hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {suggestion}
                 </button>
               ))}
             </div>
             <form onSubmit={handleSubmit} className="flex gap-2">
+              <label htmlFor="chat-input" className="sr-only">
+                Pergunte sobre sua estadia
+              </label>
               <input
+                id="chat-input"
                 ref={inputRef}
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
                 placeholder="Pergunte sobre sua estadia"
-                className="min-w-0 flex-1 rounded-full border border-slate-200 bg-[#f7fbfc] px-4 py-3 text-sm outline-none transition focus:border-[#0067b1] focus:bg-white"
+                className="min-w-0 flex-1 rounded-field border border-line bg-cream px-4 py-3 text-base text-ink outline-none transition placeholder:text-muted focus:border-coral focus:bg-surface"
               />
               <button
                 type="submit"
-                disabled={isStreaming}
-                className="rounded-full bg-[#ff8a1c] p-3 text-white shadow-lg shadow-orange-500/20 transition hover:bg-[#f47c08] disabled:cursor-not-allowed disabled:opacity-60"
+                disabled={isStreaming || !input.trim()}
+                className="flex shrink-0 items-center justify-center rounded-field bg-coral px-3.5 text-white transition hover:bg-coral-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
                 aria-label="Enviar mensagem"
               >
-                <Send className="h-5 w-5" />
+                <Send className="h-5 w-5" aria-hidden />
               </button>
             </form>
           </div>
         </div>
       ) : null}
 
-      <button
-        type="button"
-        onClick={() => setIsOpen(true)}
-        className="fixed right-4 bottom-4 z-40 flex items-center gap-2 rounded-full bg-[#06243d] px-5 py-4 font-semibold text-white shadow-2xl shadow-slate-900/20 transition hover:-translate-y-0.5 hover:bg-[#0067b1]"
-      >
-        <Bot className="h-5 w-5 text-[#ff8a1c]" />
-        Assistente virtual
-      </button>
+      {!isOpen ? (
+        <div className="fixed right-4 bottom-4 z-40 flex flex-col items-end gap-2 mb-[env(safe-area-inset-bottom)]">
+          {hasUnreadIntro ? (
+            <button
+              type="button"
+              onClick={() => {
+                setIsOpen(true);
+                setHasUnreadIntro(false);
+              }}
+              className="relative max-w-[260px] rounded-panel border border-line bg-surface px-4 py-3 text-left text-sm font-semibold leading-5 text-navy shadow-pop transition hover:-translate-y-0.5 hover:border-coral focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50"
+            >
+              Precisa de ajuda com WiFi, acesso ou dicas locais?
+              <span className="absolute -bottom-1.5 right-6 h-3 w-3 rotate-45 border-b border-r border-line bg-surface" />
+            </button>
+          ) : null}
+
+          <button
+            type="button"
+            onClick={() => {
+              setIsOpen(true);
+              setHasUnreadIntro(false);
+            }}
+            className="relative flex h-14 w-14 items-center justify-center gap-2 rounded-full bg-navy font-semibold text-white shadow-pop transition hover:-translate-y-0.5 hover:bg-navy-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/60 focus-visible:ring-offset-2 sm:h-auto sm:w-auto sm:px-5 sm:py-3.5"
+            aria-label="Abrir assistente virtual"
+          >
+            {hasUnreadIntro ? (
+              <span className="absolute -right-1.5 -top-1.5 grid h-6 min-w-6 place-items-center rounded-full border-2 border-surface bg-red-600 px-1.5 text-xs font-bold leading-none text-white">
+                1
+              </span>
+            ) : null}
+            <Bot className="h-6 w-6 text-orange sm:h-5 sm:w-5" aria-hidden />
+            <span className="hidden sm:inline">Assistente virtual</span>
+          </button>
+        </div>
+      ) : null}
     </>
   );
+}
+
+function playNotificationSound() {
+  try {
+    const audioContext = new AudioContext();
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+
+    oscillator.type = "sine";
+    oscillator.frequency.setValueAtTime(880, audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(
+      1320,
+      audioContext.currentTime + 0.08,
+    );
+
+    gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.08, audioContext.currentTime + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + 0.18);
+
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime + 0.18);
+    window.setTimeout(() => void audioContext.close(), 240);
+  } catch {
+    // Browsers can block autoplay before interaction; the visual badge still appears.
+  }
 }

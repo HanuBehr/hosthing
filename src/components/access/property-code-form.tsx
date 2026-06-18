@@ -26,21 +26,21 @@ export function PropertyCodeForm() {
     <form onSubmit={handleSubmit} noValidate aria-busy={isPending}>
       <label
         htmlFor="property-code"
-        className="block text-sm font-semibold text-[var(--color-navy)]"
+        className="block text-sm font-semibold text-navy"
       >
         Código do imóvel
       </label>
-      <p id="property-code-help" className="mt-1.5 text-sm leading-6 text-[var(--color-muted)]">
+      <p id="property-code-help" className="mt-1.5 text-sm leading-6 text-muted">
         Você encontra esse código na reserva ou no QR Code do imóvel.
       </p>
 
-      <div className="mt-3.5 flex flex-col gap-3 sm:flex-row sm:items-stretch">
+      <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-stretch">
         <input
           id="property-code"
           value={propertyCode}
           onChange={(event) => setPropertyCode(event.target.value)}
           placeholder="Ex: FLN001"
-          className="h-[3.2rem] min-w-0 flex-1 rounded-[1rem] border border-[#dfe6ec] bg-white px-4 text-base font-semibold tracking-wide text-[var(--color-navy)] outline-none transition placeholder:font-medium placeholder:text-slate-400 hover:border-[#cfd9e2] focus:border-[var(--color-navy)] focus:ring-4 focus:ring-[rgba(255,107,95,0.16)] sm:h-[3.35rem]"
+          className="h-14 min-w-0 flex-1 rounded-field border border-line bg-surface px-4 text-base font-semibold tracking-wide text-navy outline-none transition placeholder:font-medium placeholder:text-muted/70 hover:border-line-cool focus-visible:border-coral focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2"
           autoComplete="off"
           inputMode="text"
           aria-describedby="property-code-help property-code-examples"
@@ -48,7 +48,7 @@ export function PropertyCodeForm() {
         <button
           type="submit"
           disabled={isPending || !propertyCode.trim()}
-          className="inline-flex h-[3.2rem] w-full items-center justify-center gap-2 rounded-[1rem] bg-[var(--color-coral)] px-6 font-semibold text-white shadow-sm transition hover:bg-[var(--color-coral-hover)] focus:ring-4 focus:ring-[rgba(255,107,95,0.25)] focus:outline-none disabled:cursor-not-allowed disabled:bg-[#f4b4ae] disabled:text-white/85 sm:h-[3.35rem] sm:w-auto sm:min-w-36"
+          className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-field bg-coral px-6 font-semibold text-white transition hover:bg-coral-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:min-w-36"
         >
           {isPending ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> : null}
           Continuar
@@ -57,7 +57,7 @@ export function PropertyCodeForm() {
 
       <div
         id="property-code-examples"
-        className="mt-3 flex flex-wrap items-center gap-2 text-xs text-[var(--color-muted)]"
+        className="mt-4 flex flex-wrap items-center gap-2 text-xs text-muted"
       >
         <span>Exemplos para teste:</span>
         {exampleCodes.map((code) => (
@@ -65,7 +65,7 @@ export function PropertyCodeForm() {
             key={code}
             type="button"
             onClick={() => setPropertyCode(code)}
-            className="rounded-full border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-1.5 font-semibold text-[var(--color-navy)] transition hover:border-[var(--color-coral)] hover:bg-white hover:text-[var(--color-navy-strong)] focus:ring-4 focus:ring-[rgba(255,107,95,0.15)] focus:outline-none"
+            className="rounded-full border border-line bg-surface px-3 py-1.5 font-semibold text-navy transition hover:border-coral hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2"
           >
             {code}
           </button>

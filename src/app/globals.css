@@ -1,41 +1,73 @@
 @import "tailwindcss";
 
-:root {
-  --background: #fbfaf7;
-  --foreground: #082b44;
-  --color-navy: #062b45;
-  --color-navy-strong: #031f33;
+/* ------------------------------------------------------------------ *
+ * Seazone Guest Guide — design tokens
+ * One brand language across every screen: deep navy, warm off-white
+ * surfaces, coral as the single primary action, orange as a sparing
+ * support accent. No cool "dashboard" cyan anywhere.
+ * Registered in @theme so Tailwind generates real utilities
+ * (bg-navy, text-coral, border-line, rounded-card, shadow-card, …).
+ * ------------------------------------------------------------------ */
+@theme {
+  /* Brand — navy */
+  --color-navy: #06243d;
+  --color-navy-700: #0d3a5c;
+  --color-navy-900: #031f33;
+
+  /* Brand — actions */
   --color-coral: #ff6b5f;
-  --color-coral-hover: #f45a4e;
-  --color-sand: #f7f2ea;
-  --color-bg: #fbfaf7;
+  --color-coral-600: #ef5648;
+  --color-coral-soft: #fff0ee;
+  --color-orange: #ff8a1c;
+  --color-orange-600: #ef7c08;
+  --color-orange-soft: #fff3e2;
+
+  /* Surfaces */
+  --color-cream: #fbf9f4;
+  --color-sand: #f4efe5;
   --color-surface: #ffffff;
-  --color-soft-blue: #eaf8fb;
-  --color-border: #e3e8ee;
-  --color-text: #082b44;
-  --color-muted: #5e7185;
-  --color-success-soft: #eaf8f1;
-  --color-warning-soft: #fff4e6;
-  --shadow-surface: 0 18px 48px rgba(6, 43, 69, 0.07);
-  --radius-surface: 1.5rem;
+  --color-mist: #eef2f6;
+
+  /* Text */
+  --color-ink: #0c2c47;
+  --color-muted: #5f7286;
+
+  /* Lines + semantic */
+  --color-line: #e7e3da;
+  --color-line-cool: #e3e8ee;
+  --color-positive: #2e9e6b;
+  --color-positive-soft: #e9f6ef;
+
+  /* Radius scale — brand-specific names to avoid clobbering rounded-md/lg */
+  --radius-card: 1.25rem;
+  --radius-panel: 1rem;
+  --radius-field: 0.85rem;
+
+  /* Shadow scale */
+  --shadow-card: 0 1px 2px rgba(6, 36, 61, 0.04), 0 14px 34px rgba(6, 36, 61, 0.06);
+  --shadow-raised: 0 2px 6px rgba(6, 36, 61, 0.05), 0 22px 48px rgba(6, 36, 61, 0.1);
+  --shadow-pop: 0 18px 50px rgba(3, 25, 42, 0.22);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
+:root {
+  --background: var(--color-cream);
+  --foreground: var(--color-ink);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-cream);
+  color: var(--color-ink);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
 
 ::selection {
   background: rgba(255, 107, 95, 0.22);
-  color: var(--color-navy-strong);
+  color: var(--color-navy-900);
 }
 
 button,
@@ -45,20 +77,39 @@ textarea {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Warm page wash used on light screens (landing, invalid code). */
 .seazone-shell {
   background:
-    radial-gradient(circle at 10% 8%, rgba(234, 248, 251, 0.7), transparent 23rem),
-    radial-gradient(circle at 92% 14%, rgba(255, 244, 230, 0.68), transparent 21rem),
-    linear-gradient(135deg, var(--color-bg) 0%, var(--color-sand) 100%);
-}
-
-.seazone-glass {
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  background: rgba(255, 255, 255, 0.76);
-  box-shadow: 0 24px 80px rgba(6, 36, 61, 0.12);
-  backdrop-filter: blur(24px);
+    radial-gradient(circle at 8% 6%, rgba(255, 138, 28, 0.07), transparent 22rem),
+    radial-gradient(circle at 94% 12%, rgba(255, 107, 95, 0.07), transparent 20rem),
+    linear-gradient(160deg, var(--color-cream) 0%, var(--color-sand) 100%);
 }
 
 .seazone-card-shadow {
-  box-shadow: var(--shadow-surface);
+  box-shadow: var(--shadow-card);
+}
+
+/* Thin, on-brand scrollbar for inner scroll areas (chat, chip rows). */
+.seazone-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(6, 36, 61, 0.2) transparent;
+}
+.seazone-scroll::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+.seazone-scroll::-webkit-scrollbar-thumb {
+  background: rgba(6, 36, 61, 0.16);
+  border-radius: 9999px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

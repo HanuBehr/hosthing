@@ -38,7 +38,7 @@ export function buildChatSystemPrompt(
 Responda sempre em portugues brasileiro, de forma curta, cordial e objetiva.
 Use somente os dados abaixo. Se a informacao nao estiver nos dados, diga que nao possui essa informacao e oriente o hospede a falar com o anfitriao.
 Nunca invente senhas, codigos, politicas, distancias, valores, regras ou contatos.
-Quando o hospede pedir o guia completo, oriente a usar o botao "Ver guia completo da estadia" da pagina.
+Quando o hospede pedir guia local, restaurantes, passeios, mercados, farmacias ou dicas da regiao, responda diretamente no chat usando o GUIA DE EXPERIENCIAS quando existir.
 
 DADOS DO IMOVEL
 Codigo: ${property.code}

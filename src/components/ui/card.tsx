@@ -13,7 +13,7 @@ export function Card({
     <section
       {...props}
       className={clsx(
-        "rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6",
+        "rounded-card border border-line bg-surface p-5 shadow-card sm:p-6",
         className,
       )}
     >
@@ -32,16 +32,18 @@ export function SectionTitle({
   description?: string;
 }) {
   return (
-    <div className="space-y-2">
+    <div className="space-y-1.5">
       {eyebrow ? (
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-cyan-700">
+        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-coral">
           {eyebrow}
         </p>
       ) : null}
-      <h2 className="text-2xl font-semibold tracking-tight text-slate-950">
+      <h2 className="text-xl font-semibold tracking-[-0.02em] text-navy sm:text-2xl">
         {title}
       </h2>
-      {description ? <p className="text-slate-600">{description}</p> : null}
+      {description ? (
+        <p className="text-sm leading-6 text-muted">{description}</p>
+      ) : null}
     </div>
   );
 }

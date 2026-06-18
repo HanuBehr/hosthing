@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { PropertyGuide } from "@/components/property/property-guide";
-import { getExperienceGuideForProperty } from "@/server/experience-guides";
 import { getPropertyByCode } from "@/server/properties";
 
 export const dynamic = "force-dynamic";
@@ -35,7 +34,5 @@ export default async function GuestGuidePage({ params }: PageProps) {
     notFound();
   }
 
-  const guide = await getExperienceGuideForProperty(property.id);
-
-  return <PropertyGuide property={property} guide={guide} />;
+  return <PropertyGuide property={property} />;
 }
