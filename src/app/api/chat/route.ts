@@ -275,6 +275,12 @@ export async function POST(request: Request) {
     );
   }
 
+  const fallbackAnswer = buildFallbackAnswer(
+    property,
+    guide,
+    getLastUserMessage(body.data.messages) ?? "",
+  );
+
   const result = streamText({
     model: openai("gpt-4o-mini"),
     system: buildChatSystemPrompt(
@@ -284,7 +290,12 @@ export async function POST(request: Request) {
     messages: body.data.messages,
   });
 
-  return result.toTextStreamResponse();
+  return streamWithFallback(result.textStream, fallbackAnswer);
+}
+
+function getLastUserMessage(messages: z.infer<typeof chatRequestSchema>["messages"]) {
+  return [...messages].reverse().find((message) => message.role === "user")
+    ?.content;
 }
 
 function buildFallbackAnswer(
@@ -463,6 +474,46 @@ function streamPlainText(text: string) {
         await new Promise((resolve) => setTimeout(resolve, 20));
       }
       controller.close();
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+    },
+  });
+}
+
+function streamWithFallback(
+  textStream: AsyncIterable<string>,
+  fallbackText: string,
+) {
+  const encoder = new TextEncoder();
+
+  const stream = new ReadableStream({
+    async start(controller) {
+      let emittedText = false;
+
+      try {
+        for await (const chunk of textStream) {
+          emittedText = true;
+          controller.enqueue(encoder.encode(chunk));
+        }
+
+        if (!emittedText) {
+          controller.enqueue(encoder.encode(fallbackText));
+        }
+      } catch {
+        controller.enqueue(
+          encoder.encode(
+            emittedText
+              ? "\n\nNão consegui completar a resposta agora."
+              : fallbackText,
+          ),
+        );
+      } finally {
+        controller.close();
+      }
     },
   });
 
