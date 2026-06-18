@@ -37,6 +37,8 @@ const fallbackLocalGuides: Record<
     }>;
     airport: { name: string; distance: string; travelTime: string };
     transportTip: string;
+    localContext: string;
+    typicalFoodTip: string;
     seasonalTips: string;
   }
 > = {
@@ -96,6 +98,10 @@ const fallbackLocalGuides: Record<
     },
     transportTip:
       "Na Trindade, transporte por app costuma ser prático; em horários de aula na UFSC, saia com alguns minutos de folga.",
+    localContext:
+      "Florianópolis combina vida universitária, praias, lagoas e cultura açoriana. A Trindade é uma região prática para quem quer ficar perto da UFSC e circular para outras áreas da ilha.",
+    typicalFoodTip:
+      "Na região de Florianópolis, frutos do mar, sequência de camarão, ostras e restaurantes próximos à Lagoa ou ao centro são boas pedidas; perto da Trindade, prefira opções práticas de bairro ou deslocamento curto por app.",
     seasonalTips:
       "A Trindade é prática para circular pela região da UFSC; em horários de aula, considere sair com alguns minutos de folga.",
   },
@@ -155,6 +161,10 @@ const fallbackLocalGuides: Record<
     },
     transportTip:
       "Em Gramado, transporte por app e táxi funcionam bem na área central, mas em alta temporada vale chamar com antecedência.",
+    localContext:
+      "Gramado é uma cidade turística da Serra Gaúcha, conhecida pela arquitetura de inspiração europeia, clima frio, chocolate, Natal Luz e passeios clássicos como Rua Coberta e Lago Negro.",
+    typicalFoodTip:
+      "Para comida típica em Gramado, considere fondue, massas, cafés coloniais e restaurantes de inspiração alemã/italiana na área central; Cara de Mau, George III e Cantina Pastasciutta são opções conhecidas da cidade.",
     seasonalTips:
       "Gramado costuma ter noites frias mesmo fora do inverno; leve uma camada extra para sair à noite.",
   },
@@ -214,6 +224,10 @@ const fallbackLocalGuides: Record<
     },
     transportTip:
       "No Campeche, transporte por app costuma funcionar bem, mas em dias de praia ou alta temporada pode demorar mais.",
+    localContext:
+      "O Campeche fica no sul de Florianópolis e é conhecido pela praia extensa, clima mais residencial e acesso a passeios como Ilha do Campeche quando as condições permitem.",
+    typicalFoodTip:
+      "No Campeche, boas escolhas costumam envolver frutos do mar, pizzarias e restaurantes casuais de praia; Pachamay, Zeca Bar e Pizzarium são opções práticas para a região.",
     seasonalTips:
       "Para praia, prefira chegar cedo ao Campeche e confira a condição do vento antes de sair.",
   },
@@ -273,6 +287,10 @@ const fallbackLocalGuides: Record<
     },
     transportTip:
       "Em Blumenau, transporte por app é uma boa opção; em dias de evento na Vila Germânica, planeje deslocamento com antecedência.",
+    localContext:
+      "Blumenau tem forte influência da imigração alemã, é conhecida pela arquitetura enxaimel, pela cultura cervejeira e pela Oktoberfest, com a Vila Germânica como principal ponto de eventos.",
+    typicalFoodTip:
+      "Para uma experiência alemã ou regional em Blumenau perto da Vila Germânica, considere Bier Vila pela praticidade, Thapyoka pela cozinha regional e Moinho do Vale para uma refeição mais completa; confira rota e horários antes de sair.",
     seasonalTips:
       "Em períodos de eventos na Vila Germânica, vale sair com antecedência e reservar restaurantes.",
   },
@@ -332,6 +350,10 @@ const fallbackLocalGuides: Record<
     },
     transportTip:
       "Em Balneário Camboriú, caminhar pela região central costuma ser prático; para Barra Sul, Unipraias e aeroporto, transporte por app é conveniente.",
+    localContext:
+      "Balneário Camboriú é uma cidade litorânea conhecida pela Praia Central, prédios altos, vida noturna, Barra Sul e atrações como o Parque Unipraias.",
+    typicalFoodTip:
+      "Na Barra Sul e região central, restaurantes de frutos do mar, cozinha internacional e opções de orla funcionam bem; Chaplin, Guacamole e Number Seven são referências próximas para jantar.",
     seasonalTips:
       "Na alta temporada, planeje deslocamentos com folga e prefira caminhar pela região central quando possível.",
   },
@@ -405,6 +427,22 @@ function buildFallbackAnswer(
 
   if (normalized.includes("check-in") || normalized.includes("checkin") || normalized.includes("entrar")) {
     return `O check-in pode ser feito a partir das ${formatHour(property.rules.check_in_time)}. ${property.operational.property_access_instructions}`;
+  }
+
+  if (isHistoryIntent(normalized)) {
+    if (fallbackGuide?.localContext) {
+      return `${fallbackGuide.localContext} Esta resposta está contextualizada para o imóvel ${property.name}, em ${property.address.neighborhood}, ${property.address.city}/${property.address.state}.`;
+    }
+
+    return `Não tenho um resumo histórico seguro cadastrado para ${property.address.city}/${property.address.state}, mas posso ajudar com informações práticas da estadia neste imóvel.`;
+  }
+
+  if (isTypicalFoodIntent(normalized)) {
+    if (fallbackGuide?.typicalFoodTip) {
+      return `${fallbackGuide.typicalFoodTip} Sugestões com rota: ${formatPlaces(fallbackGuide.restaurants, property)}.`;
+    }
+
+    return `Não tenho uma recomendação típica segura cadastrada para ${property.address.city}/${property.address.state}. Posso ajudar com restaurantes próximos, mercado, farmácia, acesso e regras do imóvel.`;
   }
 
   if (isLocationIntent(normalized)) {
@@ -503,6 +541,18 @@ function isAttractionIntent(message: string) {
 
 function isEssentialIntent(message: string) {
   return ["mercado", "supermercado", "farmacia", "hospital", "essencial"].some(
+    (term) => message.includes(term),
+  );
+}
+
+function isHistoryIntent(message: string) {
+  return ["historia", "historico", "cultura", "colonizacao", "imigracao", "oktoberfest"].some(
+    (term) => message.includes(term),
+  );
+}
+
+function isTypicalFoodIntent(message: string) {
+  return ["alemao", "alema", "alemaes", "tipico", "tipica", "culinaria", "comida regional", "cervejaria", "chope"].some(
     (term) => message.includes(term),
   );
 }

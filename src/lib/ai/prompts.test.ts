@@ -17,8 +17,17 @@ describe("buildChatSystemPrompt", () => {
   it("instructs the assistant not to invent missing information", () => {
     const prompt = buildChatSystemPrompt(propertyFixture, null);
 
+    expect(prompt).toContain("Se faltar dado operacional do imovel");
     expect(prompt).toContain("Nunca invente");
     expect(prompt).toContain("Ainda nao ha guia de experiencias");
+  });
+
+  it("allows public local knowledge without redirecting to the host", () => {
+    const prompt = buildChatSystemPrompt(propertyFixture, experienceGuideFixture);
+
+    expect(prompt).toContain("informacoes publicas locais sobre a cidade");
+    expect(prompt).toContain("historia, cultura, culinaria");
+    expect(prompt).toContain("Nao mande o hospede falar com o anfitriao para perguntas publicas");
   });
 
   it("locks recommendations to the current property location", () => {
@@ -35,6 +44,7 @@ describe("buildChatSystemPrompt", () => {
     const prompt = buildChatSystemPrompt(propertyFixture, experienceGuideFixture);
 
     expect(prompt).toContain("recomende pelo menos 3 opcoes");
+    expect(prompt).toContain("nao prometa ranking absoluto");
     expect(prompt).toContain("inclua obrigatoriamente");
     expect(prompt).toContain("Google Maps");
     expect(prompt).toContain("perguntas sobre aeroporto, distancia, deslocamento ou tempo de trajeto");
