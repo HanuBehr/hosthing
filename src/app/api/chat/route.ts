@@ -37,44 +37,44 @@ const fallbackLocalGuides: Record<
   FLN001: {
     restaurants: [
       {
-        name: "Box 32",
-        distance: "aprox. 6 km",
-        description: "tradicional em Florianópolis, conhecido pelos petiscos",
+        name: "Restaurante Meu Cantinho",
+        distance: "aprox. 700 m",
+        description: "opção casual para almoço no bairro Trindade",
       },
       {
-        name: "Armazém Vieira",
-        distance: "aprox. 5 km",
-        description: "referência local em frutos do mar e ambiente histórico",
+        name: "Pizzaria Basilico",
+        distance: "aprox. 1 km",
+        description: "pizzaria prática para jantar perto da UFSC",
       },
     ],
     attractions: [
       {
-        name: "Mercado Público de Florianópolis",
-        distance: "aprox. 6 km",
-        description: "bom para provar comidas locais e circular pelo centro",
+        name: "UFSC",
+        distance: "aprox. 900 m",
+        description: "campus arborizado e principal ponto de referência da Trindade",
       },
       {
-        name: "Beira-Mar Norte",
-        distance: "aprox. 4 km",
-        description: "passeio agradável para caminhada no fim de tarde",
+        name: "Shopping Villa Romana",
+        distance: "aprox. 2,5 km",
+        description: "shopping com lojas, cinema e opções de alimentação",
       },
     ],
     essentials: [
       {
-        name: "Angeloni Beira-Mar",
-        distance: "aprox. 4 km",
-        description: "supermercado completo para compras da estadia",
+        name: "Imperatriz Gourmet Trindade",
+        distance: "aprox. 1 km",
+        description: "supermercado com itens de mercado e padaria",
         type: "supermarket",
       },
       {
-        name: "Panvel Centro",
-        distance: "aprox. 5 km",
-        description: "farmácia em região central da cidade",
+        name: "Farmácia Catarinense Trindade",
+        distance: "aprox. 500 m",
+        description: "farmácia próxima para compras básicas",
         type: "pharmacy",
       },
     ],
     seasonalTips:
-      "Em dias de sol, saia cedo para praias e passeios porque o trânsito da ilha pode aumentar bastante.",
+      "A Trindade é prática para circular pela região da UFSC; em horários de aula, considere sair com alguns minutos de folga.",
   },
   GRM001: {
     restaurants: [

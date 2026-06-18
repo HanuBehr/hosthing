@@ -13,7 +13,7 @@ const prisma = new PrismaClient({
 const properties = [
   {
     code: "FLN001",
-    name: "Apartamento Beira-Mar Florianópolis",
+    name: "Apartamento Trindade UFSC",
     propertyType: "Apartamento",
     bedroomQuantity: 2,
     bathroomQuantity: 1,
@@ -219,7 +219,7 @@ const properties = [
       dishwasher: true,
     },
     images: [
-      "https://upload.wikimedia.org/wikipedia/commons/8/81/Blumenau_a_partir_do_edificio_Petite_Maison_-_panoramio_%288%29_%28cropped%29.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/67/Parque_Vila_Germanica_Blumenau_SC_%2840841592442%29.jpg",
     ],
     host: {
       name: "Roberto Weiss",

@@ -4,7 +4,7 @@ import type { Property } from "@/lib/validators/property";
 export const propertyFixture: Property = {
   id: "property-fln001",
   code: "FLN001",
-  name: "Apartamento Beira-Mar Florianópolis",
+  name: "Apartamento Trindade UFSC",
   propertyType: "Apartamento",
   bedroomQuantity: 2,
   bathroomQuantity: 1,
