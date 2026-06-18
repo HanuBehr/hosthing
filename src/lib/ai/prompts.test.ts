@@ -35,6 +35,7 @@ describe("buildChatSystemPrompt", () => {
     const prompt = buildChatSystemPrompt(propertyFixture, experienceGuideFixture);
 
     expect(prompt).toContain("recomende pelo menos 3 opcoes");
+    expect(prompt).toContain("inclua obrigatoriamente");
     expect(prompt).toContain("Google Maps");
     expect(prompt).toContain("perguntas sobre aeroporto, distancia, deslocamento ou tempo de trajeto");
     expect(prompt).toContain("a partir do endereco do imovel atual");
