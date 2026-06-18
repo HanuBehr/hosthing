@@ -261,21 +261,16 @@ export async function POST(request: Request) {
 
   const guide = await getExperienceGuideForProperty(property.id).catch(() => null);
 
-  if (!hasOpenAIKey()) {
-    const lastUserMessage = [...body.data.messages]
-      .reverse()
-      .find((message) => message.role === "user")?.content;
-
-    return streamPlainText(
-      buildFallbackAnswer(property, guide, lastUserMessage ?? ""),
-    );
-  }
-
   const fallbackAnswer = buildFallbackAnswer(
     property,
     guide,
     getLastUserMessage(body.data.messages) ?? "",
   );
+
+  if (!hasOpenAIKey()) {
+    console.warn("OPENAI_API_KEY is missing or not parseable in production runtime.");
+    return streamPlainText(fallbackAnswer);
+  }
 
   const result = streamText({
     model: getOpenAIModel("gpt-4o-mini"),
@@ -499,7 +494,8 @@ function streamWithFallback(
         if (!emittedText) {
           controller.enqueue(encoder.encode(fallbackText));
         }
-      } catch {
+      } catch (error) {
+        console.error("OpenAI stream failed", error);
         controller.enqueue(
           encoder.encode(
             emittedText
