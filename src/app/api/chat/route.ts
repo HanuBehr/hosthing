@@ -1,7 +1,7 @@
+import { openai } from "@ai-sdk/openai";
 import { streamText } from "ai";
 import { z } from "zod";
 
-import { getOpenAIModel, hasOpenAIKey } from "@/lib/ai/openai";
 import { buildChatSystemPrompt } from "@/lib/ai/prompts";
 import { formatHour } from "@/lib/format";
 import type { ExperienceGuide } from "@/lib/validators/experience-guide";
@@ -9,6 +9,10 @@ import { getExperienceGuideForProperty } from "@/server/experience-guides";
 import { getPropertyByCode } from "@/server/properties";
 
 export const runtime = "nodejs";
+
+function hasOpenAIKey() {
+  return Boolean(process.env.OPENAI_API_KEY?.trim());
+}
 
 const chatRequestSchema = z.object({
   propertyCode: z.string().min(1),
@@ -268,12 +272,11 @@ export async function POST(request: Request) {
   );
 
   if (!hasOpenAIKey()) {
-    console.warn("OPENAI_API_KEY is missing or not parseable in production runtime.");
     return streamPlainText(fallbackAnswer);
   }
 
   const result = streamText({
-    model: getOpenAIModel("gpt-4o-mini"),
+    model: openai("gpt-4o-mini"),
     system: buildChatSystemPrompt(
       property,
       guide ?? getFallbackExperienceGuide(property.code),
@@ -494,8 +497,7 @@ function streamWithFallback(
         if (!emittedText) {
           controller.enqueue(encoder.encode(fallbackText));
         }
-      } catch (error) {
-        console.error("OpenAI stream failed", error);
+      } catch {
         controller.enqueue(
           encoder.encode(
             emittedText

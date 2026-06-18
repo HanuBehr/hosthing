@@ -1,6 +1,6 @@
+import { openai } from "@ai-sdk/openai";
 import { generateObject } from "ai";
 
-import { getOpenAIModel } from "@/lib/ai/openai";
 import { buildExperienceGuidePrompt } from "@/lib/ai/prompts";
 import {
   experienceGuideSchema,
@@ -12,7 +12,7 @@ export async function generateExperienceGuide(
   property: Property,
 ): Promise<ExperienceGuide> {
   const result = await generateObject({
-    model: getOpenAIModel("gpt-4o-mini"),
+    model: openai("gpt-4o-mini"),
     schema: experienceGuideSchema,
     schemaName: "ExperienceGuide",
     schemaDescription:
