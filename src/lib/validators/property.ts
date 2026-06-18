@@ -49,7 +49,7 @@ export const propertySchema = z.object({
   operational: operationalSchema,
   rules: rulesSchema,
   amenities: z.record(z.string(), z.boolean()),
-  images: z.array(z.string().url()),
+  images: z.array(z.string().min(1)),
   host: hostSchema,
 });
 

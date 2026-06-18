@@ -61,7 +61,7 @@ const properties = [
       balcony: true,
     },
     images: [
-      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1200",
+      "/properties/fln001.jpg",
     ],
     host: {
       name: "Ana Paula",
@@ -113,7 +113,7 @@ const properties = [
       dishwasher: true,
     },
     images: [
-      "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=1200",
+      "/properties/grm001.jpg",
     ],
     host: {
       name: "Carlos Eduardo",
@@ -168,7 +168,7 @@ const properties = [
       bbq_grill: true,
     },
     images: [
-      "https://upload.wikimedia.org/wikipedia/commons/7/72/Florianopolis_Campeche_Ilha.JPG",
+      "/properties/cmp001.jpg",
     ],
     host: {
       name: "Marina Costa",
@@ -223,7 +223,7 @@ const properties = [
       balcony: true,
     },
     images: [
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1200",
+      "/properties/lag001.jpg",
     ],
     host: {
       name: "Bianca Martins",
@@ -278,7 +278,7 @@ const properties = [
       pool: true,
     },
     images: [
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200",
+      "/properties/jur001.jpg",
     ],
     host: {
       name: "Lucas Farias",
@@ -333,7 +333,7 @@ const properties = [
       bbq_grill: true,
     },
     images: [
-      "https://images.unsplash.com/photo-1519046904884-53103b34b206?w=1200",
+      "/properties/sto001.jpg",
     ],
     host: {
       name: "Fernanda Lima",
@@ -387,7 +387,7 @@ const properties = [
       dishwasher: true,
     },
     images: [
-      "https://upload.wikimedia.org/wikipedia/commons/6/67/Parque_Vila_Germanica_Blumenau_SC_%2840841592442%29.jpg",
+      "/properties/bnu001.jpg",
     ],
     host: {
       name: "Roberto Weiss",
@@ -443,7 +443,7 @@ const properties = [
       pool: true,
     },
     images: [
-      "https://upload.wikimedia.org/wikipedia/commons/5/59/Balne%C3%A1rio_Cambori%C3%BA_from_Unipraias_Park_2023-04-02.jpg",
+      "/properties/bca001.jpg",
     ],
     host: {
       name: "Patrícia Almeida",

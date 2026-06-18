@@ -17,7 +17,8 @@ export function PropertyGuide({
   property: Property;
 }) {
   const heroImage = property.images[0];
-  const shouldSkipOptimization = heroImage?.includes("upload.wikimedia.org") ?? false;
+  const shouldSkipOptimization =
+    heroImage?.startsWith("/") || heroImage?.includes("upload.wikimedia.org") || false;
 
   return (
     <main className="seazone-shell min-h-screen pb-28 text-ink sm:pb-24">
