@@ -136,7 +136,7 @@ export function ChatWidget({
             <div className="flex min-w-0 items-center gap-3">
               <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-field bg-orange">
                 <Image
-                  src="/assistant.png"
+                  src="/assistant-avatar.png"
                   alt="Assistente virtual Seazone"
                   fill
                   sizes="40px"
@@ -258,7 +258,7 @@ export function ChatWidget({
             ) : null}
             <span className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full bg-orange sm:h-8 sm:w-8">
               <Image
-                src="/assistant.png"
+                src="/assistant-avatar.png"
                 alt=""
                 fill
                 sizes="36px"
