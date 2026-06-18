@@ -30,6 +30,15 @@ describe("buildChatSystemPrompt", () => {
     expect(prompt).toContain("Nunca responda como se o hospede estivesse em outro codigo, bairro, cidade ou estado");
     expect(prompt).toContain("ignore essa informacao");
   });
+
+  it("asks for complete local answers with maps context", () => {
+    const prompt = buildChatSystemPrompt(propertyFixture, experienceGuideFixture);
+
+    expect(prompt).toContain("recomende pelo menos 3 opcoes");
+    expect(prompt).toContain("Google Maps");
+    expect(prompt).toContain("perguntas sobre aeroporto, distancia, deslocamento ou tempo de trajeto");
+    expect(prompt).toContain("a partir do endereco do imovel atual");
+  });
 });
 
 describe("buildExperienceGuidePrompt", () => {

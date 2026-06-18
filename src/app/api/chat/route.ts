@@ -35,6 +35,7 @@ const fallbackLocalGuides: Record<
       description: string;
       type: "pharmacy" | "supermarket" | "hospital" | "other";
     }>;
+    airport: { name: string; distance: string; travelTime: string };
     seasonalTips: string;
   }
 > = {
@@ -49,6 +50,11 @@ const fallbackLocalGuides: Record<
         name: "Pizzaria Basilico",
         distance: "aprox. 1 km",
         description: "pizzaria prática para jantar perto da UFSC",
+      },
+      {
+        name: "Sushi Yama",
+        distance: "aprox. 1,4 km",
+        description: "opção japonesa na região central da Trindade",
       },
     ],
     attractions: [
@@ -77,6 +83,11 @@ const fallbackLocalGuides: Record<
         type: "pharmacy",
       },
     ],
+    airport: {
+      name: "Aeroporto Internacional de Florianópolis",
+      distance: "aprox. 12 km",
+      travelTime: "20 a 35 min de carro, dependendo do trânsito",
+    },
     seasonalTips:
       "A Trindade é prática para circular pela região da UFSC; em horários de aula, considere sair com alguns minutos de folga.",
   },
@@ -91,6 +102,11 @@ const fallbackLocalGuides: Record<
         name: "George III",
         distance: "aprox. 2 km",
         description: "cozinha contemporânea em uma casa clássica da cidade",
+      },
+      {
+        name: "Cantina Pastasciutta",
+        distance: "aprox. 2 km",
+        description: "clássico de massas na região central de Gramado",
       },
     ],
     attractions: [
@@ -119,6 +135,11 @@ const fallbackLocalGuides: Record<
         type: "pharmacy",
       },
     ],
+    airport: {
+      name: "Aeroporto Regional Hugo Cantergiani",
+      distance: "aprox. 65 km",
+      travelTime: "1h15 a 1h40 de carro, dependendo da estrada e do trânsito",
+    },
     seasonalTips:
       "Gramado costuma ter noites frias mesmo fora do inverno; leve uma camada extra para sair à noite.",
   },
@@ -133,6 +154,11 @@ const fallbackLocalGuides: Record<
         name: "Zeca Bar e Restaurante",
         distance: "aprox. 3 km",
         description: "opção tradicional para frutos do mar no sul da ilha",
+      },
+      {
+        name: "Pizzarium Pizzaria",
+        distance: "aprox. 2 km",
+        description: "boa opção casual para jantar no Campeche",
       },
     ],
     attractions: [
@@ -161,6 +187,11 @@ const fallbackLocalGuides: Record<
         type: "pharmacy",
       },
     ],
+    airport: {
+      name: "Aeroporto Internacional de Florianópolis",
+      distance: "aprox. 10 km",
+      travelTime: "15 a 30 min de carro, dependendo do trânsito",
+    },
     seasonalTips:
       "Para praia, prefira chegar cedo ao Campeche e confira a condição do vento antes de sair.",
   },
@@ -175,6 +206,11 @@ const fallbackLocalGuides: Record<
         name: "Thapyoka Restaurante",
         distance: "aprox. 4 km",
         description: "cozinha regional em área histórica de Blumenau",
+      },
+      {
+        name: "Bier Vila",
+        distance: "aprox. 1 km",
+        description: "opção prática perto da Vila Germânica para comida e chope",
       },
     ],
     attractions: [
@@ -203,6 +239,11 @@ const fallbackLocalGuides: Record<
         type: "pharmacy",
       },
     ],
+    airport: {
+      name: "Aeroporto Internacional de Navegantes",
+      distance: "aprox. 55 km",
+      travelTime: "50 a 75 min de carro, dependendo da BR-470 e do trânsito",
+    },
     seasonalTips:
       "Em períodos de eventos na Vila Germânica, vale sair com antecedência e reservar restaurantes.",
   },
@@ -217,6 +258,11 @@ const fallbackLocalGuides: Record<
         name: "Guacamole Cocina Mexicana",
         distance: "aprox. 2 km",
         description: "opção descontraída e conhecida para jantar na cidade",
+      },
+      {
+        name: "Number Seven",
+        distance: "aprox. 2 km",
+        description: "restaurante conhecido para jantar na região da orla",
       },
     ],
     attractions: [
@@ -245,6 +291,11 @@ const fallbackLocalGuides: Record<
         type: "pharmacy",
       },
     ],
+    airport: {
+      name: "Aeroporto Internacional de Navegantes",
+      distance: "aprox. 35 km",
+      travelTime: "35 a 55 min de carro, dependendo do trânsito",
+    },
     seasonalTips:
       "Na alta temporada, planeje deslocamentos com folga e prefira caminhar pela região central quando possível.",
   },
@@ -320,13 +371,21 @@ function buildFallbackAnswer(
     return `O check-in pode ser feito a partir das ${formatHour(property.rules.check_in_time)}. ${property.operational.property_access_instructions}`;
   }
 
+  if (isAirportIntent(normalized)) {
+    if (fallbackGuide?.airport) {
+      return `O aeroporto mais prático para este imóvel em ${property.address.neighborhood}, ${property.address.city}/${property.address.state} é ${fallbackGuide.airport.name}, a ${fallbackGuide.airport.distance}; o trajeto costuma levar ${fallbackGuide.airport.travelTime}. Confira a rota no Google Maps: ${buildMapsUrl(`${fallbackGuide.airport.name} até ${getPropertyLocationQuery(property)}`)}.`;
+    }
+
+    return `Não tenho uma distância de aeroporto cadastrada para este imóvel. Para evitar informação errada, confira a rota a partir de ${property.address.neighborhood}, ${property.address.city}/${property.address.state} no Google Maps.`;
+  }
+
   if (isRestaurantIntent(normalized)) {
     if (guide?.restaurants.length) {
-      return `Perto de você tem ${formatPlaces(guide.restaurants.slice(0, 3))}.`;
+      return `Para comer perto deste imóvel em ${property.address.neighborhood}, ${property.address.city}/${property.address.state}, eu consideraria ${formatPlaces(guide.restaurants.slice(0, 3), property)}. Essas opções fazem sentido pela proximidade com o endereço da estadia; confira horários e rota antes de sair.`;
     }
 
     if (fallbackGuide?.restaurants.length) {
-      return `Perto de você tem ${formatPlaces(fallbackGuide.restaurants)}.`;
+      return `Para comer perto deste imóvel em ${property.address.neighborhood}, ${property.address.city}/${property.address.state}, eu consideraria ${formatPlaces(fallbackGuide.restaurants, property)}. São opções próximas ou práticas para a região da estadia; confira horários e rota antes de sair.`;
     }
 
     return "Ainda não tenho restaurantes cadastrados para este imóvel. Posso ajudar com WiFi, acesso, regras e contato do anfitrião.";
@@ -334,11 +393,11 @@ function buildFallbackAnswer(
 
   if (isEssentialIntent(normalized)) {
     if (guide?.essentials.length) {
-      return `Para itens essenciais, considere ${formatPlaces(guide.essentials.slice(0, 3))}.`;
+      return `Para itens essenciais perto deste imóvel, considere ${formatPlaces(guide.essentials.slice(0, 3), property)}.`;
     }
 
     if (fallbackGuide?.essentials.length) {
-      return `Para itens essenciais, considere ${formatPlaces(fallbackGuide.essentials)}.`;
+      return `Para itens essenciais perto deste imóvel, considere ${formatPlaces(fallbackGuide.essentials, property)}.`;
     }
 
     return "Ainda não tenho mercados ou farmácias cadastrados para este imóvel. Em caso de urgência, fale com o anfitrião.";
@@ -346,11 +405,11 @@ function buildFallbackAnswer(
 
   if (isAttractionIntent(normalized)) {
     if (guide?.attractions.length) {
-      return `Boas opções por perto: ${formatPlaces(guide.attractions.slice(0, 3))}.`;
+      return `Boas opções por perto, considerando ${property.address.neighborhood}, ${property.address.city}/${property.address.state}: ${formatPlaces(guide.attractions.slice(0, 3), property)}.`;
     }
 
     if (fallbackGuide?.attractions.length) {
-      return `Boas opções por perto: ${formatPlaces(fallbackGuide.attractions)}.`;
+      return `Boas opções por perto, considerando ${property.address.neighborhood}, ${property.address.city}/${property.address.state}: ${formatPlaces(fallbackGuide.attractions, property)}.`;
     }
 
     return "Ainda não tenho atrações cadastradas para este imóvel. Posso ajudar com WiFi, acesso, regras e contato do anfitrião.";
@@ -400,6 +459,10 @@ function isEssentialIntent(message: string) {
   );
 }
 
+function isAirportIntent(message: string) {
+  return message.includes("aeroporto") || message.includes("airport");
+}
+
 function isSeasonalIntent(message: string) {
   return ["dica", "sazonal", "temporada", "chuva", "frio", "calor"].some(
     (term) => message.includes(term),
@@ -408,10 +471,31 @@ function isSeasonalIntent(message: string) {
 
 function formatPlaces(
   places: Array<{ name: string; distance: string; description: string }>,
+  property?: Awaited<ReturnType<typeof getPropertyByCode>> extends infer T
+    ? NonNullable<T>
+    : never,
 ) {
   return places
-    .map((place) => `${place.name} (${place.distance}), ${place.description}`)
+    .map((place) => {
+      const mapsUrl = property
+        ? ` Maps: ${buildMapsUrl(`${place.name} ${property.address.city} ${property.address.state}`)}`
+        : "";
+
+      return `${place.name} (${place.distance}), ${place.description}.${mapsUrl}`;
+    })
     .join("; ");
+}
+
+function getPropertyLocationQuery(
+  property: Awaited<ReturnType<typeof getPropertyByCode>> extends infer T
+    ? NonNullable<T>
+    : never,
+) {
+  return `${property.address.street} ${property.address.number} ${property.address.neighborhood} ${property.address.city} ${property.address.state}`;
+}
+
+function buildMapsUrl(query: string) {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 }
 
 function buildLocalGuideOverview(
