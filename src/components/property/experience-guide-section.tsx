@@ -134,7 +134,9 @@ export function ExperienceGuideSection({
         </div>
       ) : null}
 
-      {state.status === "ready" ? <GuideContent guide={state.guide} /> : null}
+      {state.status === "ready" ? (
+        <GuideContent guide={state.guide} location={location} />
+      ) : null}
     </section>
   );
 }
@@ -162,7 +164,13 @@ function LoadingGuide() {
   );
 }
 
-function GuideContent({ guide }: { guide: ExperienceGuide }) {
+function GuideContent({
+  guide,
+  location,
+}: {
+  guide: ExperienceGuide;
+  location: string;
+}) {
   return (
     <div className="mt-4 rounded-panel border border-line bg-surface/85 p-3 sm:p-5">
       <p className="text-sm leading-6 text-muted">{guide.welcome_message}</p>
@@ -172,12 +180,14 @@ function GuideContent({ guide }: { guide: ExperienceGuide }) {
           title="Nearby restaurants"
           icon={<Utensils className="h-4 w-4" aria-hidden />}
           places={guide.restaurants}
+          location={location}
         />
 
         <GuideGroup
           title="Nearby attractions"
           icon={<MapPin className="h-4 w-4" aria-hidden />}
           places={guide.attractions}
+          location={location}
         />
       </div>
 
@@ -196,6 +206,7 @@ function GuideContent({ guide }: { guide: ExperienceGuide }) {
                 </span>
               </div>
               <p className="mt-1 text-sm leading-5 text-muted">{service.description}</p>
+              <MapsLink placeName={service.name} location={location} />
             </li>
           ))}
         </ul>
@@ -213,10 +224,12 @@ function GuideGroup({
   title,
   icon,
   places,
+  location,
 }: {
   title: string;
   icon: ReactNode;
   places: Place[];
+  location: string;
 }) {
   return (
     <section>
@@ -234,10 +247,29 @@ function GuideGroup({
                 <span className="text-xs font-semibold text-muted">{place.distance}</span>
               </div>
               <p className="mt-1 text-sm leading-5 text-muted">{place.description}</p>
+              <MapsLink placeName={place.name} location={location} />
             </div>
           </li>
         ))}
       </ol>
     </section>
   );
+}
+
+function MapsLink({ placeName, location }: { placeName: string; location: string }) {
+  return (
+    <a
+      href={buildMapsUrl(`${placeName} ${location}`)}
+      target="_blank"
+      rel="noreferrer"
+      className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-2.5 py-1 text-xs font-semibold text-navy transition hover:border-coral hover:bg-coral-soft hover:text-coral focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50"
+    >
+      <MapPin className="h-3.5 w-3.5" aria-hidden />
+      Open in Maps
+    </a>
+  );
+}
+
+function buildMapsUrl(query: string) {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 }
