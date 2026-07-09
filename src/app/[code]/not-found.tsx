@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { SeazoneLogo } from "@/components/brand/seazone-logo";
+import { BrandLogo } from "@/components/brand/brand-logo";
 
 const exampleCodes = [
   "FLN001",
@@ -15,29 +15,29 @@ const exampleCodes = [
 
 export default function PropertyNotFound() {
   return (
-    <main className="seazone-shell flex min-h-screen items-center justify-center px-5 py-10 sm:px-8">
+    <main className="app-shell flex min-h-screen items-center justify-center px-5 py-10 sm:px-8">
       <section className="w-full max-w-xl rounded-card border border-line bg-surface p-6 shadow-card sm:p-8">
-        <SeazoneLogo />
+        <BrandLogo />
         <p className="mt-10 text-xs font-semibold uppercase tracking-[0.22em] text-coral">
-          Código não encontrado
+          Code not found
         </p>
         <h1 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-navy">
-          Não encontramos um imóvel com este código.
+          We could not find a property with this code.
         </h1>
         <p className="mt-4 leading-7 text-muted">
-          Confira o código na reserva ou no QR Code do imóvel. Se o problema
-          continuar, entre em contato com o anfitrião ou com a central da Seazone.
+          Check the property code and try again. For this demo, you can also
+          choose one of the sample guides below.
         </p>
 
         <Link
           href="/"
           className="mt-7 inline-flex rounded-field bg-coral px-5 py-3 font-semibold text-white transition hover:bg-coral-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2"
         >
-          Tentar outro código
+          Try another code
         </Link>
 
         <div className="mt-8 border-t border-line pt-6">
-          <p className="text-xs font-medium text-muted">Códigos de exemplo:</p>
+          <p className="text-xs font-medium text-muted">Demo codes:</p>
           <div className="mt-3 flex flex-wrap gap-2">
             {exampleCodes.map((code) => (
               <Link

@@ -3,19 +3,19 @@ import type { Property } from "@/lib/validators/property";
 const amenityLabels: Record<string, string> = {
   wifi: "WiFi",
   tv: "TV",
-  air_conditioning: "Ar-condicionado",
-  kitchen: "Cozinha",
-  washing_machine: "Máquina de lavar",
-  elevator: "Elevador",
-  balcony: "Sacada",
-  bbq_grill: "Churrasqueira",
-  dishwasher: "Lava-louças",
-  pool: "Piscina",
+  air_conditioning: "Air conditioning",
+  kitchen: "Kitchen",
+  washing_machine: "Washing machine",
+  elevator: "Elevator",
+  balcony: "Balcony",
+  bbq_grill: "BBQ grill",
+  dishwasher: "Dishwasher",
+  pool: "Pool",
 };
 
 const accessTypeLabels: Record<string, string> = {
-  smart_lock: "Fechadura eletrônica",
-  keybox: "Cofre de chaves",
+  smart_lock: "Smart lock",
+  keybox: "Key lockbox",
 };
 
 export function formatAmenity(key: string) {
@@ -37,7 +37,7 @@ export function formatRule(allowed: boolean, positive: string, negative: string)
 }
 
 export function formatHour(hour: string) {
-  return hour.replace(":00", "h");
+  return hour;
 }
 
 export function formatPhoneForWhatsApp(phone: string) {

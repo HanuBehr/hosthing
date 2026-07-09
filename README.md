@@ -1,14 +1,14 @@
-# Seazone Guest Guide
+# StayPilot AI
 
-Guia Digital do Hóspede personalizado por imóvel, criado para o teste técnico AI Builder da Seazone.
+AI-powered guest guides for short-term rental operators.
 
-O hóspede informa o código do imóvel, acessa o guia da estadia e usa um assistente virtual contextualizado para dúvidas sobre acesso, WiFi, regras, contato e recomendações locais.
+Guests open a property-specific guide, review arrival instructions, house rules, amenities, host contact details, AI-generated local recommendations, and chat with a streaming virtual concierge that understands the current property context.
 
-## Produção
+## Live Demo
 
-https://seazone.vercel.app
+Production is deployed on Vercel.
 
-Códigos de avaliação:
+Demo codes:
 
 - `FLN001`
 - `CMP001`
@@ -19,56 +19,48 @@ Códigos de avaliação:
 - `BCA001`
 - `GRM001`
 
-Links diretos:
-
-- https://seazone.vercel.app/FLN001
-- https://seazone.vercel.app/CMP001
-- https://seazone.vercel.app/LAG001
-- https://seazone.vercel.app/JUR001
-- https://seazone.vercel.app/STO001
-- https://seazone.vercel.app/BNU001
-- https://seazone.vercel.app/BCA001
-- https://seazone.vercel.app/GRM001
+The current dataset is being migrated from the original Brazil-focused demo to an international portfolio dataset.
 
 ## Stack
 
 - Next.js 16 App Router
+- React 19
 - TypeScript
-- Tailwind CSS
+- Tailwind CSS v4
 - PostgreSQL
 - Prisma ORM
 - OpenAI via Vercel AI SDK
 - Zod
 - Vitest
+- Vercel
 
-## Funcionalidades
+## Features
 
-- Entrada por código do imóvel na home
-- Guia personalizado em `/[code]`
-- Dados do imóvel, fotos, endereço, capacidade e comodidades
-- Instruções de acesso, WiFi, estacionamento e contato do anfitrião
-- Regras da estadia
-- Guia de experiências gerado por IA, contextualizado por endereço e persistido no banco
-- Assistente virtual com streaming de resposta
-- Recomendações locais dentro do assistente
-- Página amigável para código inexistente
+- Dynamic guest guides by property code at `/[code]`
+- Property photos, address, capacity, amenities, and host contact details
+- Arrival essentials: WiFi, access instructions, check-in, check-out, and parking
+- House rules for pets, smoking, children, babies, and events
+- AI-generated local guide persisted in PostgreSQL
+- Streaming virtual concierge with property and local-guide context
+- Friendly invalid-code page
+- Mobile-first responsive layout
 
-## Setup Local
+## Local Setup
 
-Instale as dependências:
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-Crie `.env` com base em `.env.example`:
+Create `.env` from `.env.example`:
 
 ```bash
-DATABASE_URL="postgresql://user:password@localhost:5432/seazone_guest_guide"
+DATABASE_URL="postgresql://user:password@localhost:5432/staypilot_ai"
 OPENAI_API_KEY=""
 ```
 
-Prepare o banco:
+Prepare the database:
 
 ```bash
 npm run prisma:generate
@@ -76,13 +68,13 @@ npm run prisma:migrate
 npm run db:seed
 ```
 
-Rode o projeto:
+Run locally:
 
 ```bash
 npm run dev
 ```
 
-Acesse `http://localhost:3000` e use um dos códigos de avaliação.
+Open `http://localhost:3000` and use one of the demo codes.
 
 ## Scripts
 
@@ -98,45 +90,26 @@ npm run prisma:deploy
 npm run db:seed
 ```
 
-## Estrutura
+## Project Structure
 
 ```txt
 src/app
-  Rotas, páginas e APIs
+  App Router pages and API routes
 
 src/components
-  Componentes de UI, guia e chat
+  UI, guest guide, property, and chat components
 
 src/lib
-  Prisma, validações, formatação e prompts de IA
+  Prisma client, validation, formatting, and AI prompts
 
 src/server
-  Leitura server-side de imóveis e guias
+  Server-side property and experience-guide access
 
 prisma
-  Schema, migrations e seed do PostgreSQL
+  PostgreSQL schema, migrations, and seed data
 ```
 
-## Banco E Deploy
-
-Produção usa PostgreSQL hospedado no Neon e deploy na Vercel.
-
-Variáveis usadas em produção:
-
-```bash
-NEON_POSTGRES_PRISMA_URL="..."
-NEON_DATABASE_URL="..."
-OPENAI_API_KEY="..."
-```
-
-Para aplicar schema e dados em um novo banco:
-
-```bash
-npm run prisma:deploy
-npm run db:seed
-```
-
-## Testes
+## Verification
 
 ```bash
 npm run lint

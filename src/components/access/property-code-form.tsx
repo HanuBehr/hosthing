@@ -37,10 +37,10 @@ export function PropertyCodeForm() {
         htmlFor="property-code"
         className="block text-sm font-semibold text-navy"
       >
-        Código do imóvel
+        Property code
       </label>
       <p id="property-code-help" className="mt-1.5 text-sm leading-6 text-muted">
-        Você encontra esse código na reserva ou no QR Code do imóvel.
+        Use one of the demo codes or the code attached to a reservation.
       </p>
 
       <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-stretch">
@@ -48,7 +48,7 @@ export function PropertyCodeForm() {
           id="property-code"
           value={propertyCode}
           onChange={(event) => setPropertyCode(event.target.value)}
-          placeholder="Ex: FLN001"
+          placeholder="Example: FLN001"
           className="h-14 min-w-0 flex-1 rounded-field border border-line bg-surface px-4 text-base font-semibold tracking-wide text-navy outline-none transition placeholder:font-medium placeholder:text-muted/70 hover:border-line-cool focus-visible:border-coral focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2"
           autoComplete="off"
           inputMode="text"
@@ -60,15 +60,15 @@ export function PropertyCodeForm() {
           className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-field bg-coral px-6 font-semibold text-white transition hover:bg-coral-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:min-w-36"
         >
           {isPending ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> : null}
-          Continuar
+          Continue
         </button>
       </div>
 
       <div
         id="property-code-examples"
-        className="seazone-scroll -mx-4 mt-4 flex items-center gap-2 overflow-x-auto px-4 pb-1 text-xs text-muted sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0"
+        className="app-scroll -mx-4 mt-4 flex items-center gap-2 overflow-x-auto px-4 pb-1 text-xs text-muted sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0"
       >
-        <span className="shrink-0">Exemplos para teste:</span>
+        <span className="shrink-0">Demo codes:</span>
         {exampleCodes.map((code) => (
           <button
             key={code}

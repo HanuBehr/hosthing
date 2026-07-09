@@ -27,15 +27,15 @@ export function HouseRules({ property }: { property: Property }) {
     {
       icon: PawPrint,
       allowed: rules.allow_pet,
-      text: formatRule(rules.allow_pet, "Pets permitidos", "Pets não permitidos"),
+      text: formatRule(rules.allow_pet, "Pets allowed", "Pets not allowed"),
     },
     {
       icon: PartyPopper,
       allowed: rules.events_permitted,
       text: formatRule(
         rules.events_permitted,
-        "Eventos permitidos",
-        "Festas e eventos não permitidos",
+        "Events allowed",
+        "Parties and events are not allowed",
       ),
     },
     {
@@ -43,8 +43,8 @@ export function HouseRules({ property }: { property: Property }) {
       allowed: rules.suitable_for_children,
       text: formatRule(
         rules.suitable_for_children,
-        "Adequado para crianças",
-        "Não indicado para crianças",
+        "Suitable for children",
+        "Not recommended for children",
       ),
     },
     {
@@ -52,8 +52,8 @@ export function HouseRules({ property }: { property: Property }) {
       allowed: rules.suitable_for_babies,
       text: formatRule(
         rules.suitable_for_babies,
-        "Adequado para bebês",
-        "Não indicado para bebês",
+        "Suitable for babies",
+        "Not recommended for babies",
       ),
     },
     {
@@ -61,18 +61,18 @@ export function HouseRules({ property }: { property: Property }) {
       allowed: rules.smoking_permitted,
       text: formatRule(
         rules.smoking_permitted,
-        "Permitido fumar",
-        "Não é permitido fumar",
+        "Smoking allowed",
+        "Smoking is not allowed",
       ),
     },
   ];
 
   return (
     <section
-      id="regras"
+      id="rules"
       className="scroll-mt-24 border-b border-line bg-transparent pb-6 sm:pb-8"
     >
-      <SectionTitle eyebrow="Regras da estadia" title="Políticas do imóvel" />
+      <SectionTitle eyebrow="House rules" title="Stay policies" />
       <ul className="mt-4 grid gap-2.5 sm:mt-5 sm:gap-3 sm:grid-cols-2">
         {items.map((rule) => {
           const Icon = rule.icon;

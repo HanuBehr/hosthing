@@ -640,13 +640,13 @@ export async function POST(request: Request) {
   const body = chatRequestSchema.safeParse(await request.json());
 
   if (!body.success) {
-    return Response.json({ error: "Mensagem inválida." }, { status: 400 });
+    return Response.json({ error: "Invalid message." }, { status: 400 });
   }
 
   const property = await getPropertyByCode(body.data.propertyCode);
 
   if (!property) {
-    return Response.json({ error: "Imóvel não encontrado." }, { status: 404 });
+    return Response.json({ error: "Property not found." }, { status: 404 });
   }
 
   const guide = await getExperienceGuideForProperty(property.id).catch(() => null);
@@ -688,38 +688,38 @@ function buildFallbackAnswer(
   const normalized = normalizeMessage(message);
   const fallbackGuide = fallbackLocalGuides[property.code];
 
-  if (normalized.includes("guia")) {
+  if (normalized.includes("guide") || normalized.includes("guia")) {
     return buildLocalGuideOverview(property, guide, fallbackGuide);
   }
 
   if (normalized.includes("wifi") || normalized.includes("wi-fi") || normalized.includes("senha")) {
-    return `A rede WiFi é ${property.operational.wifi_network} e a senha é ${property.operational.wifi_password}.`;
+    return `The WiFi network is ${property.operational.wifi_network} and the password is ${property.operational.wifi_password}.`;
   }
 
   if (normalized.includes("cachorro") || normalized.includes("pet") || normalized.includes("animal")) {
     return property.rules.allow_pet
-      ? "Sim, este imóvel permite animais de estimação."
-      : "Infelizmente este imóvel não permite animais de estimação.";
+      ? "Yes, this property allows pets."
+      : "Unfortunately, this property does not allow pets.";
   }
 
   if (normalized.includes("check-in") || normalized.includes("checkin") || normalized.includes("entrar")) {
-    return `O check-in pode ser feito a partir das ${formatHour(property.rules.check_in_time)}. ${property.operational.property_access_instructions}`;
+    return `Check-in starts at ${formatHour(property.rules.check_in_time)}. ${property.operational.property_access_instructions}`;
   }
 
   if (isHistoryIntent(normalized)) {
     if (fallbackGuide?.localContext) {
-      return `${fallbackGuide.localContext} Esta resposta está contextualizada para o imóvel ${property.name}, em ${property.address.neighborhood}, ${property.address.city}/${property.address.state}.`;
+      return `${fallbackGuide.localContext} This answer is scoped to ${property.name}, in ${property.address.neighborhood}, ${property.address.city}/${property.address.state}.`;
     }
 
-    return `Não tenho um resumo histórico seguro cadastrado para ${property.address.city}/${property.address.state}, mas posso ajudar com informações práticas da estadia neste imóvel.`;
+    return `I do not have a reliable local history summary for ${property.address.city}/${property.address.state}, but I can help with practical stay information for this property.`;
   }
 
   if (isTypicalFoodIntent(normalized)) {
     if (fallbackGuide?.typicalFoodTip) {
-      return `${fallbackGuide.typicalFoodTip} Sugestões com rota: ${formatPlaces(fallbackGuide.restaurants, property)}.`;
+      return `${fallbackGuide.typicalFoodTip} Suggested places with map links: ${formatPlaces(fallbackGuide.restaurants, property)}.`;
     }
 
-    return `Não tenho uma recomendação típica segura cadastrada para ${property.address.city}/${property.address.state}. Posso ajudar com restaurantes próximos, mercado, farmácia, acesso e regras do imóvel.`;
+    return `I do not have a reliable regional-food recommendation for ${property.address.city}/${property.address.state}. I can help with nearby restaurants, markets, pharmacies, access, and house rules.`;
   }
 
   if (isLocationIntent(normalized)) {
@@ -728,54 +728,54 @@ function buildFallbackAnswer(
 
   if (isTransportIntent(normalized)) {
     if (fallbackGuide?.transportTip) {
-      return `${fallbackGuide.transportTip} Para sair do imóvel, use como referência ${property.address.neighborhood}, ${property.address.city}/${property.address.state}. Rota no Google Maps: ${buildMapsUrl(getPropertyLocationQuery(property))}.`;
+      return `${fallbackGuide.transportTip} Use ${property.address.neighborhood}, ${property.address.city}/${property.address.state} as the starting point. Google Maps: ${buildMapsUrl(getPropertyLocationQuery(property))}.`;
     }
 
-    return `Para deslocamento, use como referência ${property.address.neighborhood}, ${property.address.city}/${property.address.state}. O tempo pode variar conforme trânsito e horário.`;
+    return `For transport, use ${property.address.neighborhood}, ${property.address.city}/${property.address.state} as the reference point. Travel time can vary by traffic and time of day.`;
   }
 
   if (isAirportIntent(normalized)) {
     if (fallbackGuide?.airport) {
-      return `O aeroporto mais prático para este imóvel em ${property.address.neighborhood}, ${property.address.city}/${property.address.state} é ${fallbackGuide.airport.name}, a ${fallbackGuide.airport.distance}; o trajeto costuma levar ${fallbackGuide.airport.travelTime}. Confira a rota no Google Maps: ${buildMapsUrl(`${fallbackGuide.airport.name} até ${getPropertyLocationQuery(property)}`)}.`;
+      return `The most practical airport for this property in ${property.address.neighborhood}, ${property.address.city}/${property.address.state} is ${fallbackGuide.airport.name}, about ${fallbackGuide.airport.distance} away; the trip usually takes ${fallbackGuide.airport.travelTime}. Check the route on Google Maps: ${buildMapsUrl(`${fallbackGuide.airport.name} to ${getPropertyLocationQuery(property)}`)}.`;
     }
 
-    return `Não tenho uma distância de aeroporto cadastrada para este imóvel. Para evitar informação errada, confira a rota a partir de ${property.address.neighborhood}, ${property.address.city}/${property.address.state} no Google Maps.`;
+    return `I do not have a reliable airport distance for this property. To avoid incorrect information, check the route from ${property.address.neighborhood}, ${property.address.city}/${property.address.state} on Google Maps.`;
   }
 
   if (isRestaurantIntent(normalized)) {
     if (guide?.restaurants.length) {
-      return `Para comer perto deste imóvel em ${property.address.neighborhood}, ${property.address.city}/${property.address.state}, eu consideraria ${formatPlaces(guide.restaurants.slice(0, 3), property)}. Essas opções fazem sentido pela proximidade com o endereço da estadia; confira horários e rota antes de sair.`;
+      return `For food near this property in ${property.address.neighborhood}, ${property.address.city}/${property.address.state}, I would consider ${formatPlaces(guide.restaurants.slice(0, 3), property)}. These options make sense for the stay location; check hours and route before leaving.`;
     }
 
     if (fallbackGuide?.restaurants.length) {
-      return `Para comer perto deste imóvel em ${property.address.neighborhood}, ${property.address.city}/${property.address.state}, eu consideraria ${formatPlaces(fallbackGuide.restaurants, property)}. São opções próximas ou práticas para a região da estadia; confira horários e rota antes de sair.`;
+      return `For food near this property in ${property.address.neighborhood}, ${property.address.city}/${property.address.state}, I would consider ${formatPlaces(fallbackGuide.restaurants, property)}. These are nearby or practical options for the stay area; check hours and route before leaving.`;
     }
 
-    return "Ainda não tenho restaurantes cadastrados para este imóvel. Posso ajudar com WiFi, acesso, regras e contato do anfitrião.";
+    return "I do not have restaurants saved for this property yet. I can help with WiFi, access, rules, and host contact.";
   }
 
   if (isEssentialIntent(normalized)) {
     if (guide?.essentials.length) {
-      return `Para itens essenciais perto deste imóvel, considere ${formatPlaces(guide.essentials.slice(0, 3), property)}.`;
+      return `For essentials near this property, consider ${formatPlaces(guide.essentials.slice(0, 3), property)}.`;
     }
 
     if (fallbackGuide?.essentials.length) {
-      return `Para itens essenciais perto deste imóvel, considere ${formatPlaces(fallbackGuide.essentials, property)}.`;
+      return `For essentials near this property, consider ${formatPlaces(fallbackGuide.essentials, property)}.`;
     }
 
-    return "Ainda não tenho mercados ou farmácias cadastrados para este imóvel. Em caso de urgência, fale com o anfitrião.";
+    return "I do not have markets or pharmacies saved for this property yet. For urgent issues, contact the host.";
   }
 
   if (isAttractionIntent(normalized)) {
     if (guide?.attractions.length) {
-      return `Boas opções por perto, considerando ${property.address.neighborhood}, ${property.address.city}/${property.address.state}: ${formatPlaces(guide.attractions.slice(0, 3), property)}.`;
+      return `Good nearby options around ${property.address.neighborhood}, ${property.address.city}/${property.address.state}: ${formatPlaces(guide.attractions.slice(0, 3), property)}.`;
     }
 
     if (fallbackGuide?.attractions.length) {
-      return `Boas opções por perto, considerando ${property.address.neighborhood}, ${property.address.city}/${property.address.state}: ${formatPlaces(fallbackGuide.attractions, property)}.`;
+      return `Good nearby options around ${property.address.neighborhood}, ${property.address.city}/${property.address.state}: ${formatPlaces(fallbackGuide.attractions, property)}.`;
     }
 
-    return "Ainda não tenho atrações cadastradas para este imóvel. Posso ajudar com WiFi, acesso, regras e contato do anfitrião.";
+    return "I do not have attractions saved for this property yet. I can help with WiFi, access, rules, and host contact.";
   }
 
   if (isSeasonalIntent(normalized)) {
@@ -787,18 +787,18 @@ function buildFallbackAnswer(
       return fallbackGuide.seasonalTips;
     }
 
-    return "Ainda não tenho uma dica sazonal cadastrada para este imóvel.";
+    return "I do not have a seasonal tip saved for this property yet.";
   }
 
   if (isPublicLocalIntent(normalized)) {
     return buildLocalPublicAnswer(property, fallbackGuide);
   }
 
-  if (normalized.includes("telefone") || normalized.includes("anfitri") || normalized.includes("contato")) {
-    return `O anfitrião é ${property.host.name}. O telefone é ${property.host.phone}.`;
+  if (normalized.includes("phone") || normalized.includes("host") || normalized.includes("contact") || normalized.includes("telefone") || normalized.includes("anfitri") || normalized.includes("contato")) {
+    return `The host is ${property.host.name}. The phone number is ${property.host.phone}.`;
   }
 
-  return "Posso te ajudar com WiFi, acesso ao imóvel, regras da estadia, contato do anfitrião, restaurantes, atrações e serviços próximos.";
+  return "I can help with WiFi, property access, house rules, host contact, restaurants, attractions, and nearby services.";
 }
 
 function normalizeMessage(message: string) {
@@ -809,31 +809,31 @@ function normalizeMessage(message: string) {
 }
 
 function isRestaurantIntent(message: string) {
-  return ["restaurante", "comer", "jantar", "almocar", "almoco", "comida"].some(
+  return ["restaurant", "food", "eat", "dinner", "lunch", "restaurante", "comer", "jantar", "almocar", "almoco", "comida"].some(
     (term) => message.includes(term),
   );
 }
 
 function isAttractionIntent(message: string) {
-  return ["o que fazer", "passeio", "atracao", "turismo", "praia", "visitar", "perto"].some(
+  return ["what to do", "attraction", "tour", "tourism", "beach", "visit", "nearby", "around", "o que fazer", "passeio", "atracao", "turismo", "praia", "visitar", "perto"].some(
     (term) => message.includes(term),
   );
 }
 
 function isEssentialIntent(message: string) {
-  return ["mercado", "supermercado", "farmacia", "hospital", "essencial"].some(
+  return ["market", "supermarket", "pharmacy", "hospital", "essential", "mercado", "supermercado", "farmacia", "hospital", "essencial"].some(
     (term) => message.includes(term),
   );
 }
 
 function isHistoryIntent(message: string) {
-  return ["historia", "historico", "cultura", "colonizacao", "imigracao", "oktoberfest"].some(
+  return ["history", "historic", "culture", "colonization", "immigration", "historia", "historico", "cultura", "colonizacao", "imigracao", "oktoberfest"].some(
     (term) => message.includes(term),
   );
 }
 
 function isTypicalFoodIntent(message: string) {
-  return ["alemao", "alema", "alemaes", "tipico", "tipica", "culinaria", "comida regional", "cervejaria", "chope"].some(
+  return ["typical", "regional food", "cuisine", "brewery", "beer", "alemao", "alema", "alemaes", "tipico", "tipica", "culinaria", "comida regional", "cervejaria", "chope"].some(
     (term) => message.includes(term),
   );
 }
@@ -841,12 +841,17 @@ function isTypicalFoodIntent(message: string) {
 function isLocationIntent(message: string) {
   return [
     "onde fica",
+    "where is",
+    "location",
     "localizacao",
     "localização",
     "bairro",
     "regiao",
     "região",
     "o que tem perto",
+    "what is nearby",
+    "near the apartment",
+    "near the house",
     "perto do apartamento",
     "perto da casa",
     "arredores",
@@ -854,7 +859,7 @@ function isLocationIntent(message: string) {
 }
 
 function isTransportIntent(message: string) {
-  return ["uber", "taxi", "táxi", "transporte", "onibus", "ônibus", "carro", "deslocamento"].some(
+  return ["uber", "taxi", "rideshare", "transport", "bus", "car", "getting around", "táxi", "transporte", "onibus", "ônibus", "carro", "deslocamento"].some(
     (term) => message.includes(term),
   );
 }
@@ -864,7 +869,7 @@ function isAirportIntent(message: string) {
 }
 
 function isSeasonalIntent(message: string) {
-  return ["dica", "sazonal", "temporada", "chuva", "frio", "calor"].some(
+  return ["tip", "seasonal", "season", "rain", "cold", "hot", "weather", "dica", "sazonal", "temporada", "chuva", "frio", "calor"].some(
     (term) => message.includes(term),
   );
 }
@@ -905,15 +910,15 @@ function buildLocalPublicAnswer(
   fallbackGuide: (typeof fallbackLocalGuides)[string] | undefined,
 ) {
   if (!fallbackGuide) {
-    return `Posso ajudar com perguntas públicas sobre ${property.address.neighborhood}, ${property.address.city}/${property.address.state}, além de acesso, WiFi, regras e contato deste imóvel.`;
+    return `I can help with public local questions about ${property.address.neighborhood}, ${property.address.city}/${property.address.state}, plus access, WiFi, rules, and host contact for this property.`;
   }
 
   return [
     fallbackGuide.localContext,
-    `Para comer por perto: ${formatPlaces(fallbackGuide.restaurants, property)}.`,
-    `Para passear ou se localizar: ${formatPlaces(fallbackGuide.attractions, property)}.`,
-    `Para deslocamento: ${fallbackGuide.transportTip}`,
-    `Se a pergunta envolver horário, lotação, preço ou condição do dia, confira no Google Maps ou site oficial antes de sair.`,
+    `For food nearby: ${formatPlaces(fallbackGuide.restaurants, property)}.`,
+    `For attractions or orientation: ${formatPlaces(fallbackGuide.attractions, property)}.`,
+    `For transport: ${fallbackGuide.transportTip}`,
+    `If the question involves hours, crowding, prices, or same-day conditions, check Google Maps or the official website before leaving.`,
   ].join(" ");
 }
 
@@ -955,26 +960,26 @@ function buildLocalGuideOverview(
 ) {
   if (guide) {
     return [
-      `Este imóvel fica em ${property.address.neighborhood}, ${property.address.city}/${property.address.state}.`,
-      `Para comer por perto: ${formatPlaces(guide.restaurants.slice(0, 3), property)}.`,
-      `Para passear: ${formatPlaces(guide.attractions.slice(0, 3), property)}.`,
-      `Serviços úteis: ${formatPlaces(guide.essentials.slice(0, 3), property)}.`,
+      `This property is in ${property.address.neighborhood}, ${property.address.city}/${property.address.state}.`,
+      `For food nearby: ${formatPlaces(guide.restaurants.slice(0, 3), property)}.`,
+      `For things to do: ${formatPlaces(guide.attractions.slice(0, 3), property)}.`,
+      `Useful services: ${formatPlaces(guide.essentials.slice(0, 3), property)}.`,
       guide.seasonal_tips,
     ].join(" ");
   }
 
   if (fallbackGuide) {
     return [
-      `Este imóvel fica em ${property.address.neighborhood}, ${property.address.city}/${property.address.state}.`,
-      `Para comer por perto: ${formatPlaces(fallbackGuide.restaurants, property)}.`,
-      `Para passear: ${formatPlaces(fallbackGuide.attractions, property)}.`,
-      `Serviços úteis: ${formatPlaces(fallbackGuide.essentials, property)}.`,
+      `This property is in ${property.address.neighborhood}, ${property.address.city}/${property.address.state}.`,
+      `For food nearby: ${formatPlaces(fallbackGuide.restaurants, property)}.`,
+      `For things to do: ${formatPlaces(fallbackGuide.attractions, property)}.`,
+      `Useful services: ${formatPlaces(fallbackGuide.essentials, property)}.`,
       fallbackGuide.transportTip,
       fallbackGuide.seasonalTips,
     ].join(" ");
   }
 
-  return "Ainda não tenho recomendações locais cadastradas para este imóvel. Posso ajudar com WiFi, acesso, regras e contato do anfitrião.";
+  return "I do not have local recommendations saved for this property yet. I can help with WiFi, access, rules, and host contact.";
 }
 
 function getFallbackExperienceGuide(code: string): ExperienceGuide | null {
@@ -984,7 +989,7 @@ function getFallbackExperienceGuide(code: string): ExperienceGuide | null {
 
   return {
     welcome_message:
-      "Estas são recomendações locais para apoiar a estadia neste imóvel.",
+      "These are local recommendations to support your stay at this property.",
     restaurants: fallbackGuide.restaurants,
     attractions: fallbackGuide.attractions,
     essentials: fallbackGuide.essentials,
@@ -1036,7 +1041,7 @@ function streamWithFallback(
         controller.enqueue(
           encoder.encode(
             emittedText
-              ? "\n\nNão consegui completar a resposta agora."
+              ? "\n\nI could not complete the answer right now."
               : fallbackText,
           ),
         );

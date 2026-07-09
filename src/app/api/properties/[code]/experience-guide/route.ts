@@ -18,7 +18,7 @@ export async function POST(_request: Request, { params }: RouteParams) {
   const property = await getPropertyByCode(code);
 
   if (!property) {
-    return Response.json({ error: "Imóvel não encontrado." }, { status: 404 });
+    return Response.json({ error: "Property not found." }, { status: 404 });
   }
 
   const existingGuide = await prisma.experienceGuide.findUnique({
@@ -50,11 +50,11 @@ export async function POST(_request: Request, { params }: RouteParams) {
       where: { propertyId: property.id },
       data: {
         status: "FAILED",
-        errorMessage: "OPENAI_API_KEY não configurada.",
+        errorMessage: "OPENAI_API_KEY is not configured.",
       },
     });
     return Response.json(
-      { error: "OPENAI_API_KEY não configurada." },
+      { error: "OPENAI_API_KEY is not configured." },
       { status: 500 },
     );
   }
@@ -75,7 +75,7 @@ export async function POST(_request: Request, { params }: RouteParams) {
     return Response.json({ guide });
   } catch (error) {
     const message =
-      error instanceof Error ? error.message : "Falha inesperada ao gerar guia.";
+      error instanceof Error ? error.message : "Unexpected guide generation failure.";
 
     await prisma.experienceGuide.update({
       where: { propertyId: property.id },

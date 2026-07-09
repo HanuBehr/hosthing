@@ -1,12 +1,9 @@
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------ *
- * Seazone Guest Guide — design tokens
- * One brand language across every screen: deep navy, warm off-white
- * surfaces, coral as the single primary action, orange as a sparing
- * support accent. No cool "dashboard" cyan anywhere.
- * Registered in @theme so Tailwind generates real utilities
- * (bg-navy, text-coral, border-line, rounded-card, shadow-card, …).
+ * StayPilot AI design tokens.
+ * A premium hospitality palette: deep navy, warm off-white surfaces,
+ * coral as the primary action, and orange as a sparing support accent.
  * ------------------------------------------------------------------ */
 @theme {
   /* Brand — navy */
@@ -78,27 +75,27 @@ textarea {
 }
 
 /* Warm page wash used on light screens (landing, invalid code). */
-.seazone-shell {
+.app-shell {
   background:
     radial-gradient(circle at 8% 6%, rgba(255, 138, 28, 0.07), transparent 22rem),
     radial-gradient(circle at 94% 12%, rgba(255, 107, 95, 0.07), transparent 20rem),
     linear-gradient(160deg, var(--color-cream) 0%, var(--color-sand) 100%);
 }
 
-.seazone-card-shadow {
+.app-card-shadow {
   box-shadow: var(--shadow-card);
 }
 
 /* Thin, on-brand scrollbar for inner scroll areas (chat, chip rows). */
-.seazone-scroll {
+.app-scroll {
   scrollbar-width: thin;
   scrollbar-color: rgba(6, 36, 61, 0.2) transparent;
 }
-.seazone-scroll::-webkit-scrollbar {
+.app-scroll::-webkit-scrollbar {
   height: 6px;
   width: 6px;
 }
-.seazone-scroll::-webkit-scrollbar-thumb {
+.app-scroll::-webkit-scrollbar-thumb {
   background: rgba(6, 36, 61, 0.16);
   border-radius: 9999px;
 }

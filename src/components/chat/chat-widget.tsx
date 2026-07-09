@@ -10,14 +10,14 @@ type ChatMessage = {
 };
 
 const suggestions = [
-  "Qual a senha do WiFi?",
-  "O que fazer por perto?",
-  "Restaurantes próximos",
-  "Mercado ou farmácia perto?",
+  "What is the WiFi password?",
+  "What can I do nearby?",
+  "Nearby restaurants",
+  "Market or pharmacy nearby?",
 ];
 
 const initialAssistantMessage =
-  "Olá! Sou o assistente virtual deste imóvel. Posso responder sobre WiFi, acesso, regras da estadia, restaurantes e recomendações próximas.";
+  "Hi! I am the virtual concierge for this property. I can help with WiFi, access, house rules, restaurants, and nearby recommendations.";
 
 export function ChatWidget({
   propertyCode,
@@ -92,7 +92,7 @@ export function ChatWidget({
       });
 
       if (!response.ok || !response.body) {
-        throw new Error("Não foi possível falar com o assistente agora.");
+        throw new Error("The assistant is unavailable right now.");
       }
 
       const reader = response.body.getReader();
@@ -114,7 +114,7 @@ export function ChatWidget({
           content:
             error instanceof Error
               ? error.message
-              : "Erro inesperado no assistente.",
+              : "Unexpected assistant error.",
         },
       ]);
     } finally {
@@ -137,7 +137,7 @@ export function ChatWidget({
               <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-field bg-orange">
                 <Image
                   src="/assistant-avatar.png"
-                  alt="Assistente virtual Seazone"
+                  alt="StayPilot AI concierge"
                   fill
                   sizes="40px"
                   className="object-cover"
@@ -145,10 +145,10 @@ export function ChatWidget({
               </span>
               <div className="min-w-0">
                 <p className="font-semibold tracking-[-0.01em]">
-                  Assistente virtual
+                  Virtual concierge
                 </p>
                 <p className="truncate text-xs text-white/60">
-                  Código do imóvel: {propertyCode}
+                  Property code: {propertyCode}
                 </p>
               </div>
             </div>
@@ -164,7 +164,7 @@ export function ChatWidget({
 
           <div
             ref={scrollRef}
-            className="seazone-scroll flex-1 space-y-2.5 overflow-y-auto bg-cream p-3 sm:space-y-3 sm:p-4"
+            className="app-scroll flex-1 space-y-2.5 overflow-y-auto bg-cream p-3 sm:space-y-3 sm:p-4"
             role="log"
             aria-live="polite"
             aria-relevant="additions text"
@@ -188,7 +188,7 @@ export function ChatWidget({
           </div>
 
           <div className="border-t border-line bg-surface p-3 sm:p-4">
-            <div className="seazone-scroll -mx-3 mb-3 flex gap-2 overflow-x-auto px-3 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
+            <div className="app-scroll -mx-3 mb-3 flex gap-2 overflow-x-auto px-3 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
               {suggestions.map((suggestion) => (
                 <button
                   type="button"
@@ -203,21 +203,21 @@ export function ChatWidget({
             </div>
             <form onSubmit={handleSubmit} className="flex gap-2">
               <label htmlFor="chat-input" className="sr-only">
-                Pergunte sobre sua estadia
+                Ask about your stay
               </label>
               <input
                 id="chat-input"
                 ref={inputRef}
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
-                placeholder="Pergunte sobre sua estadia"
+                placeholder="Ask about your stay"
                 className="min-w-0 flex-1 rounded-field border border-line bg-cream px-3 py-2.5 text-base text-ink outline-none transition placeholder:text-muted focus:border-coral focus:bg-surface sm:px-4 sm:py-3"
               />
               <button
                 type="submit"
                 disabled={isStreaming || !input.trim()}
                 className="flex shrink-0 items-center justify-center rounded-field bg-coral px-3 text-white transition hover:bg-coral-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 sm:px-3.5"
-                aria-label="Enviar mensagem"
+                aria-label="Send message"
               >
                 <Send className="h-5 w-5" aria-hidden />
               </button>
@@ -237,7 +237,7 @@ export function ChatWidget({
               }}
               className="relative max-w-[230px] rounded-panel border border-line bg-surface px-3.5 py-2.5 text-left text-sm font-semibold leading-5 text-navy shadow-pop transition hover:-translate-y-0.5 hover:border-coral focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 sm:max-w-[260px] sm:px-4 sm:py-3"
             >
-              Precisa de ajuda com WiFi, acesso ou dicas locais?
+              Need help with WiFi, access, or local tips?
               <span className="absolute -bottom-1.5 right-6 h-3 w-3 rotate-45 border-b border-r border-line bg-surface" />
             </button>
           ) : null}
@@ -249,7 +249,7 @@ export function ChatWidget({
               setHasUnreadIntro(false);
             }}
             className="relative flex h-14 w-14 items-center justify-center gap-2 rounded-full bg-navy font-semibold text-white shadow-pop transition hover:-translate-y-0.5 hover:bg-navy-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/60 focus-visible:ring-offset-2 sm:h-auto sm:w-auto sm:px-4 sm:py-3"
-            aria-label="Abrir assistente virtual"
+            aria-label="Open virtual concierge"
           >
             {hasUnreadIntro ? (
               <span className="absolute -right-1.5 -top-1.5 grid h-6 min-w-6 place-items-center rounded-full border-2 border-surface bg-red-600 px-1.5 text-xs font-bold leading-none text-white">
@@ -265,7 +265,7 @@ export function ChatWidget({
                 className="object-cover"
               />
             </span>
-            <span className="hidden sm:inline">Assistente virtual</span>
+            <span className="hidden sm:inline">Virtual concierge</span>
           </button>
         </div>
       ) : null}

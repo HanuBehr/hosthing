@@ -16,7 +16,7 @@ export async function generateExperienceGuide(
     schema: experienceGuideSchema,
     schemaName: "ExperienceGuide",
     schemaDescription:
-      "Guia local personalizado para um imovel da Seazone.",
+      "Personalized local guide for a short-term rental property.",
     prompt: buildExperienceGuidePrompt(property),
   });
 

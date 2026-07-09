@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { BedDouble, MapPin, ShowerHead, Users } from "lucide-react";
 
-import { SeazoneLogo } from "@/components/brand/seazone-logo";
+import { BrandLogo } from "@/components/brand/brand-logo";
 import { ChatWidget } from "@/components/chat/chat-widget";
 import { ArrivalEssentials } from "@/components/property/arrival-essentials";
 import { ExperienceGuideSection } from "@/components/property/experience-guide-section";
@@ -21,12 +21,12 @@ export function PropertyGuide({
     heroImage?.startsWith("/") || heroImage?.includes("upload.wikimedia.org") || false;
 
   return (
-    <main className="seazone-shell min-h-screen pb-28 text-ink sm:pb-24">
+    <main className="app-shell min-h-screen pb-28 text-ink sm:pb-24">
       <section className="relative isolate overflow-hidden bg-navy text-white">
         {heroImage ? (
           <Image
             src={heroImage}
-            alt={`Foto do imóvel ${property.name}`}
+            alt={`Photo of ${property.name}`}
             fill
             priority
             unoptimized={shouldSkipOptimization}
@@ -40,10 +40,10 @@ export function PropertyGuide({
           <header className="flex items-center">
             <Link
               href="/"
-              aria-label="Voltar para a página inicial"
+              aria-label="Back to home"
               className="inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/60 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
             >
-              <SeazoneLogo />
+              <BrandLogo className="text-white" />
             </Link>
           </header>
 
@@ -64,17 +64,17 @@ export function PropertyGuide({
             <dl className="mt-6 grid grid-cols-3 gap-2 sm:mt-8 sm:max-w-2xl sm:gap-3">
               <HeroStat
                 icon={<Users className="h-4 w-4" aria-hidden />}
-                label="Hóspedes"
+                label="Guests"
                 value={String(property.guestCapacity)}
               />
               <HeroStat
                 icon={<BedDouble className="h-4 w-4" aria-hidden />}
-                label="Quartos"
+                label="Bedrooms"
                 value={String(property.bedroomQuantity)}
               />
               <HeroStat
                 icon={<ShowerHead className="h-4 w-4" aria-hidden />}
-                label={property.bathroomQuantity > 1 ? "Banheiros" : "Banheiro"}
+                label={property.bathroomQuantity > 1 ? "Bathrooms" : "Bathroom"}
                 value={String(property.bathroomQuantity)}
               />
             </dl>
@@ -83,11 +83,11 @@ export function PropertyGuide({
       </section>
 
       <nav className="sticky top-0 z-30 border-b border-line bg-cream/85 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl min-w-0 gap-1.5 overflow-x-auto seazone-scroll px-4 py-2.5 sm:gap-2 sm:px-8 sm:py-3 lg:px-10">
-          <NavPill href="#acesso">Acesso</NavPill>
-          <NavPill href="#regras">Regras</NavPill>
-          <NavPill href="#experiencias">Experiências</NavPill>
-          <NavPill href="#contato">Contato</NavPill>
+        <div className="app-scroll mx-auto flex max-w-7xl min-w-0 gap-1.5 overflow-x-auto px-4 py-2.5 sm:gap-2 sm:px-8 sm:py-3 lg:px-10">
+          <NavPill href="#access">Access</NavPill>
+          <NavPill href="#rules">Rules</NavPill>
+          <NavPill href="#experiences">Local Guide</NavPill>
+          <NavPill href="#contact">Contact</NavPill>
         </div>
       </nav>
 

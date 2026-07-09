@@ -13,17 +13,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Guia Digital do Hóspede | Seazone",
+  title: "StayPilot AI | Smart Guest Guides",
   description:
-    "Guia personalizado com informações da estadia, experiências locais e assistente virtual.",
+    "AI-powered guest guides with property details, local recommendations, and a streaming concierge assistant.",
   icons: {
     icon: "/icon.png",
     shortcut: "/icon.png",
     apple: "/icon.png",
   },
   robots: {
-    index: false,
-    follow: false,
+    index: true,
+    follow: true,
   },
 };
 
@@ -34,7 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="pt-BR"
+      lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>

@@ -10,12 +10,12 @@ import { propertyFixture } from "@/test/fixtures";
 
 describe("format helpers", () => {
   it("formats check-in and check-out hours for guests", () => {
-    expect(formatHour("15:00")).toBe("15h");
+    expect(formatHour("15:00")).toBe("15:00");
   });
 
   it("maps boolean rules to guest-friendly labels", () => {
-    expect(formatRule(false, "Permite pets", "Não permite pets")).toBe(
-      "Não permite pets",
+    expect(formatRule(false, "Pets allowed", "Pets not allowed")).toBe(
+      "Pets not allowed",
     );
   });
 
@@ -29,7 +29,7 @@ describe("format helpers", () => {
     expect(getEnabledAmenities(propertyFixture)).toEqual([
       "WiFi",
       "TV",
-      "Ar-condicionado",
+      "Air conditioning",
     ]);
   });
 });

@@ -9,24 +9,24 @@ export function ArrivalEssentials({ property }: { property: Property }) {
   const { operational, rules } = property;
 
   const parkingValue = operational.has_parking_spot
-    ? operational.parking_spot_identifier ?? "Disponível"
-    : "Não disponível";
+    ? operational.parking_spot_identifier ?? "Available"
+    : "Not available";
 
   return (
     <section
-      id="acesso"
+      id="access"
       className="scroll-mt-24 border-b border-line bg-transparent pb-6 sm:pb-8"
     >
       <div className="space-y-1.5">
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-coral">
-          Para sua chegada
+          Arrival essentials
         </p>
         <h2 className="text-xl font-semibold tracking-[-0.02em] text-navy sm:text-2xl">
-          O essencial para entrar e se conectar
+          Everything needed to arrive and connect
         </h2>
         <p className="text-sm leading-6 text-muted">
-          Tudo que você precisa nos primeiros minutos: horários, WiFi, acesso ao
-          imóvel e estacionamento.
+          Check-in timing, WiFi, property access, and parking details for the
+          first few minutes of the stay.
         </p>
       </div>
 
@@ -34,28 +34,28 @@ export function ArrivalEssentials({ property }: { property: Property }) {
         <Tile
           icon={<Clock3 className="h-5 w-5" />}
           label="Check-in"
-          value={`A partir das ${formatHour(rules.check_in_time)}`}
+          value={`From ${formatHour(rules.check_in_time)}`}
         />
         <Tile
           icon={<LogOut className="h-5 w-5" />}
           label="Check-out"
-          value={`Até ${formatHour(rules.check_out_time)}`}
+          value={`Until ${formatHour(rules.check_out_time)}`}
         />
 
         <Tile icon={<Wifi className="h-5 w-5" />} label="WiFi">
           <dl className="mt-3 space-y-2">
             <div className="grid grid-cols-[3.25rem_minmax(0,1fr)] items-baseline gap-2 sm:grid-cols-[3.75rem_minmax(0,1fr)] sm:gap-3">
-              <dt className="text-xs font-medium text-muted">Rede</dt>
+              <dt className="text-xs font-medium text-muted">Network</dt>
               <dd className="min-w-0 truncate text-right font-semibold text-navy" title={operational.wifi_network}>
                 {operational.wifi_network}
               </dd>
             </div>
             <div className="grid grid-cols-[3.25rem_minmax(0,1fr)] items-center gap-2 sm:grid-cols-[3.75rem_minmax(0,1fr)]">
-              <dt className="text-xs font-medium text-muted">Senha</dt>
+              <dt className="text-xs font-medium text-muted">Password</dt>
               <dd className="flex min-w-0 items-center justify-end gap-2">
                 <CopyButton
                   value={operational.wifi_password}
-                  label="Copiar senha do WiFi"
+                  label="Copy WiFi password"
                 />
                 <span
                   className="min-w-0 truncate text-right font-semibold text-navy"
@@ -68,7 +68,7 @@ export function ArrivalEssentials({ property }: { property: Property }) {
           </dl>
         </Tile>
 
-        <Tile icon={<Car className="h-5 w-5" />} label="Estacionamento">
+        <Tile icon={<Car className="h-5 w-5" />} label="Parking">
           <p className="mt-2 font-semibold text-navy">{parkingValue}</p>
           {operational.parking_spot_instructions ? (
             <p className="mt-2 break-words text-sm leading-6 text-muted">
@@ -85,7 +85,7 @@ export function ArrivalEssentials({ property }: { property: Property }) {
           </span>
           <div className="min-w-0 space-y-2">
             <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-              <p className="text-xs font-medium text-muted">Acesso ao imóvel</p>
+              <p className="text-xs font-medium text-muted">Property access</p>
               <p className="font-semibold text-navy">
                 {formatAccessType(operational.property_access_type)}
               </p>
@@ -96,11 +96,11 @@ export function ArrivalEssentials({ property }: { property: Property }) {
             {operational.property_password ? (
               <div className="grid grid-cols-[auto_3rem_minmax(0,1fr)] items-center gap-2 rounded-field border border-line bg-surface px-3 py-2 sm:grid-cols-[auto_3.5rem_minmax(0,1fr)]">
                 <KeyRound className="h-4 w-4 shrink-0 text-coral" aria-hidden />
-                <span className="text-xs font-medium text-muted">Código</span>
+                <span className="text-xs font-medium text-muted">Code</span>
                 <span className="flex min-w-0 items-center justify-end gap-2">
                   <CopyButton
                     value={operational.property_password}
-                    label="Copiar código de acesso"
+                    label="Copy access code"
                   />
                   <span
                     className="min-w-0 truncate font-semibold text-navy"

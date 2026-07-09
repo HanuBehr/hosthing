@@ -16,10 +16,10 @@ type Place = ExperienceGuide["restaurants"][number];
 type Essential = ExperienceGuide["essentials"][number];
 
 const essentialLabels: Record<Essential["type"], string> = {
-  pharmacy: "Farmácia",
-  supermarket: "Supermercado",
+  pharmacy: "Pharmacy",
+  supermarket: "Supermarket",
   hospital: "Hospital",
-  other: "Serviço",
+  other: "Service",
 };
 
 export function ExperienceGuideSection({
@@ -65,7 +65,7 @@ export function ExperienceGuideSection({
 
         if (!response.ok || !payload.guide) {
           throw new Error(
-            payload.error ?? "Não foi possível gerar o guia de experiências agora.",
+            payload.error ?? "The local guide could not be generated right now.",
           );
         }
 
@@ -78,7 +78,7 @@ export function ExperienceGuideSection({
           message:
             error instanceof Error
               ? error.message
-              : "Não foi possível gerar o guia de experiências agora.",
+              : "The local guide could not be generated right now.",
         });
       }
     }
@@ -97,16 +97,16 @@ export function ExperienceGuideSection({
   }
 
   return (
-    <section id="experiencias" className="scroll-mt-24 border-b border-line bg-transparent pb-6 sm:pb-8">
+    <section id="experiences" className="scroll-mt-24 border-b border-line bg-transparent pb-6 sm:pb-8">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <SectionTitle
-          eyebrow="Guia de experiências"
-          title="Recomendações perto da sua estadia"
-          description={`Conteúdo gerado por IA para ${propertyName}, considerando ${location}.`}
+          eyebrow="AI local guide"
+          title="Recommendations near this stay"
+          description={`AI-generated recommendations for ${propertyName}, based on ${location}.`}
         />
         <span className="inline-flex w-fit items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 text-xs font-semibold text-muted">
           <Sparkles className="h-3.5 w-3.5 text-coral" aria-hidden />
-          IA contextualizada
+          Context-aware AI
         </span>
       </div>
 
@@ -119,7 +119,7 @@ export function ExperienceGuideSection({
               <AlertCircle className="h-5 w-5" aria-hidden />
             </span>
             <div className="min-w-0">
-              <p className="font-semibold text-navy">Guia indisponível no momento</p>
+              <p className="font-semibold text-navy">Guide unavailable right now</p>
               <p className="mt-1 text-sm leading-6 text-muted">{state.message}</p>
               <button
                 type="button"
@@ -127,7 +127,7 @@ export function ExperienceGuideSection({
                 className="mt-3 inline-flex items-center gap-2 rounded-field border border-line bg-surface px-3 py-2 text-sm font-semibold text-navy transition hover:border-coral hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50"
               >
                 <RefreshCw className="h-4 w-4" aria-hidden />
-                Tentar novamente
+                Try again
               </button>
             </div>
           </div>
@@ -147,9 +147,9 @@ function LoadingGuide() {
           <Loader2 className="h-5 w-5 animate-spin" aria-hidden />
         </span>
         <div className="min-w-0 flex-1">
-          <p className="font-semibold text-navy">Gerando recomendações da região</p>
+          <p className="font-semibold text-navy">Generating local recommendations</p>
           <p className="mt-1 text-sm leading-6 text-muted">
-            Estamos montando restaurantes, atrações, serviços essenciais e uma dica sazonal para este endereço.
+            Restaurants, attractions, essential services, and a seasonal tip are being prepared for this address.
           </p>
           <div className="mt-4 space-y-2">
             <div className="h-2 w-full rounded-full bg-mist" />
@@ -169,13 +169,13 @@ function GuideContent({ guide }: { guide: ExperienceGuide }) {
 
       <div className="mt-4 grid gap-5 sm:mt-5 sm:gap-6 lg:grid-cols-2">
         <GuideGroup
-          title="Restaurantes próximos"
+          title="Nearby restaurants"
           icon={<Utensils className="h-4 w-4" aria-hidden />}
           places={guide.restaurants}
         />
 
         <GuideGroup
-          title="Atrações próximas"
+          title="Nearby attractions"
           icon={<MapPin className="h-4 w-4" aria-hidden />}
           places={guide.attractions}
         />
@@ -183,7 +183,7 @@ function GuideContent({ guide }: { guide: ExperienceGuide }) {
 
       <div className="mt-4 border-t border-line pt-4 sm:mt-5">
         <h3 className="text-sm font-semibold uppercase tracking-[0.16em] text-coral">
-          Serviços essenciais
+          Essential services
         </h3>
         <ul className="mt-3 grid gap-x-5 gap-y-3 sm:grid-cols-2">
           {guide.essentials.map((service) => (
@@ -202,7 +202,7 @@ function GuideContent({ guide }: { guide: ExperienceGuide }) {
       </div>
 
       <div className="mt-4 rounded-field bg-coral-soft/60 px-3 py-2.5 text-sm leading-6 sm:mt-5 sm:px-4 sm:py-3">
-        <span className="font-semibold text-navy">Dica sazonal: </span>
+        <span className="font-semibold text-navy">Seasonal tip: </span>
         <span className="text-muted">{guide.seasonal_tips}</span>
       </div>
     </div>

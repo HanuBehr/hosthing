@@ -16,13 +16,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!property) {
     return {
-      title: "Guia não encontrado | Seazone",
+      title: "Guide not found | StayPilot AI",
     };
   }
 
   return {
-    title: `${property.name} | Guia do Hóspede`,
-    description: `Guia da estadia em ${property.address.city}/${property.address.state}.`,
+    title: `${property.name} | Guest Guide`,
+    description: `Guest guide for ${property.address.city}/${property.address.state}.`,
   };
 }
 

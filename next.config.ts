@@ -11,14 +11,6 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "upload.wikimedia.org",
       },
-      {
-        protocol: "https",
-        hostname: "institucional.seazone.com.br",
-      },
-      {
-        protocol: "https",
-        hostname: "guia-do-hospede.seazone.com.br",
-      },
     ],
   },
 };
