@@ -1,14 +1,14 @@
-# StayPilot AI
+# Hostwise
 
-AI-powered guest guides for short-term rental operators.
+Guest guides for short-term rental operators.
 
-StayPilot AI is a portfolio-grade rental guest experience app inspired by the operational problems behind Airbnb-style hospitality: guests need arrival instructions, property rules, reservation details, and local recommendations in one reliable place. Each property has its own guide, persisted AI-generated local content, and a streaming virtual concierge that answers from the current property and reservation context.
+Hostwise is a rental guest experience app inspired by the operational problems behind Airbnb-style hospitality: guests need arrival instructions, property rules, reservation details, and local recommendations in one reliable place. Each property has its own guide, persisted generated local content, and a streaming guest support chat that answers from the current property and reservation context.
 
-## Live Demo
+## Live App
 
 Production is deployed on Vercel.
 
-Demo codes:
+Sample property codes:
 
 - `SYD001` - Sydney harbour apartment
 - `BLI001` - Bali beach villa
@@ -25,10 +25,10 @@ Demo codes:
 - Read-only operator dashboard at `/operator`
 - Property photos, address, capacity, amenities, and host contact details
 - Arrival essentials: WiFi, access instructions, check-in, check-out, and parking
-- Demo reservation context: reservation code, guest name, stay dates, cleaning fee, currency, and status
-- AI-generated local guide with restaurants, attractions, essential services, and seasonal tips
+- Reservation context: reservation code, guest name, stay dates, cleaning fee, currency, and status
+- Local guide with restaurants, attractions, essential services, and seasonal tips
 - Persisted local guide content in PostgreSQL to avoid regenerating on every visit
-- Streaming virtual concierge powered by the Vercel AI SDK
+- Streaming guest support powered by the Vercel AI SDK
 - Strict assistant behavior: no invented private details, fees, codes, rules, or contacts
 - Friendly invalid-code page and mobile-first responsive UI
 
@@ -41,7 +41,7 @@ Demo codes:
 - **PostgreSQL** for persistent property, reservation, and generated guide data
 - **Prisma 7** for schema modeling, migrations, generated client, and seed workflow
 - **Vercel AI SDK** for structured object generation and streaming assistant responses
-- **OpenAI** for local guide generation and real-time concierge responses
+- **OpenAI** for local guide generation and real-time guest support responses
 - **Zod** for runtime validation of database JSON, API input, and AI output
 - **Vitest** for unit tests around formatting, prompts, and generated-guide validation
 - **Vercel** for production deployment
@@ -62,14 +62,14 @@ src/server
   Server-side property, reservation, and experience-guide data access
 
 prisma
-  PostgreSQL schema, migrations, and international demo seed data
+  PostgreSQL schema, migrations, and seed data
 ```
 
 The guide page loads property and reservation context server-side. The local guide section calls an API route that generates a structured guide with OpenAI, validates it with Zod, and persists it in PostgreSQL. The chat route streams an AI answer using the property, reservation, and generated guide as context. If the AI key is unavailable, deterministic fallback responses still answer core operational questions.
 
-The operator dashboard is a read-only product surface that summarizes the demo portfolio, markets, guide inventory, and operational product signals for rental managers.
+The operator dashboard is a read-only product surface that summarizes property inventory, markets, guide coverage, and operational signals for rental managers.
 
-## AI Behavior
+## Assistant Behavior
 
 The assistant is intentionally constrained:
 
@@ -84,14 +84,14 @@ The assistant is intentionally constrained:
 Core models:
 
 - `Property`: property code, name, type, capacity, address, operational details, rules, amenities, images, and host information
-- `Reservation`: fake demo booking data connected to a property, including reservation code, guest, dates, guest count, cleaning fee, currency, and status
-- `ExperienceGuide`: persisted AI-generated local recommendations with generation status and error state
+- `Reservation`: sample booking data connected to a property, including reservation code, guest, dates, guest count, cleaning fee, currency, and status
+- `ExperienceGuide`: persisted generated local recommendations with generation status and error state
 
-The demo data is fictional and safe for a public repository.
+The included data is safe for a public repository and does not represent real guest records.
 
 ## Security Notes
 
-This repository intentionally keeps demo guides public so recruiters can inspect the full guest flow without authentication. In a production guest-guide product, direct public property codes should not expose WiFi passwords, access codes, host phone numbers, or reservation details.
+This repository intentionally keeps sample guides public so reviewers can inspect the full guest flow without authentication. In a production guest-guide product, direct public property codes should not expose WiFi passwords, access codes, host phone numbers, or reservation details.
 
 Production hardening path:
 
@@ -112,7 +112,7 @@ npm install
 Create `.env` from `.env.example`:
 
 ```bash
-DATABASE_URL="postgresql://user:password@localhost:5432/staypilot_ai"
+DATABASE_URL="postgresql://user:password@localhost:5432/hostwise"
 OPENAI_API_KEY=""
 ```
 
@@ -130,7 +130,7 @@ Run locally:
 npm run dev
 ```
 
-Open `http://localhost:3000` and use one of the demo codes.
+Open `http://localhost:3000` and use one of the sample property codes.
 
 ## Scripts
 

@@ -4,11 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowLeft,
-  Bot,
   Building2,
   CalendarCheck,
   CircleDollarSign,
   Globe2,
+  MessageCircle,
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
@@ -17,7 +17,7 @@ import { BrandLogo } from "@/components/brand/brand-logo";
 import { propertyCatalog } from "@/lib/property-catalog";
 
 export const metadata: Metadata = {
-  title: "Operator Dashboard | StayPilot AI",
+  title: "Operator Dashboard | Hostwise",
   description:
     "Read-only operations dashboard for the Hostwise property guide system.",
 };
@@ -36,7 +36,7 @@ const operationsStats = [
     icon: CalendarCheck,
   },
   {
-    label: "AI guide status",
+    label: "Guide status",
     value: "On demand",
     detail: "Generated once and persisted",
     icon: Sparkles,
@@ -69,7 +69,7 @@ export default function OperatorDashboardPage() {
               Operator view
             </p>
             <h1 className="mt-3 max-w-3xl text-[clamp(2.1rem,5vw,4.6rem)] font-semibold leading-[0.98] tracking-[-0.055em] text-navy">
-              Portfolio operations for AI-powered guest guides
+              Property operations for guest guides
             </h1>
           </div>
 
@@ -118,7 +118,7 @@ export default function OperatorDashboardPage() {
               </div>
               <p className="max-w-sm text-sm leading-6 text-muted">
                 Each row represents a property with operational data,
-                reservation context, and AI-ready local guide generation.
+                reservation context, and a local guide ready for guests.
               </p>
             </div>
 
@@ -178,9 +178,9 @@ export default function OperatorDashboardPage() {
                   text="The same guide workflow supports apartments, villas, condos, studios, and townhouses across countries."
                 />
                 <Signal
-                  icon={<Bot className="h-4 w-4" aria-hidden />}
-                  title="AI operations layer"
-                  text="Local guides are generated on demand, validated, persisted, and reused by the guest concierge."
+                  icon={<MessageCircle className="h-4 w-4" aria-hidden />}
+                  title="Local guide workflow"
+                  text="Local recommendations are prepared on demand, validated, saved, and reused by the guest support chat."
                 />
                 <Signal
                   icon={<CircleDollarSign className="h-4 w-4" aria-hidden />}

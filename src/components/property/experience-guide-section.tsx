@@ -100,13 +100,13 @@ export function ExperienceGuideSection({
     <section id="experiences" className="scroll-mt-24 border-b border-line bg-transparent pb-6 sm:pb-8">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <SectionTitle
-          eyebrow="AI local guide"
+          eyebrow="Local guide"
           title="Recommendations near this stay"
-          description={`AI-generated recommendations for ${propertyName}, based on ${location}.`}
+          description={`Recommendations for ${propertyName}, based on ${location}.`}
         />
         <span className="inline-flex w-fit items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 text-xs font-semibold text-muted">
           <Sparkles className="h-3.5 w-3.5 text-coral" aria-hidden />
-          Context-aware AI
+          Updated for this stay
         </span>
       </div>
 
@@ -149,7 +149,7 @@ function LoadingGuide() {
           <Loader2 className="h-5 w-5 animate-spin" aria-hidden />
         </span>
         <div className="min-w-0 flex-1">
-          <p className="font-semibold text-navy">Generating local recommendations</p>
+          <p className="font-semibold text-navy">Preparing local recommendations</p>
           <p className="mt-1 text-sm leading-6 text-muted">
             Restaurants, attractions, essential services, and a seasonal tip are being prepared for this address.
           </p>

@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "StayPilot AI | Smart Guest Guides",
+  title: "Hostwise | Guest Guides",
   description:
-    "AI-powered guest guides with property details, local recommendations, and a streaming concierge assistant.",
+    "Guest guides with arrival details, reservation context, local recommendations, and stay support.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",

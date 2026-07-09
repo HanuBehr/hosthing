@@ -62,7 +62,7 @@ export default function Home() {
           </div>
           <p className="max-w-md text-sm leading-6 text-muted">
             Open a guide for each stay to see arrival details, booking context,
-            local recommendations, and the concierge in action.
+            local recommendations, and stay support.
           </p>
         </div>
 
@@ -109,20 +109,20 @@ export default function Home() {
           <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-orange">
-                Built like a product
+                Host and guest workflow
               </p>
               <h2 className="mt-3 text-2xl font-semibold tracking-[-0.035em] sm:text-3xl">
-                Full-stack hospitality workflow, not a static brochure
+                Guide details that keep each stay moving
               </h2>
               <p className="mt-4 text-sm leading-6 text-white/72 sm:text-base sm:leading-7">
-                The product combines persisted property data, reservation
-                context, structured local guide generation, and a concierge
-                with deterministic fallbacks for operational questions.
+                Each guide brings together access details, house rules,
+                reservation context, nearby recommendations, and answers to
+                common guest questions.
               </p>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2">
-              {architectureHighlights.map((item) => (
+              {guideHighlights.map((item) => (
                 <div
                   key={item.title}
                   className="rounded-panel border border-white/12 bg-white/8 p-4 backdrop-blur"
@@ -141,26 +141,26 @@ export default function Home() {
   );
 }
 
-const architectureHighlights = [
+const guideHighlights = [
   {
-    title: "Next.js + React",
+    title: "Arrival details",
     description:
-      "Dynamic guide routes, server-loaded context, responsive client chat, and production build checks.",
+      "WiFi, lock instructions, parking, check-in, check-out, and host contact are kept in one place.",
   },
   {
-    title: "PostgreSQL + Prisma",
+    title: "Booking context",
     description:
-      "Property, reservation, and generated local-guide models with migrations and repeatable seed data.",
+      "Guests can confirm reservation code, dates, guest count, fees, currency, and stay status.",
   },
   {
-    title: "AI SDK + OpenAI",
+    title: "Local recommendations",
     description:
-      "Structured local guide generation, persisted outputs, and streaming concierge responses.",
+      "Restaurants, attractions, essentials, map links, and seasonal notes are tailored to the property location.",
   },
   {
-    title: "Zod + Vitest",
+    title: "Guest questions",
     description:
-      "Runtime validation for AI/database boundaries and tests for prompts, formatting, and fallback answers.",
+      "The support chat answers from the current property and stay details instead of sending guests hunting.",
   },
 ] as const;
 
@@ -186,10 +186,10 @@ function ArrivalSupportVisual() {
             Guest guide
           </p>
           <p className="mt-2 text-base font-semibold tracking-[-0.02em]">
-            Access, reservation details, and AI support in one place.
+            Access, reservation details, and stay support in one place.
           </p>
           <div className="mt-3 flex flex-wrap gap-2">
-            {["Access", "Booking", "AI concierge"].map((label) => (
+            {["Access", "Booking", "Local tips"].map((label) => (
               <span
                 key={label}
                 className="rounded-full border border-line bg-surface px-3 py-1 text-xs font-semibold text-navy"
