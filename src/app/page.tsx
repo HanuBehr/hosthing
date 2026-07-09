@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { BedDouble, MapPin, ShieldCheck, Users } from "lucide-react";
 
 import { PropertyCodeForm } from "@/components/access/property-code-form";
 import { BrandLogo } from "@/components/brand/brand-logo";
@@ -11,18 +12,18 @@ const supportImageUrl =
 export default function Home() {
   return (
     <main className="app-shell min-h-screen px-4 py-6 sm:px-8 sm:py-10 lg:px-10">
-      <section className="mx-auto grid min-h-[calc(100dvh-3rem)] max-w-[1120px] items-center gap-8 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-16">
+      <section className="mx-auto grid min-h-[calc(100dvh-3rem)] max-w-[1120px] items-center gap-8 lg:grid-cols-[minmax(0,1fr)_430px] lg:gap-14">
         <div className="max-w-2xl">
           <BrandLogo />
 
           <div className="mt-8 sm:mt-12">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-coral">
+            <div className="inline-flex rounded-full border border-line bg-surface/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-coral shadow-card">
               Host-ready arrival guides
-            </p>
+            </div>
             <h1 className="mt-4 text-[clamp(2.1rem,4.5vw,3.4rem)] font-semibold leading-[1.03] tracking-[-0.04em] text-navy">
-              Everything guests need for a smoother stay
+              A guest guide for the first five minutes of every stay
             </h1>
-            <p className="mt-4 max-w-md text-base leading-7 text-muted sm:mt-5 sm:text-lg">
+            <p className="mt-4 max-w-xl text-base leading-7 text-muted sm:mt-5 sm:text-lg">
               Open a property guide with arrival instructions, booking details,
               house rules, local recommendations, and fast help when guests
               need it.
@@ -32,9 +33,21 @@ export default function Home() {
               <PropertyCodeForm />
             </div>
 
-            <p className="mt-4 text-sm leading-6 text-muted sm:mt-5">
-              Arrival details · Booking context · Local recommendations
-            </p>
+            <div className="mt-5 grid max-w-xl gap-2 text-sm text-muted sm:grid-cols-3">
+              {heroSignals.map((signal) => {
+                const Icon = signal.icon;
+                return (
+                  <div
+                    key={signal.label}
+                    className="rounded-field border border-line bg-surface/70 px-3 py-2 shadow-card"
+                  >
+                    <Icon className="mb-1 h-4 w-4 text-coral" aria-hidden />
+                    <p className="font-semibold text-navy">{signal.label}</p>
+                    <p className="mt-0.5 leading-5">{signal.text}</p>
+                  </div>
+                );
+              })}
+            </div>
 
             <div className="mt-5 flex flex-wrap gap-3">
               <Link
@@ -73,7 +86,7 @@ export default function Home() {
               href={`/${property.code}`}
               className="group overflow-hidden rounded-card border border-line bg-surface shadow-card transition hover:-translate-y-1 hover:border-coral/60 hover:shadow-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2"
             >
-              <div className="relative h-36 overflow-hidden bg-mist">
+              <div className="relative h-40 overflow-hidden bg-mist">
                 <Image
                   src={property.images[0]}
                   alt={property.name}
@@ -83,6 +96,9 @@ export default function Home() {
                 />
                 <div className="absolute left-3 top-3 rounded-full bg-navy/88 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
                   {property.code}
+                </div>
+                <div className="absolute bottom-3 left-3 rounded-full bg-surface/92 px-3 py-1 text-xs font-semibold text-navy backdrop-blur">
+                  {property.address.neighborhood}
                 </div>
               </div>
               <div className="p-4">
@@ -95,8 +111,19 @@ export default function Home() {
                 <p className="mt-2 text-sm leading-5 text-muted">
                   {property.address.neighborhood}, {property.address.city}
                 </p>
-                <p className="mt-3 inline-flex rounded-full bg-coral-soft px-3 py-1 text-xs font-semibold text-coral">
-                  {property.typeLabel}
+                <div className="mt-3 flex flex-wrap gap-1.5 text-xs font-semibold">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-coral-soft px-2.5 py-1 text-coral">
+                    <Users className="h-3.5 w-3.5" aria-hidden />
+                    {property.guestCapacity} guests
+                  </span>
+                  <span className="inline-flex items-center gap-1 rounded-full bg-cream px-2.5 py-1 text-navy">
+                    <BedDouble className="h-3.5 w-3.5" aria-hidden />
+                    {property.bedroomQuantity} bed
+                    {property.bedroomQuantity > 1 ? "s" : ""}
+                  </span>
+                </div>
+                <p className="mt-3 text-xs font-semibold text-navy">
+                  {property.typeLabel} · Self check-in
                 </p>
               </div>
             </Link>
@@ -164,6 +191,24 @@ const guideHighlights = [
   },
 ] as const;
 
+const heroSignals = [
+  {
+    label: "Access first",
+    text: "WiFi, lock code, parking, and timing are easy to find.",
+    icon: ShieldCheck,
+  },
+  {
+    label: "Stay context",
+    text: "Booking details travel with the property guide.",
+    icon: Users,
+  },
+  {
+    label: "Local map",
+    text: "Nearby food, essentials, and attractions are one tap away.",
+    icon: MapPin,
+  },
+] as const;
+
 function ArrivalSupportVisual() {
   return (
     <aside
@@ -180,6 +225,10 @@ function ArrivalSupportVisual() {
           className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-navy-900/70 via-navy-900/10 to-transparent" />
+
+        <div className="absolute right-3 top-3 rounded-full border border-white/35 bg-white/18 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
+          8 guides · 6 markets
+        </div>
 
         <div className="absolute inset-x-3 bottom-3 rounded-panel border border-white/40 bg-surface/90 p-3 text-navy shadow-card backdrop-blur-md sm:inset-x-4 sm:bottom-4 sm:p-4">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-coral">
