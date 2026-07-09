@@ -3,8 +3,7 @@ import Link from "next/link";
 
 import { PropertyCodeForm } from "@/components/access/property-code-form";
 import { BrandLogo } from "@/components/brand/brand-logo";
-import { DemoDisclosure } from "@/components/demo/demo-disclosure";
-import { demoProperties } from "@/lib/demo-properties";
+import { propertyCatalog } from "@/lib/property-catalog";
 
 const supportImageUrl =
   "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=82";
@@ -18,15 +17,15 @@ export default function Home() {
 
           <div className="mt-8 sm:mt-12">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-coral">
-              Smart arrival companion
+              Host-ready arrival guides
             </p>
             <h1 className="mt-4 text-[clamp(2.1rem,4.5vw,3.4rem)] font-semibold leading-[1.03] tracking-[-0.04em] text-navy">
-              AI guest guides for global rental stays
+              Everything guests need for a smoother stay
             </h1>
             <p className="mt-4 max-w-md text-base leading-7 text-muted sm:mt-5 sm:text-lg">
-              Launch a property-specific guide with arrival instructions,
-              reservation context, local recommendations, and a streaming
-              virtual concierge.
+              Open a property guide with arrival instructions, booking details,
+              house rules, local recommendations, and fast help when guests
+              need it.
             </p>
 
             <div className="mt-6 max-w-lg rounded-card border border-line bg-surface p-4 shadow-card sm:mt-8 sm:p-6">
@@ -34,7 +33,7 @@ export default function Home() {
             </div>
 
             <p className="mt-4 text-sm leading-6 text-muted sm:mt-5">
-              Demo portfolio · PostgreSQL persistence · Streaming AI assistant
+              Arrival details · Booking context · Local recommendations
             </p>
 
             <div className="mt-5 flex flex-wrap gap-3">
@@ -42,12 +41,8 @@ export default function Home() {
                 href="/operator"
                 className="inline-flex rounded-field border border-line bg-surface px-4 py-2.5 text-sm font-semibold text-navy shadow-card transition hover:border-coral hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50"
               >
-                View operator dashboard
+                Host dashboard
               </Link>
-            </div>
-
-            <div className="mt-4 max-w-lg">
-              <DemoDisclosure compact />
             </div>
           </div>
         </div>
@@ -59,20 +54,20 @@ export default function Home() {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-coral">
-              International demo catalog
+              Featured stays
             </p>
             <h2 className="mt-3 text-2xl font-semibold tracking-[-0.035em] text-navy sm:text-3xl">
               Explore the property guides
             </h2>
           </div>
           <p className="max-w-md text-sm leading-6 text-muted">
-            Each demo includes fictional operational data, a booking context,
-            and AI-ready local guide generation for its market.
+            Open a guide for each stay to see arrival details, booking context,
+            local recommendations, and the concierge in action.
           </p>
         </div>
 
         <div className="mt-5 grid gap-3 sm:mt-7 sm:grid-cols-2 lg:grid-cols-4">
-          {demoProperties.map((property) => (
+          {propertyCatalog.map((property) => (
             <Link
               key={property.code}
               href={`/${property.code}`}
@@ -80,7 +75,7 @@ export default function Home() {
             >
               <div className="relative h-36 overflow-hidden bg-mist">
                 <Image
-                  src={property.image}
+                  src={property.images[0]}
                   alt={property.name}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
@@ -98,10 +93,10 @@ export default function Home() {
                   {property.name}
                 </h3>
                 <p className="mt-2 text-sm leading-5 text-muted">
-                  {property.location}
+                  {property.address.neighborhood}, {property.address.city}
                 </p>
                 <p className="mt-3 inline-flex rounded-full bg-coral-soft px-3 py-1 text-xs font-semibold text-coral">
-                  {property.type}
+                  {property.typeLabel}
                 </p>
               </div>
             </Link>
@@ -120,8 +115,8 @@ export default function Home() {
                 Full-stack hospitality workflow, not a static brochure
               </h2>
               <p className="mt-4 text-sm leading-6 text-white/72 sm:text-base sm:leading-7">
-                The demo combines persisted property data, fake reservation
-                context, structured AI generation, and a streaming concierge
+                The product combines persisted property data, reservation
+                context, structured local guide generation, and a concierge
                 with deterministic fallbacks for operational questions.
               </p>
             </div>

@@ -25,7 +25,7 @@ export function ShareGuideButton({
     const url = new URL(`/${propertyCode}`, window.location.origin).toString();
     const shareData = {
       title: `${propertyName} guest guide`,
-      text: `Open the StayPilot AI guest guide for ${propertyName}.`,
+      text: `Open the guest guide for ${propertyName}.`,
       url,
     };
 

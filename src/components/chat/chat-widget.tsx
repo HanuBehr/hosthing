@@ -137,7 +137,7 @@ export function ChatWidget({
               <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-field bg-orange">
                 <Image
                   src="/assistant-avatar.svg"
-                  alt="StayPilot AI concierge"
+                  alt="Hostwise concierge"
                   fill
                   sizes="40px"
                   className="object-cover"

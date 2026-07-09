@@ -41,7 +41,7 @@ export function buildChatSystemPrompt(
 ) {
   const fullAddress = getFullAddress(property);
 
-  return `You are StayPilot AI, a virtual concierge for short-term rental guests.
+  return `You are the host's virtual concierge for short-term rental guests.
 
 Always reply in English, with a concise, warm, and practical tone.
 Use only the data below for private or operational property information. If operational data is missing, say you do not have that information and suggest contacting the host.

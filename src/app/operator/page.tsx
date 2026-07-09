@@ -14,18 +14,18 @@ import {
 } from "lucide-react";
 
 import { BrandLogo } from "@/components/brand/brand-logo";
-import { demoProperties } from "@/lib/demo-properties";
+import { propertyCatalog } from "@/lib/property-catalog";
 
 export const metadata: Metadata = {
   title: "Operator Dashboard | StayPilot AI",
   description:
-    "Read-only portfolio operations dashboard for the StayPilot AI demo.",
+    "Read-only operations dashboard for the Hostwise property guide system.",
 };
 
-const portfolioStats = [
+const operationsStats = [
   {
-    label: "Demo properties",
-    value: String(demoProperties.length),
+    label: "Properties",
+    value: String(propertyCatalog.length),
     detail: "Across 7 global markets",
     icon: Building2,
   },
@@ -44,7 +44,7 @@ const portfolioStats = [
   {
     label: "Sensitive data model",
     value: "Scoped",
-    detail: "Demo-safe with production notes",
+    detail: "Scoped operational data",
     icon: ShieldCheck,
   },
 ] as const;
@@ -83,7 +83,7 @@ export default function OperatorDashboardPage() {
         </header>
 
         <section className="mt-7 grid gap-3 sm:mt-9 sm:grid-cols-2 lg:grid-cols-4">
-          {portfolioStats.map((stat) => {
+          {operationsStats.map((stat) => {
             const Icon = stat.icon;
             return (
               <div
@@ -113,7 +113,7 @@ export default function OperatorDashboardPage() {
                   Property operations
                 </p>
                 <h2 className="mt-2 text-2xl font-semibold tracking-[-0.035em] text-navy">
-                  Demo guide inventory
+                  Guide inventory
                 </h2>
               </div>
               <p className="max-w-sm text-sm leading-6 text-muted">
@@ -124,7 +124,7 @@ export default function OperatorDashboardPage() {
 
             <div className="mt-5 overflow-hidden rounded-panel border border-line">
               <div className="divide-y divide-line">
-                {demoProperties.map((property) => (
+                {propertyCatalog.map((property) => (
                   <Link
                     href={`/${property.code}`}
                     key={property.code}
@@ -132,7 +132,7 @@ export default function OperatorDashboardPage() {
                   >
                     <div className="relative h-16 overflow-hidden rounded-field bg-mist sm:h-14">
                       <Image
-                        src={property.image}
+                        src={property.images[0]}
                         alt=""
                         fill
                         sizes="80px"
@@ -150,7 +150,7 @@ export default function OperatorDashboardPage() {
                         </span>
                       </div>
                       <p className="mt-1 text-sm leading-5 text-muted">
-                        {property.location} · {property.type}
+                        {property.address.neighborhood}, {property.address.city} · {property.typeLabel}
                       </p>
                     </div>
 
@@ -169,7 +169,7 @@ export default function OperatorDashboardPage() {
                 Product signals
               </p>
               <h2 className="mt-2 text-2xl font-semibold tracking-[-0.035em]">
-                What this dashboard demonstrates
+                What this dashboard controls
               </h2>
               <div className="mt-5 space-y-3">
                 <Signal

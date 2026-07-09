@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { BrandLogo } from "@/components/brand/brand-logo";
-import { demoPropertyCodes } from "@/lib/demo-properties";
+import { propertyCodes } from "@/lib/property-catalog";
 
 export default function PropertyNotFound() {
   return (
@@ -15,8 +15,8 @@ export default function PropertyNotFound() {
           We could not find a property with this code.
         </h1>
         <p className="mt-4 leading-7 text-muted">
-          Check the property code and try again. For this demo, you can also
-          choose one of the sample guides below.
+          Check the property code and try again, or open one of the featured
+          stays below.
         </p>
 
         <Link
@@ -27,9 +27,9 @@ export default function PropertyNotFound() {
         </Link>
 
         <div className="mt-8 border-t border-line pt-6">
-          <p className="text-xs font-medium text-muted">Demo codes:</p>
+          <p className="text-xs font-medium text-muted">Featured stays:</p>
           <div className="mt-3 flex flex-wrap gap-2">
-            {demoPropertyCodes.map((code) => (
+            {propertyCodes.map((code) => (
               <Link
                 key={code}
                 href={`/${code}`}

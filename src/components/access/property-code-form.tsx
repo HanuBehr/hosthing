@@ -4,7 +4,7 @@ import { FormEvent, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 
-import { demoPropertyCodes } from "@/lib/demo-properties";
+import { propertyCodes } from "@/lib/property-catalog";
 
 export function PropertyCodeForm() {
   const router = useRouter();
@@ -31,7 +31,7 @@ export function PropertyCodeForm() {
         Property code
       </label>
       <p id="property-code-help" className="mt-1.5 text-sm leading-6 text-muted">
-        Use one of the demo codes or the code attached to a reservation.
+        Enter the code from the reservation or choose a featured stay below.
       </p>
 
       <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-stretch">
@@ -59,8 +59,8 @@ export function PropertyCodeForm() {
         id="property-code-examples"
         className="app-scroll -mx-4 mt-4 flex items-center gap-2 overflow-x-auto px-4 pb-1 text-xs text-muted sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0"
       >
-        <span className="shrink-0">Demo codes:</span>
-        {demoPropertyCodes.map((code) => (
+        <span className="shrink-0">Featured stays:</span>
+        {propertyCodes.map((code) => (
           <button
             key={code}
             type="button"

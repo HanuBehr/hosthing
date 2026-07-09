@@ -5,7 +5,6 @@ import { BedDouble, MapPin, ShowerHead, Users } from "lucide-react";
 
 import { BrandLogo } from "@/components/brand/brand-logo";
 import { ChatWidget } from "@/components/chat/chat-widget";
-import { DemoDisclosure } from "@/components/demo/demo-disclosure";
 import { ArrivalEssentials } from "@/components/property/arrival-essentials";
 import { ExperienceGuideSection } from "@/components/property/experience-guide-section";
 import { HouseRules } from "@/components/property/house-rules";
@@ -105,7 +104,6 @@ export function PropertyGuide({
 
       <div className="mx-auto grid max-w-7xl gap-5 px-4 py-6 sm:px-8 sm:py-8 lg:grid-cols-[1.3fr_0.7fr] lg:px-10">
         <div className="space-y-4 sm:space-y-5">
-          <DemoDisclosure />
           <ArrivalEssentials property={property} />
           <HouseRules property={property} />
           <ExperienceGuideSection

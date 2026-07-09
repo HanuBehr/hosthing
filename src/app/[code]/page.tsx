@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 
 import { PropertyGuide } from "@/components/property/property-guide";
 import { getPropertyByCode } from "@/server/properties";
-import { getDemoReservationForProperty } from "@/server/reservations";
+import { getReservationForProperty } from "@/server/reservations";
 
 export const dynamic = "force-dynamic";
 
@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!property) {
     return {
-      title: "Guide not found | StayPilot AI",
+      title: "Guide not found | Hostwise",
     };
   }
 
@@ -35,7 +35,7 @@ export default async function GuestGuidePage({ params }: PageProps) {
     notFound();
   }
 
-  const reservation = await getDemoReservationForProperty(property.id);
+  const reservation = await getReservationForProperty(property.id);
 
   return <PropertyGuide property={property} reservation={reservation} />;
 }

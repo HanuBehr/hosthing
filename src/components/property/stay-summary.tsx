@@ -44,7 +44,7 @@ export function StaySummary({
 
       {reservation ? (
         <section className="border-b border-line pb-5">
-          <SectionTitle eyebrow="Reservation" title="Demo booking" />
+          <SectionTitle eyebrow="Reservation" title="Booking details" />
           <dl className="mt-4 space-y-3 text-sm sm:mt-5 sm:space-y-4">
             <Detail
               icon={<Building2 className="h-4 w-4" aria-hidden />}

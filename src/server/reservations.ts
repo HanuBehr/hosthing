@@ -1,10 +1,11 @@
 import { prisma } from "@/lib/db/prisma";
+import { getCatalogReservationForProperty } from "@/lib/property-catalog";
 import {
   reservationSchema,
   type Reservation,
 } from "@/lib/validators/reservation";
 
-export async function getDemoReservationForProperty(
+export async function getReservationForProperty(
   propertyId: string,
 ): Promise<Reservation | null> {
   const reservation = await prisma.reservation.findFirst({
@@ -15,10 +16,10 @@ export async function getDemoReservationForProperty(
     orderBy: {
       checkInDate: "asc",
     },
-  });
+  }).catch(() => null);
 
   if (!reservation) {
-    return null;
+    return getCatalogReservationForProperty(propertyId);
   }
 
   return reservationSchema.parse(reservation);

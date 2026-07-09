@@ -1,5 +1,6 @@
 import { generateExperienceGuide } from "@/lib/ai/experience-guide";
 import { prisma } from "@/lib/db/prisma";
+import { guideCatalog } from "@/lib/property-catalog";
 import { experienceGuideSchema } from "@/lib/validators/experience-guide";
 import { getPropertyByCode } from "@/server/properties";
 
@@ -21,9 +22,11 @@ export async function POST(_request: Request, { params }: RouteParams) {
     return Response.json({ error: "Property not found." }, { status: 404 });
   }
 
+  const catalogGuide = guideCatalog[property.code];
+
   const existingGuide = await prisma.experienceGuide.findUnique({
     where: { propertyId: property.id },
-  });
+  }).catch(() => null);
 
   if (existingGuide?.status === "COMPLETED" && existingGuide.content) {
     return Response.json({
@@ -39,25 +42,15 @@ export async function POST(_request: Request, { params }: RouteParams) {
     return Response.json({ status: "pending" }, { status: 202 });
   }
 
+  if (!hasOpenAIKey()) {
+    return Response.json({ guide: catalogGuide });
+  }
+
   await prisma.experienceGuide.upsert({
     where: { propertyId: property.id },
     create: { propertyId: property.id, status: "PENDING" },
     update: { status: "PENDING", errorMessage: null },
-  });
-
-  if (!hasOpenAIKey()) {
-    await prisma.experienceGuide.update({
-      where: { propertyId: property.id },
-      data: {
-        status: "FAILED",
-        errorMessage: "OPENAI_API_KEY is not configured.",
-      },
-    });
-    return Response.json(
-      { error: "OPENAI_API_KEY is not configured." },
-      { status: 500 },
-    );
-  }
+  }).catch(() => null);
 
   try {
     const guide = await generateExperienceGuide(property);
@@ -70,7 +63,7 @@ export async function POST(_request: Request, { params }: RouteParams) {
         generatedAt: new Date(),
         errorMessage: null,
       },
-    });
+    }).catch(() => null);
 
     return Response.json({ guide });
   } catch (error) {
@@ -83,8 +76,8 @@ export async function POST(_request: Request, { params }: RouteParams) {
         status: "FAILED",
         errorMessage: message,
       },
-    });
+    }).catch(() => null);
 
-    return Response.json({ error: message }, { status: 500 });
+    return Response.json({ guide: catalogGuide });
   }
 }

@@ -6,7 +6,7 @@ import { buildChatSystemPrompt } from "@/lib/ai/prompts";
 import { buildFallbackAnswer } from "@/lib/chat/fallback";
 import { getExperienceGuideForProperty } from "@/server/experience-guides";
 import { getPropertyByCode } from "@/server/properties";
-import { getDemoReservationForProperty } from "@/server/reservations";
+import { getReservationForProperty } from "@/server/reservations";
 
 export const runtime = "nodejs";
 
@@ -37,8 +37,8 @@ export async function POST(request: Request) {
     return Response.json({ error: "Property not found." }, { status: 404 });
   }
 
-  const guide = await getExperienceGuideForProperty(property.id).catch(() => null);
-  const reservation = await getDemoReservationForProperty(property.id).catch(
+  const guide = await getExperienceGuideForProperty(property.id, property.code).catch(() => null);
+  const reservation = await getReservationForProperty(property.id).catch(
     () => null,
   );
   const fallbackAnswer = buildFallbackAnswer(
