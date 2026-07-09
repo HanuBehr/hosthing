@@ -8,13 +8,16 @@ import {
   CalendarCheck,
   CircleDollarSign,
   Globe2,
+  MapPin,
   MessageCircle,
+  ParkingCircle,
   ShieldCheck,
   Sparkles,
+  Users,
 } from "lucide-react";
 
 import { BrandLogo } from "@/components/brand/brand-logo";
-import { propertyCatalog } from "@/lib/property-catalog";
+import { propertyCatalog, reservationCatalog } from "@/lib/property-catalog";
 
 export const metadata: Metadata = {
   title: "Operator Dashboard | Hostwise",
@@ -22,30 +25,42 @@ export const metadata: Metadata = {
     "Read-only operations dashboard for the Hostwise property guide system.",
 };
 
+const marketCount = new Set(propertyCatalog.map((property) => property.market)).size;
+const guestCapacity = propertyCatalog.reduce(
+  (total, property) => total + property.guestCapacity,
+  0,
+);
+const activeReservations = reservationCatalog.filter(
+  (reservation) => reservation.status === "confirmed",
+).length;
+const parkingReadyCount = propertyCatalog.filter(
+  (property) => property.operational.has_parking_spot,
+).length;
+
 const operationsStats = [
   {
     label: "Properties",
     value: String(propertyCatalog.length),
-    detail: "Across 7 global markets",
+    detail: `Across ${marketCount} markets`,
     icon: Building2,
   },
   {
     label: "Confirmed bookings",
-    value: "8",
-    detail: "Seeded reservation context",
+    value: String(activeReservations),
+    detail: "Arrival details attached",
     icon: CalendarCheck,
   },
   {
-    label: "Guide status",
-    value: "On demand",
-    detail: "Generated once and persisted",
-    icon: Sparkles,
+    label: "Guest capacity",
+    value: String(guestCapacity),
+    detail: "Beds, access, and rules modeled",
+    icon: Users,
   },
   {
-    label: "Sensitive data model",
-    value: "Scoped",
-    detail: "Scoped operational data",
-    icon: ShieldCheck,
+    label: "Parking ready",
+    value: `${parkingReadyCount}/${propertyCatalog.length}`,
+    detail: "Properties with dedicated instructions",
+    icon: ParkingCircle,
   },
 ] as const;
 
@@ -59,6 +74,8 @@ const marketSummary = [
 ] as const;
 
 export default function OperatorDashboardPage() {
+  const topMarkets = [...marketSummary].sort((a, b) => b.properties - a.properties);
+
   return (
     <main className="app-shell min-h-screen px-4 py-6 sm:px-8 sm:py-8 lg:px-10">
       <div className="mx-auto max-w-7xl">
@@ -71,6 +88,10 @@ export default function OperatorDashboardPage() {
             <h1 className="mt-3 max-w-3xl text-[clamp(2.1rem,5vw,4.6rem)] font-semibold leading-[0.98] tracking-[-0.055em] text-navy">
               Property operations for guest guides
             </h1>
+            <p className="mt-4 max-w-2xl text-base leading-7 text-muted sm:text-lg">
+              Track which stays are ready for guests, where operational details
+              live, and which markets need host attention before arrival.
+            </p>
           </div>
 
           <Link
@@ -105,7 +126,7 @@ export default function OperatorDashboardPage() {
           })}
         </section>
 
-        <section className="mt-5 grid gap-5 lg:grid-cols-[1.25fr_0.75fr]">
+        <section className="mt-5 grid gap-5 lg:grid-cols-[1.3fr_0.7fr]">
           <div className="rounded-card border border-line bg-surface p-4 shadow-card sm:p-5">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
               <div>
@@ -122,15 +143,14 @@ export default function OperatorDashboardPage() {
               </p>
             </div>
 
-            <div className="mt-5 overflow-hidden rounded-panel border border-line">
-              <div className="divide-y divide-line">
+            <div className="mt-5 grid gap-3">
                 {propertyCatalog.map((property) => (
                   <Link
                     href={`/${property.code}`}
                     key={property.code}
-                    className="grid gap-3 bg-surface p-3 transition hover:bg-cream sm:grid-cols-[5rem_minmax(0,1fr)_auto] sm:items-center sm:p-4"
+                    className="grid gap-3 rounded-panel border border-line bg-surface p-3 shadow-card transition hover:-translate-y-0.5 hover:border-coral/60 hover:bg-cream sm:grid-cols-[6rem_minmax(0,1fr)_auto] sm:items-center sm:p-4"
                   >
-                    <div className="relative h-16 overflow-hidden rounded-field bg-mist sm:h-14">
+                    <div className="relative h-20 overflow-hidden rounded-field bg-mist sm:h-16">
                       <Image
                         src={property.images[0]}
                         alt=""
@@ -152,6 +172,20 @@ export default function OperatorDashboardPage() {
                       <p className="mt-1 text-sm leading-5 text-muted">
                         {property.address.neighborhood}, {property.address.city} · {property.typeLabel}
                       </p>
+                      <div className="mt-2 flex flex-wrap gap-1.5 text-[11px] font-semibold">
+                        <span className="rounded-full bg-coral-soft px-2 py-0.5 text-coral">
+                          {property.guestCapacity} guests
+                        </span>
+                        <span className="rounded-full bg-cream px-2 py-0.5 text-navy">
+                          {property.bedroomQuantity} bed{property.bedroomQuantity > 1 ? "s" : ""}
+                        </span>
+                        <span className="rounded-full bg-positive-soft px-2 py-0.5 text-positive">
+                          Guide ready
+                        </span>
+                        <span className="rounded-full bg-cream px-2 py-0.5 text-muted">
+                          {property.operational.has_parking_spot ? "Parking" : "No parking"}
+                        </span>
+                      </div>
                     </div>
 
                     <span className="inline-flex w-fit rounded-full border border-line bg-surface px-3 py-1 text-xs font-semibold text-navy">
@@ -159,11 +193,33 @@ export default function OperatorDashboardPage() {
                     </span>
                   </Link>
                 ))}
-              </div>
             </div>
           </div>
 
           <aside className="space-y-5">
+            <section className="rounded-card border border-line bg-surface p-5 shadow-card">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-coral">
+                Attention queue
+              </p>
+              <div className="mt-4 space-y-3">
+                <QueueItem
+                  icon={<ShieldCheck className="h-4 w-4" aria-hidden />}
+                  title="Arrival data ready"
+                  text="All listed guides include WiFi, access instructions, rules, host contact, and reservation context."
+                />
+                <QueueItem
+                  icon={<Sparkles className="h-4 w-4" aria-hidden />}
+                  title="Local guide coverage"
+                  text="Every stay has restaurants, attractions, essential services, and a seasonal note."
+                />
+                <QueueItem
+                  icon={<MessageCircle className="h-4 w-4" aria-hidden />}
+                  title="Guest support active"
+                  text="Support chat answers from property and booking context with deterministic fallbacks."
+                />
+              </div>
+            </section>
+
             <section className="rounded-card border border-line bg-navy p-5 text-white shadow-raised">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-orange">
                 Product signals
@@ -195,10 +251,13 @@ export default function OperatorDashboardPage() {
                 Markets
               </p>
               <ul className="mt-4 space-y-3">
-                {marketSummary.map((market) => (
+                {topMarkets.map((market) => (
                   <li key={market.market} className="flex items-center justify-between gap-3">
                     <div>
-                      <p className="font-semibold text-navy">{market.market}</p>
+                      <p className="flex items-center gap-2 font-semibold text-navy">
+                        <MapPin className="h-4 w-4 text-coral" aria-hidden />
+                        {market.market}
+                      </p>
                       <p className="text-sm text-muted">{market.currency}</p>
                     </div>
                     <span className="rounded-full bg-cream px-3 py-1 text-xs font-semibold text-navy">
@@ -232,6 +291,28 @@ function Signal({
       <div>
         <p className="text-sm font-semibold text-white">{title}</p>
         <p className="mt-1 text-sm leading-6 text-white/68">{text}</p>
+      </div>
+    </div>
+  );
+}
+
+function QueueItem({
+  icon,
+  title,
+  text,
+}: {
+  icon: ReactNode;
+  title: string;
+  text: string;
+}) {
+  return (
+    <div className="flex gap-3 rounded-panel border border-line bg-cream/70 p-3">
+      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-field bg-coral-soft text-coral">
+        {icon}
+      </span>
+      <div>
+        <p className="text-sm font-semibold text-navy">{title}</p>
+        <p className="mt-1 text-sm leading-6 text-muted">{text}</p>
       </div>
     </div>
   );
