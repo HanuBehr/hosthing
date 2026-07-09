@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { PropertyGuide } from "@/components/property/property-guide";
 import { getPropertyByCode } from "@/server/properties";
+import { getDemoReservationForProperty } from "@/server/reservations";
 
 export const dynamic = "force-dynamic";
 
@@ -34,5 +35,7 @@ export default async function GuestGuidePage({ params }: PageProps) {
     notFound();
   }
 
-  return <PropertyGuide property={property} />;
+  const reservation = await getDemoReservationForProperty(property.id);
+
+  return <PropertyGuide property={property} reservation={reservation} />;
 }

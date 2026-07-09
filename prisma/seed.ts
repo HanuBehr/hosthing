@@ -449,12 +449,123 @@ const properties = [
   },
 ];
 
+const reservations = [
+  {
+    propertyCode: "SYD001",
+    reservationCode: "RSV-SYD-24091",
+    guestName: "Amelia Hart",
+    checkInDate: new Date("2026-08-12T15:00:00.000Z"),
+    checkOutDate: new Date("2026-08-17T11:00:00.000Z"),
+    guestCount: 4,
+    cleaningFee: "145.00",
+    currency: "AUD",
+    status: "confirmed",
+  },
+  {
+    propertyCode: "BLI001",
+    reservationCode: "RSV-BLI-18377",
+    guestName: "Noah Williams",
+    checkInDate: new Date("2026-09-04T14:00:00.000Z"),
+    checkOutDate: new Date("2026-09-10T11:00:00.000Z"),
+    guestCount: 6,
+    cleaningFee: "950000.00",
+    currency: "IDR",
+    status: "confirmed",
+  },
+  {
+    propertyCode: "NYG001",
+    reservationCode: "RSV-NYG-77102",
+    guestName: "Grace Miller",
+    checkInDate: new Date("2026-10-02T16:00:00.000Z"),
+    checkOutDate: new Date("2026-10-06T10:00:00.000Z"),
+    guestCount: 2,
+    cleaningFee: "125.00",
+    currency: "USD",
+    status: "confirmed",
+  },
+  {
+    propertyCode: "MEL001",
+    reservationCode: "RSV-MEL-55218",
+    guestName: "Liam Anderson",
+    checkInDate: new Date("2026-08-21T15:00:00.000Z"),
+    checkOutDate: new Date("2026-08-25T11:00:00.000Z"),
+    guestCount: 3,
+    cleaningFee: "120.00",
+    currency: "AUD",
+    status: "confirmed",
+  },
+  {
+    propertyCode: "TYO001",
+    reservationCode: "RSV-TYO-40966",
+    guestName: "Emma Clarke",
+    checkInDate: new Date("2026-11-12T15:00:00.000Z"),
+    checkOutDate: new Date("2026-11-16T10:00:00.000Z"),
+    guestCount: 2,
+    cleaningFee: "8500.00",
+    currency: "JPY",
+    status: "confirmed",
+  },
+  {
+    propertyCode: "SFO001",
+    reservationCode: "RSV-SFO-65012",
+    guestName: "Daniel Kim",
+    checkInDate: new Date("2026-09-18T16:00:00.000Z"),
+    checkOutDate: new Date("2026-09-22T11:00:00.000Z"),
+    guestCount: 5,
+    cleaningFee: "180.00",
+    currency: "USD",
+    status: "confirmed",
+  },
+  {
+    propertyCode: "RIO001",
+    reservationCode: "RSV-RIO-33018",
+    guestName: "Sophie Turner",
+    checkInDate: new Date("2026-12-05T15:00:00.000Z"),
+    checkOutDate: new Date("2026-12-11T11:00:00.000Z"),
+    guestCount: 4,
+    cleaningFee: "280.00",
+    currency: "BRL",
+    status: "confirmed",
+  },
+  {
+    propertyCode: "LIS001",
+    reservationCode: "RSV-LIS-88420",
+    guestName: "Oliver Scott",
+    checkInDate: new Date("2026-10-15T15:00:00.000Z"),
+    checkOutDate: new Date("2026-10-20T11:00:00.000Z"),
+    guestCount: 4,
+    cleaningFee: "85.00",
+    currency: "EUR",
+    status: "confirmed",
+  },
+];
+
 async function main() {
+  await prisma.reservation.deleteMany();
   await prisma.experienceGuide.deleteMany();
   await prisma.property.deleteMany();
 
   for (const property of properties) {
-    await prisma.property.create({ data: property });
+    const createdProperty = await prisma.property.create({ data: property });
+    const reservation = reservations.find(
+      (item) => item.propertyCode === property.code,
+    );
+
+    if (reservation) {
+      await prisma.reservation.create({
+        data: {
+          reservationCode: reservation.reservationCode,
+          guestName: reservation.guestName,
+          checkInDate: reservation.checkInDate,
+          checkOutDate: reservation.checkOutDate,
+          guestCount: reservation.guestCount,
+          cleaningFee: reservation.cleaningFee,
+          currency: reservation.currency,
+          status: reservation.status,
+          propertyId: createdProperty.id,
+        },
+      });
+    }
   }
 }
 

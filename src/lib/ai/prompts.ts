@@ -1,6 +1,7 @@
 import { getFullAddress } from "@/lib/format";
 import type { ExperienceGuide } from "@/lib/validators/experience-guide";
 import type { Property } from "@/lib/validators/property";
+import type { Reservation } from "@/lib/validators/reservation";
 
 export function buildExperienceGuidePrompt(property: Property) {
   const currentDate = new Intl.DateTimeFormat("en-US", {
@@ -36,6 +37,7 @@ Required rules:
 export function buildChatSystemPrompt(
   property: Property,
   guide: ExperienceGuide | null,
+  reservation: Reservation | null = null,
 ) {
   const fullAddress = getFullAddress(property);
 
@@ -46,6 +48,7 @@ Use only the data below for private or operational property information. If oper
 For public questions about the current property's area, act like a local concierge: answer using general knowledge as long as the answer is restricted to the current page location.
 Public local questions include history, culture, cuisine, restaurants, bars, cafes, markets, pharmacies, beaches, parks, museums, shopping, nightlife, known events, general safety, weather/seasonality, rain, children, walking, transport, airport, distance, and travel time.
 Never invent passwords, access codes, policies, exact distances, prices, fees, reservation numbers, rules, or contacts.
+Use reservation data only when it is explicitly present below. If reservation data is missing, say you do not have access to that booking detail.
 When the guest asks for local guides, restaurants, attractions, markets, pharmacies, or area tips, answer directly in the chat using the EXPERIENCE GUIDE when available.
 For open local questions, give a useful short paragraph instead of only a dry list.
 For restaurants, recommend at least 3 options when there is enough context, including name, approximate distance, and why it makes sense for this property.
@@ -94,6 +97,32 @@ HOST
 Name: ${property.host.name}
 Phone: ${property.host.phone}
 
+RESERVATION
+${
+  reservation
+    ? [
+        `Reservation code: ${reservation.reservationCode}`,
+        `Guest name: ${reservation.guestName}`,
+        `Check-in date: ${formatDate(reservation.checkInDate)}`,
+        `Check-out date: ${formatDate(reservation.checkOutDate)}`,
+        `Guest count: ${reservation.guestCount}`,
+        `Cleaning fee: ${formatMoney(reservation.cleaningFee, reservation.currency)}`,
+        `Status: ${reservation.status}`,
+      ].join("\n")
+    : "No reservation data is available in this guide."
+}
+
 EXPERIENCE GUIDE
 ${guide ? JSON.stringify(guide, null, 2) : "There is no generated experience guide for this property yet."}`;
+}
+
+function formatDate(date: Date) {
+  return new Intl.DateTimeFormat("en-US", { dateStyle: "medium" }).format(date);
+}
+
+function formatMoney(value: number, currency: string) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency,
+  }).format(value);
 }

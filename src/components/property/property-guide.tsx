@@ -10,11 +10,14 @@ import { ExperienceGuideSection } from "@/components/property/experience-guide-s
 import { HouseRules } from "@/components/property/house-rules";
 import { StaySummary } from "@/components/property/stay-summary";
 import type { Property } from "@/lib/validators/property";
+import type { Reservation } from "@/lib/validators/reservation";
 
 export function PropertyGuide({
   property,
+  reservation,
 }: {
   property: Property;
+  reservation: Reservation | null;
 }) {
   const heroImage = property.images[0];
   const shouldSkipOptimization =
@@ -102,7 +105,7 @@ export function PropertyGuide({
           />
         </div>
 
-        <StaySummary property={property} />
+        <StaySummary property={property} reservation={reservation} />
       </div>
 
       <ChatWidget propertyCode={property.code} />

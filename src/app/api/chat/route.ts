@@ -6,8 +6,10 @@ import { buildChatSystemPrompt } from "@/lib/ai/prompts";
 import { formatHour } from "@/lib/format";
 import type { ExperienceGuide } from "@/lib/validators/experience-guide";
 import type { Property } from "@/lib/validators/property";
+import type { Reservation } from "@/lib/validators/reservation";
 import { getExperienceGuideForProperty } from "@/server/experience-guides";
 import { getPropertyByCode } from "@/server/properties";
+import { getDemoReservationForProperty } from "@/server/reservations";
 
 export const runtime = "nodejs";
 
@@ -39,9 +41,13 @@ export async function POST(request: Request) {
   }
 
   const guide = await getExperienceGuideForProperty(property.id).catch(() => null);
+  const reservation = await getDemoReservationForProperty(property.id).catch(
+    () => null,
+  );
   const fallbackAnswer = buildFallbackAnswer(
     property,
     guide,
+    reservation,
     getLastUserMessage(body.data.messages) ?? "",
   );
 
@@ -51,7 +57,7 @@ export async function POST(request: Request) {
 
   const result = streamText({
     model: openai("gpt-4o-mini"),
-    system: buildChatSystemPrompt(property, guide),
+    system: buildChatSystemPrompt(property, guide, reservation),
     messages: body.data.messages,
   });
 
@@ -66,6 +72,7 @@ function getLastUserMessage(messages: z.infer<typeof chatRequestSchema>["message
 function buildFallbackAnswer(
   property: Property,
   guide: ExperienceGuide | null,
+  reservation: Reservation | null,
   message: string,
 ) {
   const normalized = normalizeMessage(message);
@@ -107,6 +114,22 @@ function buildFallbackAnswer(
     return `The host is ${property.host.name}. The phone number is ${property.host.phone}.`;
   }
 
+  if (hasAny(normalized, ["reservation", "booking", "confirmation", "number"])) {
+    if (!reservation) {
+      return "I do not have reservation details available in this guide. Please check the booking platform or contact the host.";
+    }
+
+    return `The reservation code is ${reservation.reservationCode}. The booking is under ${reservation.guestName} and is currently ${reservation.status}.`;
+  }
+
+  if (hasAny(normalized, ["cleaning", "cleaning fee", "fee", "cost", "charge"])) {
+    if (!reservation) {
+      return "I do not have fee details available in this guide. Please check the booking platform or contact the host.";
+    }
+
+    return `The cleaning fee for this reservation is ${formatMoney(reservation.cleaningFee, reservation.currency)}.`;
+  }
+
   if (hasAny(normalized, ["restaurant", "food", "eat", "dinner", "lunch"])) {
     if (guide?.restaurants.length) {
       return `For food near this property, I would consider ${formatPlaces(guide.restaurants.slice(0, 3), property)}. Check hours and route before leaving.`;
@@ -136,6 +159,13 @@ function buildFallbackAnswer(
   }
 
   return "I can help with WiFi, property access, house rules, host contact, restaurants, attractions, and nearby services. I will not invent private details that are not available in this guide.";
+}
+
+function formatMoney(value: number, currency: string) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency,
+  }).format(value);
 }
 
 function normalizeMessage(message: string) {

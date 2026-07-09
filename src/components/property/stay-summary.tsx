@@ -7,8 +7,15 @@ import {
   getFullAddress,
 } from "@/lib/format";
 import type { Property } from "@/lib/validators/property";
+import type { Reservation } from "@/lib/validators/reservation";
 
-export function StaySummary({ property }: { property: Property }) {
+export function StaySummary({
+  property,
+  reservation,
+}: {
+  property: Property;
+  reservation: Reservation | null;
+}) {
   const amenities = getEnabledAmenities(property);
   const whatsappUrl = `https://wa.me/${formatPhoneForWhatsApp(property.host.phone)}`;
 
@@ -34,6 +41,29 @@ export function StaySummary({ property }: { property: Property }) {
           />
         </dl>
       </section>
+
+      {reservation ? (
+        <section className="border-b border-line pb-5">
+          <SectionTitle eyebrow="Reservation" title="Demo booking" />
+          <dl className="mt-4 space-y-3 text-sm sm:mt-5 sm:space-y-4">
+            <Detail
+              icon={<Building2 className="h-4 w-4" aria-hidden />}
+              label="Reservation code"
+              value={reservation.reservationCode}
+            />
+            <Detail
+              icon={<User className="h-4 w-4" aria-hidden />}
+              label="Guest"
+              value={reservation.guestName}
+            />
+            <Detail
+              icon={<Phone className="h-4 w-4" aria-hidden />}
+              label="Cleaning fee"
+              value={formatMoney(reservation.cleaningFee, reservation.currency)}
+            />
+          </dl>
+        </section>
+      ) : null}
 
       <section
         id="contact"
@@ -80,6 +110,13 @@ export function StaySummary({ property }: { property: Property }) {
       ) : null}
     </aside>
   );
+}
+
+function formatMoney(value: number, currency: string) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency,
+  }).format(value);
 }
 
 function Detail({
