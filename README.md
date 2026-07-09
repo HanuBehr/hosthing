@@ -10,16 +10,16 @@ Production is deployed on Vercel.
 
 Demo codes:
 
-- `FLN001`
-- `CMP001`
-- `LAG001`
-- `JUR001`
-- `STO001`
-- `BNU001`
-- `BCA001`
-- `GRM001`
+- `SYD001`
+- `BLI001`
+- `NYG001`
+- `MEL001`
+- `TYO001`
+- `SFO001`
+- `RIO001`
+- `LIS001`
 
-The current dataset is being migrated from the original Brazil-focused demo to an international portfolio dataset.
+The demo dataset includes fictional stays in Sydney, Bali, New York, Melbourne, Tokyo, San Francisco, Rio de Janeiro, and Lisbon.
 
 ## Stack
 

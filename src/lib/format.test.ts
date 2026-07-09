@@ -21,7 +21,7 @@ describe("format helpers", () => {
 
   it("formats the full address with complement", () => {
     expect(getFullAddress(propertyFixture)).toBe(
-      "Rua Lauro Linhares, 589, Apto 301 - Trindade, Florianópolis/SC, 88036-001",
+      "Hickson Road, 23, Apt 1204 - The Rocks, Sydney/NSW, 2000",
     );
   });
 

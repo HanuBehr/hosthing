@@ -5,14 +5,14 @@ import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 
 const exampleCodes = [
-  "FLN001",
-  "CMP001",
-  "LAG001",
-  "JUR001",
-  "STO001",
-  "BNU001",
-  "BCA001",
-  "GRM001",
+  "SYD001",
+  "BLI001",
+  "NYG001",
+  "MEL001",
+  "TYO001",
+  "SFO001",
+  "RIO001",
+  "LIS001",
 ];
 
 export function PropertyCodeForm() {
@@ -48,7 +48,7 @@ export function PropertyCodeForm() {
           id="property-code"
           value={propertyCode}
           onChange={(event) => setPropertyCode(event.target.value)}
-          placeholder="Example: FLN001"
+          placeholder="Example: SYD001"
           className="h-14 min-w-0 flex-1 rounded-field border border-line bg-surface px-4 text-base font-semibold tracking-wide text-navy outline-none transition placeholder:font-medium placeholder:text-muted/70 hover:border-line-cool focus-visible:border-coral focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2"
           autoComplete="off"
           inputMode="text"

@@ -3,14 +3,14 @@ import Link from "next/link";
 import { BrandLogo } from "@/components/brand/brand-logo";
 
 const exampleCodes = [
-  "FLN001",
-  "CMP001",
-  "LAG001",
-  "JUR001",
-  "STO001",
-  "BNU001",
-  "BCA001",
-  "GRM001",
+  "SYD001",
+  "BLI001",
+  "NYG001",
+  "MEL001",
+  "TYO001",
+  "SFO001",
+  "RIO001",
+  "LIS001",
 ];
 
 export default function PropertyNotFound() {

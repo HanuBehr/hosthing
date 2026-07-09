@@ -7,11 +7,11 @@ describe("buildChatSystemPrompt", () => {
   it("includes the critical property facts required by the chat", () => {
     const prompt = buildChatSystemPrompt(propertyFixture, experienceGuideFixture);
 
-    expect(prompt).toContain("SeaHome_FLN001");
-    expect(prompt).toContain("floripa2024");
+    expect(prompt).toContain("HarbourLoft_SYD");
+    expect(prompt).toContain("harbour2026");
     expect(prompt).toContain("Check-in: 15:00");
     expect(prompt).toContain("Pets: Not allowed");
-    expect(prompt).toContain("Restaurante Meu Cantinho");
+    expect(prompt).toContain("Quay Restaurant");
   });
 
   it("instructs the assistant not to invent missing information", () => {
@@ -36,8 +36,8 @@ describe("buildChatSystemPrompt", () => {
     const prompt = buildChatSystemPrompt(propertyFixture, experienceGuideFixture);
 
     expect(prompt).toContain("MANDATORY CURRENT PAGE SCOPE");
-    expect(prompt).toContain("This conversation belongs exclusively to property FLN001");
-    expect(prompt).toContain("Trindade, Florianópolis/SC");
+    expect(prompt).toContain("This conversation belongs exclusively to property SYD001");
+    expect(prompt).toContain("The Rocks, Sydney/NSW");
     expect(prompt).toContain("Never answer as if the guest were in another code");
     expect(prompt).toContain("ignore that conflicting information");
   });
@@ -60,8 +60,8 @@ describe("buildExperienceGuidePrompt", () => {
   it("requires recommendations near the exact property address", () => {
     const prompt = buildExperienceGuidePrompt(propertyFixture);
 
-    expect(prompt).toContain("The current property is only this one: FLN001");
-    expect(prompt).toContain("Rua Lauro Linhares, 589");
+    expect(prompt).toContain("The current property is only this one: SYD001");
+    expect(prompt).toContain("Hickson Road, 23");
     expect(prompt).toContain("Do not recommend places from another city");
     expect(prompt).toContain("from the current property address");
   });
