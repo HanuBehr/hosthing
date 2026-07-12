@@ -69,7 +69,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="mt-6 grid auto-rows-[11rem] gap-4 sm:mt-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-6 grid auto-rows-[18rem] gap-4 sm:mt-8 sm:grid-cols-2 lg:grid-cols-4">
           {previewProperties.map((property, index) => (
             <GuideCard
               key={property.code}
@@ -179,9 +179,9 @@ function GuideCard({
   return (
     <Link
       href={`/${property.code}`}
-      className={`group relative grid h-full overflow-hidden rounded-[1.35rem] border border-line bg-surface shadow-card transition hover:-translate-y-1 hover:border-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2 ${className ?? ""}`}
+      className={`group relative grid h-full grid-rows-[minmax(0,1fr)_auto] overflow-hidden rounded-[1.35rem] border border-line bg-surface shadow-card transition hover:-translate-y-1 hover:border-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2 ${className ?? ""}`}
     >
-      <div className={`${featured ? "min-h-[15rem]" : "min-h-[8rem]"} relative overflow-hidden bg-sand`}>
+      <div className="relative min-h-0 overflow-hidden bg-sand">
         <Image
           src={property.images[0]}
           alt={property.name}
