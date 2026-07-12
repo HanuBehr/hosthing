@@ -125,40 +125,29 @@ function GuideMockup() {
   return (
     <aside
       aria-label="Hosthing guide preview"
-      className="rounded-[2rem] border border-line/80 bg-surface/92 p-3 shadow-card"
+      className="rounded-[2rem] border border-line/80 bg-surface/92 p-5 shadow-card sm:p-6"
     >
-      <div className="rounded-[1.55rem] border border-line/80 bg-white/55">
-        <div className="flex items-center gap-2 border-b border-line/70 px-4 py-3">
-          <span className="h-2.5 w-2.5 rounded-full bg-line" />
-          <span className="h-2.5 w-2.5 rounded-full bg-line-cool" />
-          <span className="h-2.5 w-2.5 rounded-full bg-coral" />
-          <span className="sr-only">Guest guide preview</span>
-        </div>
+      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-coral">
+        Guest access
+      </p>
+      <h2 className="mt-2 text-3xl font-semibold leading-none tracking-[-0.055em] text-navy">
+        Open a property guide
+      </h2>
+      <p className="mt-3 text-sm leading-6 text-muted">
+        Enter a code to open the exact guide for a stay, or preview how guests
+        see arrival details, rules, local tips, and support.
+      </p>
 
-        <div className="p-5 sm:p-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-coral">
-            Guest access
-          </p>
-          <h2 className="mt-2 text-3xl font-semibold leading-none tracking-[-0.055em] text-navy">
-            Open a property guide
-          </h2>
-          <p className="mt-3 text-sm leading-6 text-muted">
-            Enter a code to open the exact guide for a stay, or preview how
-            guests see arrival details, rules, local tips, and support.
-          </p>
-
-          <div className="mt-6 rounded-[1.25rem] border border-line bg-surface/82 p-4">
-            <PropertyCodeForm variant="embedded" />
-          </div>
-
-          <Link
-            href={`/${propertyCatalog[0].code}`}
-            className="mt-4 inline-flex text-sm font-semibold text-navy underline-offset-4 transition hover:text-coral hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50"
-          >
-            Preview {propertyCatalog[0].code}
-          </Link>
-        </div>
+      <div className="mt-6">
+        <PropertyCodeForm variant="embedded" showIntro={false} />
       </div>
+
+      <Link
+        href={`/${propertyCatalog[0].code}`}
+        className="mt-4 inline-flex text-sm font-semibold text-navy underline-offset-4 transition hover:text-coral hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50"
+      >
+        Preview {propertyCatalog[0].code}
+      </Link>
     </aside>
   );
 }
@@ -190,9 +179,9 @@ function GuideCard({
   return (
     <Link
       href={`/${property.code}`}
-      className={`group relative block h-full overflow-hidden rounded-[1.35rem] border border-line bg-surface shadow-card transition hover:-translate-y-1 hover:border-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2 ${className ?? ""}`}
+      className={`group relative grid h-full overflow-hidden rounded-[1.35rem] border border-line bg-surface shadow-card transition hover:-translate-y-1 hover:border-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2 ${className ?? ""}`}
     >
-      <div className={`${featured ? "h-full min-h-[18rem]" : "h-full min-h-[11rem]"} relative overflow-hidden bg-sand`}>
+      <div className={`${featured ? "min-h-[15rem]" : "min-h-[8rem]"} relative overflow-hidden bg-sand`}>
         <Image
           src={property.images[0]}
           alt={property.name}
@@ -200,17 +189,16 @@ function GuideCard({
           sizes="(max-width: 1024px) 50vw, 280px"
           className="object-cover transition duration-500 group-hover:scale-105"
         />
-        <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-navy/88 via-navy/38 to-transparent" />
       </div>
-      <div className="absolute inset-x-0 bottom-0 p-4 text-white">
+      <div className="self-end border-t border-line bg-surface/96 p-4 text-navy">
         <h3 className={`${featured ? "text-2xl" : "text-lg"} font-semibold leading-[1.05] tracking-[-0.04em]`}>
           {property.name}
         </h3>
-        <p className="mt-3 flex items-center gap-1.5 text-sm leading-5 text-white/82">
-          <MapPin className="h-4 w-4 shrink-0 text-coral-soft" aria-hidden />
+        <p className="mt-3 flex items-center gap-1.5 text-sm leading-5 text-muted">
+          <MapPin className="h-4 w-4 shrink-0 text-coral" aria-hidden />
           {property.address.neighborhood}, {property.address.city}
         </p>
-        <p className="mt-3 border-t border-white/20 pt-3 text-xs font-semibold text-white/78">
+        <p className="mt-3 border-t border-line pt-3 text-xs font-semibold text-muted">
           Guest guide · {property.code}
         </p>
       </div>

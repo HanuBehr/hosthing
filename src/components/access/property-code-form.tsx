@@ -7,11 +7,18 @@ import { Loader2 } from "lucide-react";
 
 import { propertyCodes } from "@/lib/property-catalog";
 
-export function PropertyCodeForm({ variant = "strip" }: { variant?: "strip" | "embedded" }) {
+export function PropertyCodeForm({
+  variant = "strip",
+  showIntro,
+}: {
+  variant?: "strip" | "embedded";
+  showIntro?: boolean;
+}) {
   const router = useRouter();
   const [propertyCode, setPropertyCode] = useState("");
   const [isPending, startTransition] = useTransition();
   const isEmbedded = variant === "embedded";
+  const shouldShowIntro = showIntro ?? !isEmbedded;
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -29,18 +36,20 @@ export function PropertyCodeForm({ variant = "strip" }: { variant?: "strip" | "e
       onSubmit={handleSubmit}
       noValidate
       aria-busy={isPending}
-      className={isEmbedded ? "space-y-3" : "flex flex-col gap-3 border-t border-line/80 py-5 sm:flex-row sm:items-center sm:justify-between"}
+      className={isEmbedded ? "space-y-2.5" : "flex flex-col gap-3 border-t border-line/80 py-5 sm:flex-row sm:items-center sm:justify-between"}
     >
-      <div className="min-w-0">
-        <label htmlFor="property-code" className="text-sm font-semibold text-navy">
-          {isEmbedded ? "Open a guide" : "Already have a property code?"}
-        </label>
-        <p className="mt-1 text-sm leading-5 text-muted">
-          {isEmbedded
-            ? "Enter the code from a reservation."
-            : "Guests can open the exact guide from their reservation."}
-        </p>
-      </div>
+      {shouldShowIntro ? (
+        <div className="min-w-0">
+          <label htmlFor="property-code" className="text-sm font-semibold text-navy">
+            {isEmbedded ? "Open a guide" : "Already have a property code?"}
+          </label>
+          <p className="mt-1 text-sm leading-5 text-muted">
+            {isEmbedded
+              ? "Enter the code from a reservation."
+              : "Guests can open the exact guide from their reservation."}
+          </p>
+        </div>
+      ) : null}
 
       <div className={isEmbedded ? "flex min-w-0 flex-col gap-2" : "flex min-w-0 flex-col gap-2 sm:w-auto sm:min-w-[28rem]"}>
         <div className="flex min-w-0 gap-2">
@@ -53,6 +62,7 @@ export function PropertyCodeForm({ variant = "strip" }: { variant?: "strip" | "e
             autoComplete="off"
             inputMode="text"
             aria-describedby="property-code-examples"
+            aria-label={shouldShowIntro ? undefined : "Property code"}
           />
           <button
             type="submit"
