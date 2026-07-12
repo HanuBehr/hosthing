@@ -69,7 +69,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="mt-6 grid auto-rows-[22rem] gap-4 sm:mt-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-6 grid auto-rows-[19rem] gap-4 sm:mt-8 sm:grid-cols-2 lg:grid-cols-4">
           {previewProperties.map((property, index) => (
             <GuideCard
               key={property.code}
@@ -154,7 +154,7 @@ function GuideMockup() {
 
 function getMosaicClass(index: number) {
   const classes = [
-    "sm:col-span-2 sm:row-span-2",
+    "sm:col-span-2 lg:col-span-2",
     "",
     "",
     "lg:col-span-2",
