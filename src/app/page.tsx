@@ -5,7 +5,6 @@ import {
   Bot,
   Clock3,
   DoorOpen,
-  LayoutDashboard,
   MapPin,
   Wifi,
 } from "lucide-react";
@@ -37,32 +36,12 @@ export default function Home() {
           className="inline-flex items-baseline gap-2 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50"
         >
           <span className="text-lg font-semibold tracking-[-0.04em] text-navy">Hosthing</span>
-          <span className="hidden text-sm font-semibold text-muted sm:inline">
-            Guest guide automation
-          </span>
         </Link>
-        <nav aria-label="Primary" className="flex items-center gap-2 text-sm font-semibold">
-          <a
-            href="#preview"
-            className="rounded-full px-3 py-2 text-muted transition hover:bg-coral-soft hover:text-coral focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50"
-          >
-            Preview
-          </a>
-          <Link
-            href="/operator"
-            className="rounded-full border border-line bg-surface/78 px-3 py-2 text-navy transition hover:border-coral hover:bg-coral-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50"
-          >
-            Host view
-          </Link>
-        </nav>
       </header>
 
       <section className="mx-auto grid min-h-[calc(100dvh-5.5rem)] max-w-[1220px] items-center gap-12 py-10 lg:grid-cols-[minmax(0,1fr)_480px] lg:gap-20 lg:py-12">
         <div className="max-w-3xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-coral">
-            AI guest guides for short-term rentals
-          </p>
-          <h1 className="mt-5 text-[clamp(2.55rem,5.7vw,5.35rem)] font-semibold leading-[0.92] tracking-[-0.07em] text-navy">
+          <h1 className="text-[clamp(2.55rem,5.7vw,5.35rem)] font-semibold leading-[0.92] tracking-[-0.07em] text-navy">
             Give every guest a guide that answers for you
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-7 text-muted sm:text-lg sm:leading-8">
@@ -83,7 +62,6 @@ export default function Home() {
               href="/operator"
               className="inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 font-semibold text-navy transition hover:bg-coral-soft hover:text-coral focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2"
             >
-              <LayoutDashboard className="h-4 w-4" aria-hidden />
               View host dashboard
             </Link>
           </div>
@@ -141,7 +119,7 @@ function GuideMockup() {
           <span className="h-2.5 w-2.5 rounded-full bg-line" />
           <span className="h-2.5 w-2.5 rounded-full bg-line-cool" />
           <span className="h-2.5 w-2.5 rounded-full bg-coral" />
-          <span className="ml-auto text-xs font-semibold text-muted">hosthing.app/SYD001</span>
+          <span className="sr-only">Guest guide preview</span>
         </div>
 
         <div className="p-5 sm:p-6">
