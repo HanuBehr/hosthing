@@ -30,16 +30,7 @@ const workflow = [
 export default function Home() {
   return (
     <main className="app-shell min-h-screen px-4 py-5 text-ink sm:px-8 sm:py-8 lg:px-10">
-      <header className="mx-auto flex max-w-[1220px] items-center justify-between gap-4">
-        <Link
-          href="/"
-          className="inline-flex items-baseline gap-2 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50"
-        >
-          <span className="text-lg font-semibold tracking-[-0.04em] text-navy">Hosthing</span>
-        </Link>
-      </header>
-
-      <section className="mx-auto grid min-h-[calc(100dvh-5.5rem)] max-w-[1220px] items-center gap-12 py-10 lg:grid-cols-[minmax(0,1fr)_480px] lg:gap-20 lg:py-12">
+      <section className="mx-auto grid min-h-[calc(100dvh-2.5rem)] max-w-[1220px] items-center gap-12 py-10 lg:grid-cols-[minmax(0,1fr)_480px] lg:gap-20 lg:py-12">
         <div className="max-w-3xl">
           <h1 className="text-[clamp(2.55rem,5.7vw,5.35rem)] font-semibold leading-[0.92] tracking-[-0.07em] text-navy">
             Give every guest a guide that answers for you
@@ -125,13 +116,14 @@ function GuideMockup() {
         <div className="p-5 sm:p-6">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-coral">
-              Guest guide
+              Hosthing workspace
             </p>
             <h2 className="mt-2 text-3xl font-semibold leading-none tracking-[-0.055em] text-navy">
-              Harbour Loft Sydney
+              One guide per property
             </h2>
             <p className="mt-3 text-sm leading-6 text-muted">
-              Everything renters need for arrival, access, rules, and local help.
+              Hosts organize arrival details, rules, local tips, and guest
+              support in one shareable experience.
             </p>
           </div>
 
