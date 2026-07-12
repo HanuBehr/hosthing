@@ -59,7 +59,6 @@ export function PropertyCodeForm() {
         id="property-code-examples"
         className="app-scroll -mx-4 mt-4 flex items-center gap-2 overflow-x-auto px-4 pb-1 text-xs text-muted sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0"
       >
-        <span className="shrink-0">Featured stays:</span>
         {propertyCodes.map((code) => (
           <button
             key={code}

@@ -25,8 +25,7 @@ export default function PropertyNotFound() {
         </Link>
 
         <div className="mt-8 border-t border-line pt-6">
-          <p className="text-xs font-medium text-muted">Featured stays:</p>
-          <div className="mt-3 flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2">
             {propertyCodes.map((code) => (
               <Link
                 key={code}

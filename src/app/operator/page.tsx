@@ -1,18 +1,12 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowLeft,
   Building2,
   CalendarCheck,
-  CircleDollarSign,
-  Globe2,
   MapPin,
-  MessageCircle,
   ParkingCircle,
-  ShieldCheck,
-  Sparkles,
   Users,
 } from "lucide-react";
 
@@ -197,55 +191,6 @@ export default function OperatorDashboardPage() {
           <aside className="space-y-5">
             <section className="rounded-card border border-line bg-surface/86 p-5 shadow-card">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-orange">
-                Attention queue
-              </p>
-              <div className="mt-4 space-y-3">
-                <QueueItem
-                  icon={<ShieldCheck className="h-4 w-4" aria-hidden />}
-                  title="Arrival data ready"
-                  text="All listed guides include WiFi, access instructions, rules, host contact, and reservation context."
-                />
-                <QueueItem
-                  icon={<Sparkles className="h-4 w-4" aria-hidden />}
-                  title="Local guide coverage"
-                  text="Every stay has restaurants, attractions, essential services, and a seasonal note."
-                />
-                <QueueItem
-                  icon={<MessageCircle className="h-4 w-4" aria-hidden />}
-                  title="Guest support active"
-                  text="Support chat answers from property and booking context with deterministic fallbacks."
-                />
-              </div>
-            </section>
-
-            <section className="rounded-card border border-navy/10 bg-navy p-5 text-white shadow-raised">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-orange-soft">
-                Product signals
-              </p>
-              <h2 className="mt-2 text-2xl font-semibold tracking-[-0.035em]">
-                What this dashboard controls
-              </h2>
-              <div className="mt-5 space-y-3">
-                <Signal
-                  icon={<Globe2 className="h-4 w-4" aria-hidden />}
-                  title="Multi-market catalog"
-                  text="The same guide workflow supports apartments, villas, condos, studios, and townhouses across countries."
-                />
-                <Signal
-                  icon={<MessageCircle className="h-4 w-4" aria-hidden />}
-                  title="Local guide workflow"
-                  text="Local recommendations are prepared on demand, validated, saved, and reused by the guest support chat."
-                />
-                <Signal
-                  icon={<CircleDollarSign className="h-4 w-4" aria-hidden />}
-                  title="Reservation context"
-                  text="Booking-specific fields like cleaning fee and reservation code are modeled separately from public local content."
-                />
-              </div>
-            </section>
-
-            <section className="rounded-card border border-line bg-surface/86 p-5 shadow-card">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-orange">
                 Markets
               </p>
               <ul className="mt-4 space-y-3">
@@ -269,49 +214,5 @@ export default function OperatorDashboardPage() {
         </section>
       </div>
     </main>
-  );
-}
-
-function Signal({
-  icon,
-  title,
-  text,
-}: {
-  icon: ReactNode;
-  title: string;
-  text: string;
-}) {
-  return (
-    <div className="flex gap-3 rounded-panel border border-white/12 bg-white/8 p-3">
-      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-field bg-white/10 text-orange">
-        {icon}
-      </span>
-      <div>
-        <p className="text-sm font-semibold text-white">{title}</p>
-        <p className="mt-1 text-sm leading-6 text-white/68">{text}</p>
-      </div>
-    </div>
-  );
-}
-
-function QueueItem({
-  icon,
-  title,
-  text,
-}: {
-  icon: ReactNode;
-  title: string;
-  text: string;
-}) {
-  return (
-    <div className="flex gap-3 rounded-panel border border-line bg-fog/75 p-3">
-      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-field bg-coral-soft text-coral">
-        {icon}
-      </span>
-      <div>
-        <p className="text-sm font-semibold text-navy">{title}</p>
-        <p className="mt-1 text-sm leading-6 text-muted">{text}</p>
-      </div>
-    </div>
   );
 }
