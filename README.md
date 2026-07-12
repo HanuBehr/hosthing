@@ -6,7 +6,7 @@ Hosthing is a rental guest experience app for short-term rental hosts who are ti
 
 ## Live App
 
-Production: https://seazone.vercel.app
+Production: https://hosthing.vercel.app
 
 Repository: https://github.com/HanuBehr/hosthing
 
