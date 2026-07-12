@@ -5,10 +5,10 @@ import { BedDouble, Users } from "lucide-react";
 import { PropertyCodeForm } from "@/components/access/property-code-form";
 import { propertyCatalog } from "@/lib/property-catalog";
 
-const supportImageUrl =
-  "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=82";
-
 export default function Home() {
+  const heroProperties = propertyCatalog.slice(0, 4);
+  const remainingProperties = propertyCatalog.slice(4);
+
   return (
     <main className="app-shell min-h-screen px-4 py-5 sm:px-8 sm:py-8 lg:px-10">
       <section className="mx-auto grid min-h-[calc(100dvh-2.5rem)] max-w-[1220px] items-center gap-10 lg:grid-cols-[minmax(0,1fr)_500px] lg:gap-16">
@@ -31,10 +31,10 @@ export default function Home() {
           </div>
         </div>
 
-        <ArrivalSupportVisual />
+        <HeroGuidePreview properties={heroProperties} />
       </section>
 
-      <section className="mx-auto mt-10 max-w-[1180px] pb-10 sm:mt-16 sm:pb-16">
+      <section className="mx-auto mt-8 max-w-[1180px] pb-10 sm:mt-10 sm:pb-16">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-orange">
@@ -47,49 +47,13 @@ export default function Home() {
         </div>
 
         <div className="mt-6 grid gap-4 sm:mt-8 sm:grid-cols-2 lg:grid-cols-4">
-          {propertyCatalog.map((property, index) => (
-            <Link
+          {remainingProperties.map((property, index) => (
+            <GuideCard
               key={property.code}
-              href={`/${property.code}`}
-              className={`group relative overflow-hidden rounded-[1.6rem] border border-line bg-navy shadow-card transition hover:-translate-y-1 hover:border-coral/60 hover:shadow-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2 ${index === 0 ? "min-h-[18rem] sm:col-span-2 lg:col-span-2" : "min-h-[21rem]"}`}
-            >
-                <Image
-                  src={property.images[0]}
-                  alt={property.name}
-                  fill
-                  sizes={index === 0 ? "(max-width: 1024px) 100vw, 50vw" : "(max-width: 1024px) 50vw, 25vw"}
-                  className="object-cover opacity-88 transition duration-700 group-hover:scale-105"
-                />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy/92 via-navy/18 to-transparent" />
-              <div className="absolute left-4 top-4 rounded-full bg-surface/90 px-3 py-1 text-xs font-semibold text-navy backdrop-blur">
-                {property.code}
-              </div>
-              <div className="absolute inset-x-0 bottom-0 p-4 text-white sm:p-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sun">
-                  {property.market}
-                </p>
-                <h3 className={`${index === 0 ? "max-w-md text-3xl" : "text-lg"} mt-2 font-semibold leading-none tracking-[-0.04em]`}>
-                  {property.name}
-                </h3>
-                <p className="mt-2 text-sm leading-5 text-white/78">
-                  {property.address.neighborhood}, {property.address.city}
-                </p>
-                <div className="mt-3 flex flex-wrap gap-1.5 text-xs font-semibold">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-white/16 px-2.5 py-1 text-white backdrop-blur">
-                    <Users className="h-3.5 w-3.5" aria-hidden />
-                    {property.guestCapacity} guests
-                  </span>
-                  <span className="inline-flex items-center gap-1 rounded-full bg-white/16 px-2.5 py-1 text-white backdrop-blur">
-                    <BedDouble className="h-3.5 w-3.5" aria-hidden />
-                    {property.bedroomQuantity} bed
-                    {property.bedroomQuantity > 1 ? "s" : ""}
-                  </span>
-                </div>
-                <p className="mt-3 text-xs font-semibold text-white/82">
-                  {property.typeLabel} · Self check-in
-                </p>
-              </div>
-            </Link>
+              property={property}
+              priority={false}
+              className={index === 0 ? "min-h-[18rem] sm:col-span-2" : "min-h-[21rem]"}
+            />
           ))}
         </div>
       </section>
@@ -98,51 +62,80 @@ export default function Home() {
   );
 }
 
-function ArrivalSupportVisual() {
+type GuideProperty = (typeof propertyCatalog)[number];
+
+function HeroGuidePreview({ properties }: { properties: GuideProperty[] }) {
+  const [featured, ...supporting] = properties;
+
   return (
     <aside
-      aria-label="Guest support overview"
-      className="flex justify-center lg:justify-end"
+      aria-label="Featured property guides"
+      className="grid gap-4"
     >
-      <div className="relative h-[280px] w-full max-w-lg overflow-hidden rounded-[2rem] border border-line bg-surface shadow-raised sm:h-[380px] lg:h-[460px] lg:max-w-none">
-        <Image
-          src={supportImageUrl}
-          alt="Modern short-term rental living room"
-          fill
-          priority
-          sizes="(max-width: 1024px) 100vw, 400px"
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-900/76 via-navy-900/6 to-transparent" />
-        <div className="absolute left-4 top-4 h-20 w-20 rounded-full border border-white/25 bg-white/10 backdrop-blur" />
-
-        <div className="absolute left-4 bottom-4 grid gap-2 sm:left-5 sm:bottom-5">
-          <HeroNote label="Access" value="Codes, WiFi, parking" />
-          <HeroNote label="Booking" value="Dates, fees, guests" />
-        </div>
-        <div className="absolute right-4 bottom-4 sm:right-5 sm:bottom-5">
-          <HeroNote label="Local" value="Food, maps, essentials" align="right" />
-        </div>
+      {featured ? (
+        <GuideCard property={featured} priority className="min-h-[15rem]" />
+      ) : null}
+      <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-[1fr_0.85fr_1fr]">
+        {supporting.map((property, index) => (
+          <GuideCard
+            key={property.code}
+            property={property}
+            priority={false}
+            className={index === 1 ? "min-h-[17rem]" : "min-h-[14rem]"}
+          />
+        ))}
       </div>
     </aside>
   );
 }
 
-function HeroNote({
-  label,
-  value,
-  align = "left",
+function GuideCard({
+  property,
+  priority,
+  className,
 }: {
-  label: string;
-  value: string;
-  align?: "left" | "right";
+  property: GuideProperty;
+  priority: boolean;
+  className: string;
 }) {
   return (
-    <div className={`rounded-full border border-white/35 bg-surface/88 px-3 py-2 text-navy shadow-card backdrop-blur-md ${align === "right" ? "text-right" : ""}`}>
-      <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-orange">
-        {label}
-      </p>
-      <p className="mt-0.5 text-xs font-semibold">{value}</p>
-    </div>
+    <Link
+      href={`/${property.code}`}
+      className={`group relative overflow-hidden rounded-[1.6rem] border border-line bg-navy shadow-card transition hover:-translate-y-1 hover:border-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2 ${className}`}
+    >
+      <Image
+        src={property.images[0]}
+        alt={property.name}
+        fill
+        priority={priority}
+        sizes={priority ? "(max-width: 1024px) 100vw, 500px" : "(max-width: 1024px) 33vw, 220px"}
+        className="object-cover opacity-95 transition duration-500 group-hover:scale-105"
+      />
+      <div className="absolute bottom-0 left-0 h-3/4 w-full bg-gradient-to-tr from-navy/96 via-navy/68 to-transparent" />
+      <div className="absolute bottom-0 left-0 max-w-[88%] p-4 text-white sm:p-5">
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sun">
+          {property.market}
+        </p>
+        <h3 className={`${priority ? "text-2xl" : "text-base"} mt-2 font-semibold leading-none tracking-[-0.04em]`}>
+          {property.name}
+        </h3>
+        <p className="mt-2 text-sm leading-5 text-white/82">
+          {property.address.neighborhood}, {property.address.city}
+        </p>
+        <div className="mt-3 flex flex-wrap gap-1.5 text-xs font-semibold">
+          <span className="inline-flex items-center gap-1 rounded-full bg-white/16 px-2.5 py-1 text-white backdrop-blur">
+            <Users className="h-3.5 w-3.5" aria-hidden />
+            {property.guestCapacity} guests
+          </span>
+          <span className="inline-flex items-center gap-1 rounded-full bg-white/16 px-2.5 py-1 text-white backdrop-blur">
+            <BedDouble className="h-3.5 w-3.5" aria-hidden />
+            {property.bedroomQuantity} bed{property.bedroomQuantity > 1 ? "s" : ""}
+          </span>
+        </div>
+        <p className="mt-3 text-xs font-semibold text-white/86">
+          {property.typeLabel} · Self check-in · {property.code}
+        </p>
+      </div>
+    </Link>
   );
 }
