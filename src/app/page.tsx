@@ -7,8 +7,6 @@ import {
   DoorOpen,
   LayoutDashboard,
   MapPin,
-  MessageCircle,
-  Sparkles,
   Wifi,
 } from "lucide-react";
 
@@ -17,11 +15,11 @@ import { propertyCatalog } from "@/lib/property-catalog";
 
 const previewProperties = propertyCatalog.slice(0, 4);
 
-const guideHighlights = [
-  { label: "Check-in", value: "From 3:00 PM", icon: Clock3 },
-  { label: "Access", value: "Lockbox and entry steps", icon: DoorOpen },
-  { label: "WiFi", value: "Network and password", icon: Wifi },
-  { label: "Local tips", value: "Food, essentials, nearby places", icon: MapPin },
+const guideRows = [
+  { label: "Arrival", value: "Check-in from 3:00 PM", icon: Clock3 },
+  { label: "Access", value: "Lockbox, entry steps, and parking", icon: DoorOpen },
+  { label: "WiFi", value: "Network and password ready to copy", icon: Wifi },
+  { label: "Local", value: "Nearby food, essentials, and tips", icon: MapPin },
 ] as const;
 
 const workflow = [
@@ -59,19 +57,18 @@ export default function Home() {
         </nav>
       </header>
 
-      <section className="mx-auto grid min-h-[calc(100dvh-5.5rem)] max-w-[1220px] items-center gap-10 py-10 lg:grid-cols-[minmax(0,1fr)_500px] lg:gap-16 lg:py-12">
+      <section className="mx-auto grid min-h-[calc(100dvh-5.5rem)] max-w-[1220px] items-center gap-12 py-10 lg:grid-cols-[minmax(0,1fr)_480px] lg:gap-20 lg:py-12">
         <div className="max-w-3xl">
-          <p className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/82 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-coral shadow-card">
-            <Sparkles className="h-3.5 w-3.5" aria-hidden />
-            For short-term rental hosts
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-coral">
+            AI guest guides for short-term rentals
           </p>
           <h1 className="mt-5 text-[clamp(2.55rem,5.7vw,5.35rem)] font-semibold leading-[0.92] tracking-[-0.07em] text-navy">
-            Stop repeating check-in instructions to every guest
+            Stop answering the same guest questions
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-7 text-muted sm:text-lg sm:leading-8">
-            Hosthing turns each property into a guest guide with arrival details,
-            house rules, local recommendations, booking context, and AI-powered
-            answers from one shared link.
+            Hosthing creates a shareable guide for each property with check-in
+            steps, WiFi, house rules, local tips, booking context, and AI
+            answers renters can use before and during their stay.
           </p>
 
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
@@ -84,19 +81,19 @@ export default function Home() {
             </Link>
             <Link
               href="/operator"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-line bg-surface/88 px-5 py-3 font-semibold text-navy shadow-card transition hover:-translate-y-0.5 hover:border-coral hover:bg-coral-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2"
+              className="inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 font-semibold text-navy transition hover:bg-coral-soft hover:text-coral focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2"
             >
               <LayoutDashboard className="h-4 w-4" aria-hidden />
               View host dashboard
             </Link>
           </div>
-
-          <div className="mt-8 max-w-xl">
-            <PropertyCodeForm />
-          </div>
         </div>
 
-        <ProductPreview />
+        <GuideMockup />
+      </section>
+
+      <section className="mx-auto max-w-[1180px] pb-8">
+        <PropertyCodeForm />
       </section>
 
       <section className="mx-auto grid max-w-[1180px] gap-4 border-y border-line py-8 sm:grid-cols-3 sm:py-10">
@@ -133,66 +130,61 @@ export default function Home() {
   );
 }
 
-function ProductPreview() {
+function GuideMockup() {
   return (
     <aside
-      aria-label="Hosthing product preview"
-      className="overflow-hidden rounded-[2rem] border border-line bg-surface shadow-raised"
+      aria-label="Hosthing guide preview"
+      className="rounded-[2rem] border border-line/80 bg-surface/92 p-3 shadow-card"
     >
-      <div className="border-b border-line bg-navy px-5 py-4 text-white sm:px-6">
-        <div className="flex items-center justify-between gap-4">
+      <div className="rounded-[1.55rem] border border-line/80 bg-white/55">
+        <div className="flex items-center gap-2 border-b border-line/70 px-4 py-3">
+          <span className="h-2.5 w-2.5 rounded-full bg-line" />
+          <span className="h-2.5 w-2.5 rounded-full bg-line-cool" />
+          <span className="h-2.5 w-2.5 rounded-full bg-coral" />
+          <span className="ml-auto text-xs font-semibold text-muted">hosthing.app/SYD001</span>
+        </div>
+
+        <div className="p-5 sm:p-6">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sun">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-coral">
               Guest guide
             </p>
-            <h2 className="mt-2 text-2xl font-semibold tracking-[-0.045em]">
+            <h2 className="mt-2 text-3xl font-semibold leading-none tracking-[-0.055em] text-navy">
               Harbour Loft Sydney
             </h2>
+            <p className="mt-3 text-sm leading-6 text-muted">
+              Everything renters need for arrival, access, rules, and local help.
+            </p>
           </div>
-          <span className="rounded-full bg-white/12 px-3 py-1 text-xs font-semibold text-white">
-            SYD001
-          </span>
-        </div>
-      </div>
 
-      <div className="p-4 sm:p-5">
-        <div className="grid gap-3 sm:grid-cols-2">
-          {guideHighlights.map((item) => {
-            const Icon = item.icon;
-            return (
-              <div key={item.label} className="rounded-panel border border-line bg-fog/72 p-3">
-                <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-coral">
-                  <Icon className="h-4 w-4" aria-hidden />
-                  {item.label}
-                </p>
-                <p className="mt-2 text-sm font-semibold leading-5 text-navy">
-                  {item.value}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="mt-4 rounded-[1.25rem] border border-line bg-surface p-4">
-          <p className="flex items-center gap-2 text-sm font-semibold text-navy">
-            <Bot className="h-4 w-4 text-coral" aria-hidden />
-            Ask about this stay
-          </p>
-          <div className="mt-3 rounded-panel bg-coral-soft p-3 text-sm leading-6 text-navy">
-            What is the WiFi password and where do I park?
+          <div className="mt-6 divide-y divide-line/70 border-y border-line/70">
+            {guideRows.map((item) => {
+              const Icon = item.icon;
+              return (
+                <div key={item.label} className="grid grid-cols-[2.25rem_5rem_minmax(0,1fr)] items-center gap-3 py-3">
+                  <span className="grid h-9 w-9 place-items-center rounded-full bg-coral-soft text-coral">
+                    <Icon className="h-4 w-4" aria-hidden />
+                  </span>
+                  <p className="text-sm font-semibold text-navy">{item.label}</p>
+                  <p className="min-w-0 text-sm leading-5 text-muted">{item.value}</p>
+                </div>
+              );
+            })}
           </div>
-          <div className="mt-2 rounded-panel bg-navy p-3 text-sm leading-6 text-white">
-            The WiFi details are in your guide. Parking instructions are listed
-            under Arrival essentials for this property.
-          </div>
-        </div>
 
-        <div className="mt-4 flex items-start gap-3 rounded-panel border border-line bg-orange-soft/72 p-3">
-          <MessageCircle className="mt-0.5 h-5 w-5 shrink-0 text-orange" aria-hidden />
-          <p className="text-sm leading-6 text-navy">
-            Renters get the information they need without hosts retyping the
-            same answers before every arrival.
-          </p>
+          <div className="mt-5 rounded-[1.25rem] bg-navy p-4 text-white">
+            <p className="flex items-center gap-2 text-sm font-semibold">
+              <Bot className="h-4 w-4 text-coral-soft" aria-hidden />
+              Ask Hosthing
+            </p>
+            <p className="mt-3 text-sm leading-6 text-white/78">
+              &quot;What is the WiFi password and where do I park?&quot;
+            </p>
+            <div className="mt-3 border-t border-white/14 pt-3 text-sm leading-6 text-white/88">
+              The guide answers from this property&apos;s arrival details, rules, and
+              booking context.
+            </div>
+          </div>
         </div>
       </div>
     </aside>
