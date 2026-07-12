@@ -11,25 +11,25 @@ const supportImageUrl =
 
 export default function Home() {
   return (
-    <main className="app-shell min-h-screen px-4 py-6 sm:px-8 sm:py-10 lg:px-10">
-      <section className="mx-auto grid min-h-[calc(100dvh-3rem)] max-w-[1120px] items-center gap-8 lg:grid-cols-[minmax(0,1fr)_430px] lg:gap-14">
+    <main className="app-shell min-h-screen px-4 py-5 sm:px-8 sm:py-8 lg:px-10">
+      <section className="mx-auto grid min-h-[calc(100dvh-2.5rem)] max-w-[1180px] items-center gap-8 lg:grid-cols-[minmax(0,1fr)_460px] lg:gap-16">
         <div className="max-w-2xl">
           <BrandLogo />
 
-          <div className="mt-8 sm:mt-12">
-            <div className="inline-flex rounded-full border border-line bg-surface/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-coral shadow-card">
+          <div className="mt-9 sm:mt-14">
+            <div className="inline-flex rounded-full border border-line bg-surface/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-coral shadow-card backdrop-blur">
               Host-ready arrival guides
             </div>
-            <h1 className="mt-4 text-[clamp(2.1rem,4.5vw,3.4rem)] font-semibold leading-[1.03] tracking-[-0.04em] text-navy">
+            <h1 className="mt-5 text-[clamp(2.45rem,5.4vw,4.65rem)] font-semibold leading-[0.93] tracking-[-0.065em] text-navy">
               A guest guide for the first five minutes of every stay
             </h1>
-            <p className="mt-4 max-w-xl text-base leading-7 text-muted sm:mt-5 sm:text-lg">
+            <p className="mt-5 max-w-xl text-base leading-7 text-muted sm:text-lg sm:leading-8">
               Open a property guide with arrival instructions, booking details,
               house rules, local recommendations, and fast help when guests
               need it.
             </p>
 
-            <div className="mt-6 max-w-lg rounded-card border border-line bg-surface p-4 shadow-card sm:mt-8 sm:p-6">
+            <div className="app-surface mt-7 max-w-xl rounded-card border border-line p-4 shadow-raised sm:mt-9 sm:p-6">
               <PropertyCodeForm />
             </div>
 
@@ -39,9 +39,9 @@ export default function Home() {
                 return (
                   <div
                     key={signal.label}
-                    className="rounded-field border border-line bg-surface/70 px-3 py-2 shadow-card"
+                    className="rounded-panel border border-line bg-surface/55 px-3 py-3 shadow-card backdrop-blur"
                   >
-                    <Icon className="mb-1 h-4 w-4 text-coral" aria-hidden />
+                    <Icon className="mb-2 h-4 w-4 text-coral" aria-hidden />
                     <p className="font-semibold text-navy">{signal.label}</p>
                     <p className="mt-0.5 leading-5">{signal.text}</p>
                   </div>
@@ -52,7 +52,7 @@ export default function Home() {
             <div className="mt-5 flex flex-wrap gap-3">
               <Link
                 href="/operator"
-                className="inline-flex rounded-field border border-line bg-surface px-4 py-2.5 text-sm font-semibold text-navy shadow-card transition hover:border-coral hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50"
+                className="inline-flex rounded-full border border-line bg-surface/70 px-4 py-2.5 text-sm font-semibold text-navy shadow-card transition hover:-translate-y-0.5 hover:border-coral hover:bg-coral-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50"
               >
                 Host dashboard
               </Link>
@@ -63,13 +63,13 @@ export default function Home() {
         <ArrivalSupportVisual />
       </section>
 
-      <section className="mx-auto mt-10 max-w-[1120px] pb-10 sm:mt-14 sm:pb-14">
+      <section className="mx-auto mt-10 max-w-[1180px] pb-10 sm:mt-16 sm:pb-16">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-coral">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-orange">
               Featured stays
             </p>
-            <h2 className="mt-3 text-2xl font-semibold tracking-[-0.035em] text-navy sm:text-3xl">
+            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.05em] text-navy sm:text-4xl">
               Explore the property guides
             </h2>
           </div>
@@ -79,14 +79,14 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="mt-5 grid gap-3 sm:mt-7 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-6 grid gap-4 sm:mt-8 sm:grid-cols-2 lg:grid-cols-4">
           {propertyCatalog.map((property) => (
             <Link
               key={property.code}
               href={`/${property.code}`}
-              className="group overflow-hidden rounded-card border border-line bg-surface shadow-card transition hover:-translate-y-1 hover:border-coral/60 hover:shadow-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2"
+              className="group overflow-hidden rounded-card border border-line bg-surface/86 shadow-card transition hover:-translate-y-1 hover:border-coral/60 hover:shadow-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2"
             >
-              <div className="relative h-40 overflow-hidden bg-mist">
+              <div className="relative h-48 overflow-hidden bg-mist">
                 <Image
                   src={property.images[0]}
                   alt={property.name}
@@ -94,15 +94,16 @@ export default function Home() {
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   className="object-cover transition duration-500 group-hover:scale-105"
                 />
-                <div className="absolute left-3 top-3 rounded-full bg-navy/88 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
+                <div className="absolute inset-0 bg-gradient-to-t from-navy/70 via-transparent to-transparent" />
+                <div className="absolute left-3 top-3 rounded-full bg-surface/90 px-3 py-1 text-xs font-semibold text-navy backdrop-blur">
                   {property.code}
                 </div>
-                <div className="absolute bottom-3 left-3 rounded-full bg-surface/92 px-3 py-1 text-xs font-semibold text-navy backdrop-blur">
+                <div className="absolute bottom-3 left-3 rounded-full bg-navy/82 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
                   {property.address.neighborhood}
                 </div>
               </div>
               <div className="p-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-coral">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-orange">
                   {property.market}
                 </p>
                 <h3 className="mt-2 text-base font-semibold leading-5 tracking-[-0.02em] text-navy">
@@ -116,7 +117,7 @@ export default function Home() {
                     <Users className="h-3.5 w-3.5" aria-hidden />
                     {property.guestCapacity} guests
                   </span>
-                  <span className="inline-flex items-center gap-1 rounded-full bg-cream px-2.5 py-1 text-navy">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-fog px-2.5 py-1 text-navy">
                     <BedDouble className="h-3.5 w-3.5" aria-hidden />
                     {property.bedroomQuantity} bed
                     {property.bedroomQuantity > 1 ? "s" : ""}
@@ -131,11 +132,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1120px] pb-12 sm:pb-16">
-        <div className="rounded-card border border-line bg-navy p-5 text-white shadow-raised sm:p-7 lg:p-8">
+      <section className="mx-auto max-w-[1180px] pb-12 sm:pb-16">
+        <div className="rounded-card border border-navy/10 bg-navy p-5 text-white shadow-raised sm:p-7 lg:p-8">
           <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-orange">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-orange-soft">
                 Host and guest workflow
               </p>
               <h2 className="mt-3 text-2xl font-semibold tracking-[-0.035em] sm:text-3xl">
@@ -152,7 +153,7 @@ export default function Home() {
               {guideHighlights.map((item) => (
                 <div
                   key={item.title}
-                  className="rounded-panel border border-white/12 bg-white/8 p-4 backdrop-blur"
+                  className="rounded-panel border border-white/12 bg-white/10 p-4 backdrop-blur"
                 >
                   <p className="text-sm font-semibold text-white">{item.title}</p>
                   <p className="mt-2 text-sm leading-6 text-white/68">
@@ -215,7 +216,7 @@ function ArrivalSupportVisual() {
       aria-label="Guest support overview"
       className="flex justify-center lg:justify-end"
     >
-      <div className="relative h-[240px] w-full max-w-lg overflow-hidden rounded-card border border-line bg-surface shadow-card sm:h-[380px] lg:h-[520px] lg:max-w-none">
+      <div className="relative h-[280px] w-full max-w-lg overflow-hidden rounded-[2rem] border border-line bg-surface shadow-raised sm:h-[420px] lg:h-[560px] lg:max-w-none">
         <Image
           src={supportImageUrl}
           alt="Modern short-term rental living room"
@@ -224,24 +225,25 @@ function ArrivalSupportVisual() {
           sizes="(max-width: 1024px) 100vw, 400px"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-900/70 via-navy-900/10 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-900/72 via-navy-900/8 to-transparent" />
+        <div className="absolute left-4 top-4 h-20 w-20 rounded-full border border-white/25 bg-white/10 backdrop-blur" />
 
-        <div className="absolute right-3 top-3 rounded-full border border-white/35 bg-white/18 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
+        <div className="absolute right-4 top-4 rounded-full border border-white/35 bg-white/18 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
           8 guides · 6 markets
         </div>
 
-        <div className="absolute inset-x-3 bottom-3 rounded-panel border border-white/40 bg-surface/90 p-3 text-navy shadow-card backdrop-blur-md sm:inset-x-4 sm:bottom-4 sm:p-4">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-coral">
+        <div className="absolute inset-x-4 bottom-4 rounded-card border border-white/45 bg-surface/88 p-4 text-navy shadow-raised backdrop-blur-md sm:inset-x-5 sm:bottom-5 sm:p-5">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-orange">
             Guest guide
           </p>
-          <p className="mt-2 text-base font-semibold tracking-[-0.02em]">
+          <p className="mt-2 text-lg font-semibold tracking-[-0.035em]">
             Access, reservation details, and stay support in one place.
           </p>
           <div className="mt-3 flex flex-wrap gap-2">
             {["Access", "Booking", "Local tips"].map((label) => (
               <span
                 key={label}
-                className="rounded-full border border-line bg-surface px-3 py-1 text-xs font-semibold text-navy"
+                className="rounded-full border border-line bg-fog px-3 py-1 text-xs font-semibold text-navy"
               >
                 {label}
               </span>

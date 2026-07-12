@@ -104,7 +104,7 @@ export function ExperienceGuideSection({
           title="Recommendations near this stay"
           description={`Recommendations for ${propertyName}, based on ${location}.`}
         />
-        <span className="inline-flex w-fit items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 text-xs font-semibold text-muted">
+        <span className="inline-flex w-fit items-center gap-2 rounded-full border border-line bg-surface/80 px-3 py-1 text-xs font-semibold text-muted shadow-card">
           <Sparkles className="h-3.5 w-3.5 text-coral" aria-hidden />
           Updated for this stay
         </span>
@@ -124,7 +124,7 @@ export function ExperienceGuideSection({
               <button
                 type="button"
                 onClick={retry}
-                className="mt-3 inline-flex items-center gap-2 rounded-field border border-line bg-surface px-3 py-2 text-sm font-semibold text-navy transition hover:border-coral hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50"
+                className="mt-3 inline-flex items-center gap-2 rounded-field border border-line bg-surface px-3 py-2 text-sm font-semibold text-navy transition hover:border-coral hover:bg-coral-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50"
               >
                 <RefreshCw className="h-4 w-4" aria-hidden />
                 Try again
@@ -172,8 +172,8 @@ function GuideContent({
   location: string;
 }) {
   return (
-    <div className="mt-4 rounded-card border border-line bg-surface/90 p-3 shadow-card sm:p-5">
-      <p className="rounded-panel bg-cream/70 p-3 text-sm leading-6 text-muted sm:p-4">
+    <div className="mt-4 rounded-card border border-line bg-surface/88 p-3 shadow-card sm:p-5">
+      <p className="rounded-panel bg-fog/75 p-3 text-sm leading-6 text-muted sm:p-4">
         {guide.welcome_message}
       </p>
 
@@ -193,17 +193,17 @@ function GuideContent({
         />
       </div>
 
-      <div className="mt-5 rounded-panel border border-line bg-cream/55 p-3 sm:p-4">
+      <div className="mt-5 rounded-panel border border-line bg-fog/65 p-3 sm:p-4">
         <h3 className="text-sm font-semibold uppercase tracking-[0.16em] text-coral">
           Essential services
         </h3>
         <ul className="mt-3 grid gap-3 sm:grid-cols-2">
           {guide.essentials.map((service) => (
-            <li key={`${service.name}-${service.distance}`} className="min-w-0 rounded-field border border-line bg-surface p-3">
+            <li key={`${service.name}-${service.distance}`} className="min-w-0 rounded-field border border-line bg-surface/92 p-3">
               <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
                 <p className="font-semibold text-navy">{service.name}</p>
                 <span className="text-xs font-semibold text-coral">{service.distance}</span>
-                <span className="rounded-full bg-cream px-2 py-0.5 text-[11px] font-semibold text-muted">
+                <span className="rounded-full bg-fog px-2 py-0.5 text-[11px] font-semibold text-muted">
                   {essentialLabels[service.type]}
                 </span>
               </div>
@@ -214,7 +214,7 @@ function GuideContent({
         </ul>
       </div>
 
-      <div className="mt-4 rounded-panel border border-coral/20 bg-coral-soft/70 px-3 py-2.5 text-sm leading-6 sm:mt-5 sm:px-4 sm:py-3">
+      <div className="mt-4 rounded-panel border border-orange/20 bg-orange-soft/70 px-3 py-2.5 text-sm leading-6 sm:mt-5 sm:px-4 sm:py-3">
         <span className="font-semibold text-navy">Seasonal tip: </span>
         <span className="text-muted">{guide.seasonal_tips}</span>
       </div>
@@ -241,7 +241,7 @@ function GuideGroup({
       </h3>
       <ol className="mt-3 grid gap-3">
         {places.map((place, index) => (
-          <li key={`${place.name}-${place.distance}`} className="grid grid-cols-[2.25rem_minmax(0,1fr)] gap-3 rounded-panel border border-line bg-surface p-3 shadow-card">
+          <li key={`${place.name}-${place.distance}`} className="grid grid-cols-[2.25rem_minmax(0,1fr)] gap-3 rounded-panel border border-line bg-surface/92 p-3 shadow-card">
             <span className="grid h-8 w-8 place-items-center rounded-field bg-coral-soft text-xs font-semibold text-coral">{String(index + 1).padStart(2, "0")}</span>
             <div className="min-w-0">
               <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">

@@ -17,7 +17,7 @@ const suggestions = [
 ];
 
 const initialAssistantMessage =
-  "Hi! I am the virtual concierge for this property. I can help with WiFi, access, house rules, restaurants, and nearby recommendations.";
+  "Hi, I can help with this stay: WiFi, access, house rules, restaurants, and nearby essentials.";
 
 export function ChatWidget({
   propertyCode,
@@ -134,10 +134,10 @@ export function ChatWidget({
         <div className="fixed inset-x-2 bottom-2 z-50 mx-auto flex max-h-[calc(100dvh-1rem)] max-w-md flex-col overflow-hidden rounded-card border border-line bg-surface shadow-pop pb-[env(safe-area-inset-bottom)] sm:inset-x-auto sm:right-5 sm:bottom-5 sm:max-h-[85dvh] sm:w-[400px]">
           <div className="flex items-center justify-between gap-3 bg-navy px-4 py-3.5 text-white sm:px-5 sm:py-4">
             <div className="flex min-w-0 items-center gap-3">
-              <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-field bg-orange">
+              <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full bg-orange">
                 <Image
                   src="/assistant-avatar.svg"
-                  alt="Hostwise concierge"
+                  alt="Hostwise stay support"
                   fill
                   sizes="40px"
                   className="object-cover"
@@ -145,7 +145,7 @@ export function ChatWidget({
               </span>
               <div className="min-w-0">
                 <p className="font-semibold tracking-[-0.01em]">
-                  Virtual concierge
+                  Stay support
                 </p>
                 <p className="truncate text-xs text-white/60">
                   Property code: {propertyCode}
@@ -164,7 +164,7 @@ export function ChatWidget({
 
           <div
             ref={scrollRef}
-            className="app-scroll flex-1 space-y-2.5 overflow-y-auto bg-cream p-3 sm:space-y-3 sm:p-4"
+            className="app-scroll flex-1 space-y-2.5 overflow-y-auto bg-fog p-3 sm:space-y-3 sm:p-4"
             role="log"
             aria-live="polite"
             aria-relevant="additions text"
@@ -175,7 +175,7 @@ export function ChatWidget({
                 className={
                   message.role === "user"
                     ? "ml-auto max-w-[92%] rounded-panel rounded-br-md bg-navy px-3 py-2.5 text-sm leading-6 text-white sm:max-w-[85%] sm:px-4 sm:py-3"
-                    : "mr-auto max-w-[92%] rounded-panel rounded-bl-md border border-line bg-surface px-3 py-2.5 text-sm leading-6 text-ink shadow-card sm:max-w-[85%] sm:px-4 sm:py-3"
+                    : "mr-auto max-w-[92%] rounded-panel rounded-bl-md border border-line bg-surface/95 px-3 py-2.5 text-sm leading-6 text-ink shadow-card sm:max-w-[85%] sm:px-4 sm:py-3"
                 }
               >
                 {message.content ? (
@@ -195,7 +195,7 @@ export function ChatWidget({
                   key={suggestion}
                   onClick={() => sendMessage(suggestion)}
                   disabled={isStreaming}
-                  className="shrink-0 rounded-full border border-line bg-surface px-3 py-1.5 text-xs font-semibold text-navy transition hover:border-coral hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="shrink-0 rounded-full border border-line bg-surface/85 px-3 py-1.5 text-xs font-semibold text-navy transition hover:border-coral hover:bg-coral-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {suggestion}
                 </button>
@@ -211,12 +211,12 @@ export function ChatWidget({
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
                 placeholder="Ask about your stay"
-                className="min-w-0 flex-1 rounded-field border border-line bg-cream px-3 py-2.5 text-base text-ink outline-none transition placeholder:text-muted focus:border-coral focus:bg-surface sm:px-4 sm:py-3"
+                className="min-w-0 flex-1 rounded-field border border-line bg-fog px-3 py-2.5 text-base text-ink outline-none transition placeholder:text-muted focus:border-coral focus:bg-surface sm:px-4 sm:py-3"
               />
               <button
                 type="submit"
                 disabled={isStreaming || !input.trim()}
-                className="flex shrink-0 items-center justify-center rounded-field bg-coral px-3 text-white transition hover:bg-coral-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 sm:px-3.5"
+                className="flex shrink-0 items-center justify-center rounded-field bg-navy px-3 text-white transition hover:bg-navy-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 sm:px-3.5"
                 aria-label="Send message"
               >
                 <Send className="h-5 w-5" aria-hidden />
@@ -235,7 +235,7 @@ export function ChatWidget({
                 setIsOpen(true);
                 setHasUnreadIntro(false);
               }}
-              className="relative max-w-[230px] rounded-panel border border-line bg-surface px-3.5 py-2.5 text-left text-sm font-semibold leading-5 text-navy shadow-pop transition hover:-translate-y-0.5 hover:border-coral focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 sm:max-w-[260px] sm:px-4 sm:py-3"
+              className="relative max-w-[230px] rounded-panel border border-line bg-surface/95 px-3.5 py-2.5 text-left text-sm font-semibold leading-5 text-navy shadow-pop transition hover:-translate-y-0.5 hover:border-coral focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 sm:max-w-[260px] sm:px-4 sm:py-3"
             >
               Need help with WiFi, access, or local tips?
               <span className="absolute -bottom-1.5 right-6 h-3 w-3 rotate-45 border-b border-r border-line bg-surface" />
@@ -249,7 +249,7 @@ export function ChatWidget({
               setHasUnreadIntro(false);
             }}
             className="relative flex h-14 w-14 items-center justify-center gap-2 rounded-full bg-navy font-semibold text-white shadow-pop transition hover:-translate-y-0.5 hover:bg-navy-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/60 focus-visible:ring-offset-2 sm:h-auto sm:w-auto sm:px-4 sm:py-3"
-            aria-label="Open virtual concierge"
+            aria-label="Open stay support"
           >
             {hasUnreadIntro ? (
               <span className="absolute -right-1.5 -top-1.5 grid h-6 min-w-6 place-items-center rounded-full border-2 border-surface bg-red-600 px-1.5 text-xs font-bold leading-none text-white">
@@ -265,7 +265,7 @@ export function ChatWidget({
                 className="object-cover"
               />
             </span>
-            <span className="hidden sm:inline">Virtual concierge</span>
+            <span className="hidden sm:inline">Stay support</span>
           </button>
         </div>
       ) : null}

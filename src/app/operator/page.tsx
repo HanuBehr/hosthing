@@ -82,7 +82,7 @@ export default function OperatorDashboardPage() {
         <header className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <BrandLogo />
-            <p className="mt-5 text-xs font-semibold uppercase tracking-[0.22em] text-coral">
+            <p className="mt-5 text-xs font-semibold uppercase tracking-[0.22em] text-orange">
               Operator view
             </p>
             <h1 className="mt-3 max-w-3xl text-[clamp(2.1rem,5vw,4.6rem)] font-semibold leading-[0.98] tracking-[-0.055em] text-navy">
@@ -96,7 +96,7 @@ export default function OperatorDashboardPage() {
 
           <Link
             href="/"
-            className="inline-flex w-fit items-center gap-2 rounded-field border border-line bg-surface px-4 py-2.5 text-sm font-semibold text-navy shadow-card transition hover:border-coral hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50"
+            className="inline-flex w-fit items-center gap-2 rounded-full border border-line bg-surface/80 px-4 py-2.5 text-sm font-semibold text-navy shadow-card transition hover:-translate-y-0.5 hover:border-coral hover:bg-coral-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden />
             Guest launcher
@@ -109,7 +109,7 @@ export default function OperatorDashboardPage() {
             return (
               <div
                 key={stat.label}
-                className="rounded-card border border-line bg-surface p-4 shadow-card sm:p-5"
+                className="rounded-card border border-line bg-surface/86 p-4 shadow-card sm:p-5"
               >
                 <span className="grid h-10 w-10 place-items-center rounded-field bg-coral-soft text-coral">
                   <Icon className="h-5 w-5" aria-hidden />
@@ -127,10 +127,10 @@ export default function OperatorDashboardPage() {
         </section>
 
         <section className="mt-5 grid gap-5 lg:grid-cols-[1.3fr_0.7fr]">
-          <div className="rounded-card border border-line bg-surface p-4 shadow-card sm:p-5">
+          <div className="rounded-card border border-line bg-surface/86 p-4 shadow-card sm:p-5">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-coral">
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-orange">
                   Property operations
                 </p>
                 <h2 className="mt-2 text-2xl font-semibold tracking-[-0.035em] text-navy">
@@ -144,61 +144,61 @@ export default function OperatorDashboardPage() {
             </div>
 
             <div className="mt-5 grid gap-3">
-                {propertyCatalog.map((property) => (
-                  <Link
-                    href={`/${property.code}`}
-                    key={property.code}
-                    className="grid gap-3 rounded-panel border border-line bg-surface p-3 shadow-card transition hover:-translate-y-0.5 hover:border-coral/60 hover:bg-cream sm:grid-cols-[6rem_minmax(0,1fr)_auto] sm:items-center sm:p-4"
-                  >
-                    <div className="relative h-20 overflow-hidden rounded-field bg-mist sm:h-16">
-                      <Image
-                        src={property.images[0]}
-                        alt=""
-                        fill
-                        sizes="80px"
-                        className="object-cover"
-                      />
-                    </div>
+              {propertyCatalog.map((property) => (
+                <Link
+                  href={`/${property.code}`}
+                  key={property.code}
+                  className="grid gap-3 rounded-panel border border-line bg-surface/92 p-3 shadow-card transition hover:-translate-y-0.5 hover:border-coral/60 hover:bg-fog sm:grid-cols-[6rem_minmax(0,1fr)_auto] sm:items-center sm:p-4"
+                >
+                  <div className="relative h-20 overflow-hidden rounded-field bg-mist sm:h-16">
+                    <Image
+                      src={property.images[0]}
+                      alt=""
+                      fill
+                      sizes="80px"
+                      className="object-cover"
+                    />
+                  </div>
 
-                    <div className="min-w-0">
-                      <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                        <p className="font-semibold tracking-[-0.01em] text-navy">
-                          {property.name}
-                        </p>
-                        <span className="rounded-full bg-coral-soft px-2 py-0.5 text-[11px] font-semibold text-coral">
-                          {property.code}
-                        </span>
-                      </div>
-                      <p className="mt-1 text-sm leading-5 text-muted">
-                        {property.address.neighborhood}, {property.address.city} · {property.typeLabel}
+                  <div className="min-w-0">
+                    <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                      <p className="font-semibold tracking-[-0.01em] text-navy">
+                        {property.name}
                       </p>
-                      <div className="mt-2 flex flex-wrap gap-1.5 text-[11px] font-semibold">
-                        <span className="rounded-full bg-coral-soft px-2 py-0.5 text-coral">
-                          {property.guestCapacity} guests
-                        </span>
-                        <span className="rounded-full bg-cream px-2 py-0.5 text-navy">
-                          {property.bedroomQuantity} bed{property.bedroomQuantity > 1 ? "s" : ""}
-                        </span>
-                        <span className="rounded-full bg-positive-soft px-2 py-0.5 text-positive">
-                          Guide ready
-                        </span>
-                        <span className="rounded-full bg-cream px-2 py-0.5 text-muted">
-                          {property.operational.has_parking_spot ? "Parking" : "No parking"}
-                        </span>
-                      </div>
+                      <span className="rounded-full bg-coral-soft px-2 py-0.5 text-[11px] font-semibold text-coral">
+                        {property.code}
+                      </span>
                     </div>
+                    <p className="mt-1 text-sm leading-5 text-muted">
+                      {property.address.neighborhood}, {property.address.city} · {property.typeLabel}
+                    </p>
+                    <div className="mt-2 flex flex-wrap gap-1.5 text-[11px] font-semibold">
+                      <span className="rounded-full bg-coral-soft px-2 py-0.5 text-coral">
+                        {property.guestCapacity} guests
+                      </span>
+                      <span className="rounded-full bg-fog px-2 py-0.5 text-navy">
+                        {property.bedroomQuantity} bed{property.bedroomQuantity > 1 ? "s" : ""}
+                      </span>
+                      <span className="rounded-full bg-positive-soft px-2 py-0.5 text-positive">
+                        Guide ready
+                      </span>
+                      <span className="rounded-full bg-fog px-2 py-0.5 text-muted">
+                        {property.operational.has_parking_spot ? "Parking" : "No parking"}
+                      </span>
+                    </div>
+                  </div>
 
-                    <span className="inline-flex w-fit rounded-full border border-line bg-surface px-3 py-1 text-xs font-semibold text-navy">
-                      Open guide
-                    </span>
-                  </Link>
-                ))}
+                  <span className="inline-flex w-fit rounded-full border border-line bg-surface/90 px-3 py-1 text-xs font-semibold text-navy">
+                    Open guide
+                  </span>
+                </Link>
+              ))}
             </div>
           </div>
 
           <aside className="space-y-5">
-            <section className="rounded-card border border-line bg-surface p-5 shadow-card">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-coral">
+            <section className="rounded-card border border-line bg-surface/86 p-5 shadow-card">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-orange">
                 Attention queue
               </p>
               <div className="mt-4 space-y-3">
@@ -220,8 +220,8 @@ export default function OperatorDashboardPage() {
               </div>
             </section>
 
-            <section className="rounded-card border border-line bg-navy p-5 text-white shadow-raised">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-orange">
+            <section className="rounded-card border border-navy/10 bg-navy p-5 text-white shadow-raised">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-orange-soft">
                 Product signals
               </p>
               <h2 className="mt-2 text-2xl font-semibold tracking-[-0.035em]">
@@ -246,8 +246,8 @@ export default function OperatorDashboardPage() {
               </div>
             </section>
 
-            <section className="rounded-card border border-line bg-surface p-5 shadow-card">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-coral">
+            <section className="rounded-card border border-line bg-surface/86 p-5 shadow-card">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-orange">
                 Markets
               </p>
               <ul className="mt-4 space-y-3">
@@ -260,7 +260,7 @@ export default function OperatorDashboardPage() {
                       </p>
                       <p className="text-sm text-muted">{market.currency}</p>
                     </div>
-                    <span className="rounded-full bg-cream px-3 py-1 text-xs font-semibold text-navy">
+                    <span className="rounded-full bg-fog px-3 py-1 text-xs font-semibold text-navy">
                       {market.properties} {market.properties > 1 ? "properties" : "property"}
                     </span>
                   </li>
@@ -306,7 +306,7 @@ function QueueItem({
   text: string;
 }) {
   return (
-    <div className="flex gap-3 rounded-panel border border-line bg-cream/70 p-3">
+    <div className="flex gap-3 rounded-panel border border-line bg-fog/75 p-3">
       <span className="grid h-8 w-8 shrink-0 place-items-center rounded-field bg-coral-soft text-coral">
         {icon}
       </span>

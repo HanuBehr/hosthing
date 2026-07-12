@@ -80,7 +80,7 @@ export function HouseRules({ property }: { property: Property }) {
           return (
             <li
               key={rule.text}
-                className="flex items-center gap-3 rounded-panel border border-line bg-surface/85 p-3 sm:p-4"
+              className="flex items-center gap-3 rounded-panel border border-line bg-surface/86 p-3 shadow-card sm:p-4"
             >
               <span
                 className={`grid h-9 w-9 shrink-0 place-items-center rounded-field ${

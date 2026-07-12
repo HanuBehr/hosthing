@@ -20,7 +20,7 @@ export function StaySummary({
   const whatsappUrl = `https://wa.me/${formatPhoneForWhatsApp(property.host.phone)}`;
 
   return (
-    <aside className="space-y-4 rounded-card border border-line bg-surface/90 p-4 shadow-card sm:space-y-5 sm:p-5 lg:sticky lg:top-24 lg:self-start">
+    <aside className="space-y-4 rounded-card border border-line bg-surface/86 p-4 shadow-card backdrop-blur sm:space-y-5 sm:p-5 lg:sticky lg:top-24 lg:self-start">
       <section className="border-b border-line pb-5">
         <SectionTitle eyebrow="Your stay" title="Summary" />
         <dl className="mt-4 space-y-3 text-sm sm:mt-5 sm:space-y-4">
@@ -84,7 +84,7 @@ export function StaySummary({
         className="scroll-mt-24 border-b border-line pb-5"
       >
         <SectionTitle eyebrow="Contact" title="Host" />
-        <div className="mt-4 rounded-panel border border-line bg-cream/70 p-3 sm:mt-5">
+        <div className="mt-4 rounded-panel border border-line bg-fog/75 p-3 sm:mt-5">
           <div className="flex items-start gap-3">
             <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-navy text-sm font-semibold text-white">
               {property.host.name.slice(0, 1)}
@@ -102,7 +102,7 @@ export function StaySummary({
           href={whatsappUrl}
           target="_blank"
           rel="noreferrer"
-          className="mt-4 flex items-center justify-center gap-2 rounded-field bg-orange px-5 py-3 font-semibold text-white transition hover:bg-orange-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange/50 focus-visible:ring-offset-2 sm:mt-5"
+          className="mt-4 flex items-center justify-center gap-2 rounded-full bg-navy px-5 py-3 font-semibold text-white shadow-card transition hover:-translate-y-0.5 hover:bg-navy-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2 sm:mt-5"
         >
           <MessageCircle className="h-4 w-4" aria-hidden />
           Contact host
@@ -144,7 +144,7 @@ function formatDate(value: Date) {
 
 function MiniStat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-field border border-line bg-cream/70 px-3 py-2">
+    <div className="rounded-field border border-line bg-fog/75 px-3 py-2">
       <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">
         {label}
       </p>

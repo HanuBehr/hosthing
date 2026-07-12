@@ -34,7 +34,7 @@ export function CopyButton({ value, label }: { value: string; label: string }) {
       onClick={handleCopy}
       aria-label={copied ? "Copied" : label}
       title={copied ? "Copied" : label}
-      className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-coral-soft text-coral transition hover:bg-coral hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2"
+      className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-coral-soft text-coral shadow-card transition hover:bg-coral hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2"
     >
       {copied ? (
         <Check className="h-3.5 w-3.5" aria-hidden />

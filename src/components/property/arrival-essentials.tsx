@@ -18,7 +18,7 @@ export function ArrivalEssentials({ property }: { property: Property }) {
       className="scroll-mt-24 border-b border-line bg-transparent pb-6 sm:pb-8"
     >
       <div className="space-y-1.5">
-        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-coral">
+        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-orange">
           Arrival essentials
         </p>
         <h2 className="text-xl font-semibold tracking-[-0.02em] text-navy sm:text-2xl">
@@ -43,13 +43,13 @@ export function ArrivalEssentials({ property }: { property: Property }) {
         />
 
         <Tile icon={<Wifi className="h-5 w-5" />} label="WiFi">
-          <div className="mt-3 rounded-field border border-line bg-cream/70 p-3">
+          <div className="mt-3 rounded-field border border-line bg-fog/80 p-3">
             <p className="text-xs font-medium text-muted">Network</p>
             <p className="mt-1 truncate font-semibold text-navy" title={operational.wifi_network}>
               {operational.wifi_network}
             </p>
           </div>
-          <div className="mt-2 flex items-center justify-between gap-3 rounded-field border border-line bg-surface px-3 py-2">
+          <div className="mt-2 flex items-center justify-between gap-3 rounded-field border border-line bg-surface/95 px-3 py-2">
             <div className="min-w-0">
               <p className="text-xs font-medium text-muted">Password</p>
               <p className="mt-0.5 truncate font-semibold text-navy" title={operational.wifi_password}>
@@ -73,7 +73,7 @@ export function ArrivalEssentials({ property }: { property: Property }) {
         </Tile>
       </div>
 
-      <div className="mt-3 rounded-card border border-coral/20 bg-surface p-3 shadow-card sm:p-5">
+      <div className="mt-3 rounded-card border border-coral/20 bg-surface/92 p-3 shadow-card sm:p-5">
         <div className="flex items-start gap-3">
           <span className="grid h-10 w-10 shrink-0 place-items-center rounded-field bg-coral text-white shadow-card">
             <DoorOpen className="h-5 w-5" aria-hidden />
@@ -89,7 +89,7 @@ export function ArrivalEssentials({ property }: { property: Property }) {
               {operational.property_access_instructions}
             </p>
             {operational.property_password ? (
-              <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-field border border-line bg-cream/80 px-3 py-2">
+              <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-field border border-line bg-fog/85 px-3 py-2">
                 <KeyRound className="h-4 w-4 shrink-0 text-coral" aria-hidden />
                 <span className="min-w-0">
                   <span className="block text-xs font-medium text-muted">Access code</span>
@@ -127,7 +127,7 @@ function Tile({
   children?: ReactNode;
 }) {
   return (
-    <div className="rounded-panel border border-line bg-surface/90 p-3 shadow-card sm:p-4">
+    <div className="rounded-panel border border-line bg-surface/86 p-3 shadow-card sm:p-4">
       <p className="flex items-center gap-2 text-xs font-medium text-muted">
         <span className="grid h-8 w-8 shrink-0 place-items-center rounded-field bg-coral-soft text-coral">
           {icon}

@@ -2,48 +2,50 @@
 
 /* ------------------------------------------------------------------ *
  * Hostwise design tokens.
- * A premium hospitality palette: deep navy, warm off-white surfaces,
- * coral as the primary action, and orange as a sparing support accent.
+ * Bright boutique travel palette: limestone, paper, mineral greens,
+ * weathered bronze, and deep ink. The UI should feel edited, not loud.
  * ------------------------------------------------------------------ */
 @theme {
-  /* Brand — navy */
-  --color-navy: #06243d;
-  --color-navy-700: #0d3a5c;
-  --color-navy-900: #031f33;
+  /* Core neutrals */
+  --color-navy: #1f2f2d;
+  --color-navy-700: #344943;
+  --color-navy-900: #121c1a;
+  --color-ink: #17211f;
+  --color-muted: #6f7b72;
 
-  /* Brand — actions */
-  --color-coral: #ff6b5f;
-  --color-coral-600: #ef5648;
-  --color-coral-soft: #fff0ee;
-  --color-orange: #ff8a1c;
-  --color-orange-600: #ef7c08;
-  --color-orange-soft: #fff3e2;
+  /* Editorial surfaces */
+  --color-cream: #f5f0e6;
+  --color-sand: #e8decc;
+  --color-surface: #fffdf8;
+  --color-mist: #dfe6df;
+  --color-fog: #edf1ea;
+  --color-limestone: #d8cfbd;
 
-  /* Surfaces */
-  --color-cream: #fbf9f4;
-  --color-sand: #f4efe5;
-  --color-surface: #ffffff;
-  --color-mist: #eef2f6;
-
-  /* Text */
-  --color-ink: #0c2c47;
-  --color-muted: #5f7286;
+  /* Accents */
+  --color-coral: #2f6f62;
+  --color-coral-600: #23574d;
+  --color-coral-soft: #e3eee8;
+  --color-orange: #9a6b42;
+  --color-orange-600: #7a5230;
+  --color-orange-soft: #efe3d4;
+  --color-clay: #b56f53;
+  --color-clay-soft: #f0ded6;
 
   /* Lines + semantic */
-  --color-line: #e7e3da;
-  --color-line-cool: #e3e8ee;
-  --color-positive: #2e9e6b;
-  --color-positive-soft: #e9f6ef;
+  --color-line: #ded5c6;
+  --color-line-cool: #cad6cf;
+  --color-positive: #487b58;
+  --color-positive-soft: #e5eee4;
 
   /* Radius scale — brand-specific names to avoid clobbering rounded-md/lg */
-  --radius-card: 1.25rem;
-  --radius-panel: 1rem;
-  --radius-field: 0.85rem;
+  --radius-card: 1.55rem;
+  --radius-panel: 1.05rem;
+  --radius-field: 0.72rem;
 
   /* Shadow scale */
-  --shadow-card: 0 1px 2px rgba(6, 36, 61, 0.04), 0 14px 34px rgba(6, 36, 61, 0.06);
-  --shadow-raised: 0 2px 6px rgba(6, 36, 61, 0.05), 0 22px 48px rgba(6, 36, 61, 0.1);
-  --shadow-pop: 0 18px 50px rgba(3, 25, 42, 0.22);
+  --shadow-card: 0 1px 0 rgba(23, 33, 31, 0.04), 0 18px 42px rgba(44, 49, 40, 0.08);
+  --shadow-raised: 0 2px 0 rgba(23, 33, 31, 0.05), 0 28px 70px rgba(44, 49, 40, 0.14);
+  --shadow-pop: 0 18px 60px rgba(18, 28, 26, 0.24);
 }
 
 @theme inline {
@@ -63,7 +65,7 @@ body {
 }
 
 ::selection {
-  background: rgba(255, 107, 95, 0.22);
+  background: rgba(47, 111, 98, 0.22);
   color: var(--color-navy-900);
 }
 
@@ -74,12 +76,18 @@ textarea {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Warm page wash used on light screens (landing, invalid code). */
+/* Editorial page wash used across the product. */
 .app-shell {
   background:
-    radial-gradient(circle at 8% 6%, rgba(255, 138, 28, 0.07), transparent 22rem),
-    radial-gradient(circle at 94% 12%, rgba(255, 107, 95, 0.07), transparent 20rem),
-    linear-gradient(160deg, var(--color-cream) 0%, var(--color-sand) 100%);
+    radial-gradient(circle at 12% 8%, rgba(47, 111, 98, 0.11), transparent 26rem),
+    radial-gradient(circle at 88% 4%, rgba(154, 107, 66, 0.13), transparent 24rem),
+    radial-gradient(circle at 60% 100%, rgba(223, 230, 223, 0.8), transparent 28rem),
+    linear-gradient(145deg, var(--color-surface) 0%, var(--color-cream) 46%, var(--color-sand) 100%);
+}
+
+.app-surface {
+  background: rgba(255, 253, 248, 0.82);
+  backdrop-filter: blur(18px);
 }
 
 .app-card-shadow {
@@ -89,14 +97,14 @@ textarea {
 /* Thin, on-brand scrollbar for inner scroll areas (chat, chip rows). */
 .app-scroll {
   scrollbar-width: thin;
-  scrollbar-color: rgba(6, 36, 61, 0.2) transparent;
+  scrollbar-color: rgba(31, 47, 45, 0.22) transparent;
 }
 .app-scroll::-webkit-scrollbar {
   height: 6px;
   width: 6px;
 }
 .app-scroll::-webkit-scrollbar-thumb {
-  background: rgba(6, 36, 61, 0.16);
+  background: rgba(31, 47, 45, 0.18);
   border-radius: 9999px;
 }
 

@@ -6,9 +6,9 @@ import { propertyCodes } from "@/lib/property-catalog";
 export default function PropertyNotFound() {
   return (
     <main className="app-shell flex min-h-screen items-center justify-center px-5 py-10 sm:px-8">
-      <section className="w-full max-w-xl rounded-card border border-line bg-surface p-6 shadow-card sm:p-8">
+      <section className="app-surface w-full max-w-xl rounded-card border border-line p-6 shadow-raised sm:p-8">
         <BrandLogo />
-        <p className="mt-10 text-xs font-semibold uppercase tracking-[0.22em] text-coral">
+        <p className="mt-10 text-xs font-semibold uppercase tracking-[0.22em] text-orange">
           Code not found
         </p>
         <h1 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-navy">
@@ -21,7 +21,7 @@ export default function PropertyNotFound() {
 
         <Link
           href="/"
-          className="mt-7 inline-flex rounded-field bg-coral px-5 py-3 font-semibold text-white transition hover:bg-coral-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2"
+          className="mt-7 inline-flex rounded-full bg-navy px-5 py-3 font-semibold text-white shadow-card transition hover:-translate-y-0.5 hover:bg-navy-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2"
         >
           Try another code
         </Link>
@@ -33,7 +33,7 @@ export default function PropertyNotFound() {
               <Link
                 key={code}
                 href={`/${code}`}
-                className="rounded-full border border-line bg-surface px-3 py-1.5 text-xs font-semibold text-navy transition hover:border-coral hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2"
+                className="rounded-full border border-line bg-surface/80 px-3 py-1.5 text-xs font-semibold text-navy transition hover:border-coral hover:bg-coral-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2"
               >
                 {code}
               </Link>

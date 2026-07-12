@@ -13,7 +13,7 @@ export function Card({
     <section
       {...props}
       className={clsx(
-        "rounded-card border border-line bg-surface p-5 shadow-card sm:p-6",
+        "rounded-card border border-line bg-surface/90 p-5 shadow-card sm:p-6",
         className,
       )}
     >
@@ -38,7 +38,7 @@ export function SectionTitle({
           {eyebrow}
         </p>
       ) : null}
-      <h2 className="text-xl font-semibold tracking-[-0.02em] text-navy sm:text-2xl">
+      <h2 className="text-xl font-semibold tracking-[-0.03em] text-navy sm:text-2xl">
         {title}
       </h2>
       {description ? (

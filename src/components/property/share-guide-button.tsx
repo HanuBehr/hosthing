@@ -50,7 +50,7 @@ export function ShareGuideButton({
     <button
       type="button"
       onClick={handleShare}
-      className="inline-flex w-fit items-center gap-2 rounded-field border border-white/25 bg-white/12 px-4 py-2.5 text-sm font-semibold text-white shadow-card backdrop-blur transition hover:border-white/50 hover:bg-white/18 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/70"
+      className="inline-flex w-fit items-center gap-2 rounded-full border border-white/28 bg-white/14 px-4 py-2.5 text-sm font-semibold text-white shadow-card backdrop-blur transition hover:-translate-y-0.5 hover:border-white/50 hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/70"
       aria-label={copied ? "Guide link copied" : "Share guide link"}
     >
       {copied ? (
