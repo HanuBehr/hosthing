@@ -46,12 +46,12 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mt-6 grid gap-4 sm:mt-8 sm:grid-cols-2 lg:grid-cols-4 lg:auto-rows-[18rem]">
+        <div className="mt-6 columns-1 gap-4 space-y-4 sm:mt-8 sm:columns-2 lg:columns-4">
           {propertyCatalog.map((property, index) => (
             <Link
               key={property.code}
               href={`/${property.code}`}
-              className={`group relative min-h-[21rem] overflow-hidden rounded-[1.6rem] border border-line bg-navy shadow-card transition hover:-translate-y-1 hover:border-coral/60 hover:shadow-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2 ${index === 0 ? "lg:col-span-2 lg:row-span-2" : ""}`}
+              className={`group relative mb-4 block break-inside-avoid overflow-hidden rounded-[1.6rem] border border-line bg-navy shadow-card transition hover:-translate-y-1 hover:border-coral/60 hover:shadow-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2 ${index === 0 ? "min-h-[34rem]" : "min-h-[21rem]"}`}
             >
                 <Image
                   src={property.images[0]}
