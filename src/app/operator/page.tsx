@@ -16,7 +16,6 @@ import {
   Users,
 } from "lucide-react";
 
-import { BrandLogo } from "@/components/brand/brand-logo";
 import { propertyCatalog, reservationCatalog } from "@/lib/property-catalog";
 
 export const metadata: Metadata = {
@@ -81,8 +80,7 @@ export default function OperatorDashboardPage() {
       <div className="mx-auto max-w-7xl">
         <header className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <BrandLogo />
-            <p className="mt-5 text-xs font-semibold uppercase tracking-[0.22em] text-orange">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-orange">
               Operator view
             </p>
             <h1 className="mt-3 max-w-3xl text-[clamp(2.1rem,5vw,4.6rem)] font-semibold leading-[0.98] tracking-[-0.055em] text-navy">

@@ -1,9 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { BedDouble, Compass, DoorOpen, KeyRound, MapPin, Users } from "lucide-react";
+import { BedDouble, Users } from "lucide-react";
 
 import { PropertyCodeForm } from "@/components/access/property-code-form";
-import { BrandLogo } from "@/components/brand/brand-logo";
 import { propertyCatalog } from "@/lib/property-catalog";
 
 const supportImageUrl =
@@ -14,13 +13,8 @@ export default function Home() {
     <main className="app-shell min-h-screen px-4 py-5 sm:px-8 sm:py-8 lg:px-10">
       <section className="mx-auto grid min-h-[calc(100dvh-2.5rem)] max-w-[1220px] items-center gap-10 lg:grid-cols-[minmax(0,1fr)_500px] lg:gap-16">
         <div className="max-w-2xl">
-          <BrandLogo />
-
-          <div className="mt-9 sm:mt-14">
-            <div className="inline-flex rounded-full border border-line bg-surface/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-coral shadow-card backdrop-blur">
-              Host-ready arrival guides
-            </div>
-            <h1 className="mt-5 text-[clamp(2.45rem,5.4vw,4.65rem)] font-semibold leading-[0.93] tracking-[-0.065em] text-navy">
+          <div>
+            <h1 className="text-[clamp(2.45rem,5.4vw,4.65rem)] font-semibold leading-[0.93] tracking-[-0.065em] text-navy">
               A guest guide for the first five minutes of every stay
             </h1>
             <p className="mt-5 max-w-xl text-base leading-7 text-muted sm:text-lg sm:leading-8">
@@ -41,33 +35,6 @@ export default function Home() {
                 </div>
                 <PropertyCodeForm />
               </div>
-            </div>
-
-            <div className="mt-6 max-w-2xl overflow-hidden rounded-[1.6rem] border border-line bg-surface/55 shadow-card backdrop-blur">
-              <div className="grid sm:grid-cols-4">
-                {journeySteps.map((signal) => {
-                  const Icon = signal.icon;
-                  return (
-                    <div
-                      key={signal.label}
-                      className="border-b border-line px-4 py-3 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0"
-                    >
-                      <Icon className="mb-3 h-4 w-4 text-coral" aria-hidden />
-                      <p className="text-sm font-semibold text-navy">{signal.label}</p>
-                      <p className="mt-1 text-sm leading-5 text-muted">{signal.text}</p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="mt-5 flex flex-wrap gap-3">
-              <Link
-                href="/operator"
-                className="inline-flex rounded-full border border-line bg-surface/70 px-4 py-2.5 text-sm font-semibold text-navy shadow-card transition hover:-translate-y-0.5 hover:border-coral hover:bg-coral-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50"
-              >
-                Host dashboard
-              </Link>
             </div>
           </div>
         </div>
@@ -198,29 +165,6 @@ const guideHighlights = [
     title: "Guest questions",
     description:
       "The support chat answers from the current property and stay details instead of sending guests hunting.",
-  },
-] as const;
-
-const journeySteps = [
-  {
-    label: "Arrive",
-    text: "Open the stay pass before the trip.",
-    icon: Compass,
-  },
-  {
-    label: "Unlock",
-    text: "Find access and WiFi without digging.",
-    icon: KeyRound,
-  },
-  {
-    label: "Settle",
-    text: "Confirm rules, host, dates, and fees.",
-    icon: DoorOpen,
-  },
-  {
-    label: "Explore",
-    text: "Use local picks with map actions.",
-    icon: MapPin,
   },
 ] as const;
 

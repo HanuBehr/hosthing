@@ -1,9 +1,7 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { BedDouble, Clock3, DoorOpen, MapPin, ShowerHead, Users, Wifi } from "lucide-react";
 
-import { BrandLogo } from "@/components/brand/brand-logo";
 import { ChatWidget } from "@/components/chat/chat-widget";
 import { ArrivalEssentials } from "@/components/property/arrival-essentials";
 import { ExperienceGuideSection } from "@/components/property/experience-guide-section";
@@ -42,21 +40,8 @@ export function PropertyGuide({
         <div className="absolute inset-x-0 bottom-0 z-10 h-44 bg-gradient-to-t from-cream to-transparent" />
 
         <div className="relative z-20 mx-auto flex min-h-[500px] max-w-7xl flex-col px-4 py-5 sm:min-h-[620px] sm:px-8 sm:py-7 lg:px-10">
-          <header className="flex items-center">
-            <Link
-              href="/"
-              aria-label="Back to home"
-              className="inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/60 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
-            >
-              <BrandLogo className="text-white" />
-            </Link>
-          </header>
-
           <div className="flex flex-1 flex-col justify-center pb-2 pt-5 sm:pt-8">
             <div className="max-w-3xl space-y-4 sm:space-y-5">
-              <p className="inline-flex rounded-full border border-white/25 bg-white/14 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-orange-soft backdrop-blur">
-                Guest guide · {property.code}
-              </p>
               <h1 className="text-[clamp(2.35rem,13vw,5.5rem)] font-semibold leading-[0.98] tracking-[-0.055em]">
                 {property.name}
               </h1>

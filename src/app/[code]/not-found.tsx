@@ -1,14 +1,12 @@
 import Link from "next/link";
 
-import { BrandLogo } from "@/components/brand/brand-logo";
 import { propertyCodes } from "@/lib/property-catalog";
 
 export default function PropertyNotFound() {
   return (
     <main className="app-shell flex min-h-screen items-center justify-center px-5 py-10 sm:px-8">
       <section className="app-surface w-full max-w-xl rounded-card border border-line p-6 shadow-raised sm:p-8">
-        <BrandLogo />
-        <p className="mt-10 text-xs font-semibold uppercase tracking-[0.22em] text-orange">
+        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-orange">
           Code not found
         </p>
         <h1 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-navy">
