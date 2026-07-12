@@ -1,25 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowRight,
-  Bot,
-  Clock3,
-  DoorOpen,
-  MapPin,
-  Wifi,
-} from "lucide-react";
+import { ArrowRight, MapPin } from "lucide-react";
 
 import { PropertyCodeForm } from "@/components/access/property-code-form";
 import { propertyCatalog } from "@/lib/property-catalog";
 
 const previewProperties = propertyCatalog;
-
-const guideRows = [
-  { label: "Arrival", value: "Check-in from 3:00 PM", icon: Clock3 },
-  { label: "Access", value: "Lockbox, entry steps, and parking", icon: DoorOpen },
-  { label: "WiFi", value: "Network and password ready to copy", icon: Wifi },
-  { label: "Local", value: "Nearby food, essentials, and tips", icon: MapPin },
-] as const;
 
 const workflowSteps = [
   {
@@ -70,10 +56,6 @@ export default function Home() {
         <GuideMockup />
       </section>
 
-      <section className="mx-auto max-w-[1180px] pb-8">
-        <PropertyCodeForm />
-      </section>
-
       <WorkflowSection />
 
       <section id="preview" className="mx-auto max-w-[1180px] scroll-mt-8 py-10 sm:py-14">
@@ -87,9 +69,14 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="mt-6 grid gap-4 sm:mt-8 sm:grid-cols-2 lg:grid-cols-4">
-          {previewProperties.map((property) => (
-            <GuideCard key={property.code} property={property} />
+        <div className="mt-6 grid auto-rows-[11rem] gap-4 sm:mt-8 sm:grid-cols-2 lg:grid-cols-4">
+          {previewProperties.map((property, index) => (
+            <GuideCard
+              key={property.code}
+              property={property}
+              className={getMosaicClass(index)}
+              featured={index === 0 || index === 3}
+            />
           ))}
         </div>
       </section>
@@ -149,60 +136,63 @@ function GuideMockup() {
         </div>
 
         <div className="p-5 sm:p-6">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-coral">
-              Hosthing workspace
-            </p>
-            <h2 className="mt-2 text-3xl font-semibold leading-none tracking-[-0.055em] text-navy">
-              One guide per property
-            </h2>
-            <p className="mt-3 text-sm leading-6 text-muted">
-              Hosts organize arrival details, rules, local tips, and guest
-              support in one shareable experience.
-            </p>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-coral">
+            Guest access
+          </p>
+          <h2 className="mt-2 text-3xl font-semibold leading-none tracking-[-0.055em] text-navy">
+            Open a property guide
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-muted">
+            Enter a code to open the exact guide for a stay, or preview how
+            guests see arrival details, rules, local tips, and support.
+          </p>
+
+          <div className="mt-6 rounded-[1.25rem] border border-line bg-surface/82 p-4">
+            <PropertyCodeForm variant="embedded" />
           </div>
 
-          <div className="mt-6 divide-y divide-line/70 border-y border-line/70">
-            {guideRows.map((item) => {
-              const Icon = item.icon;
-              return (
-                <div key={item.label} className="grid grid-cols-[2.25rem_5rem_minmax(0,1fr)] items-center gap-3 py-3">
-                  <span className="grid h-9 w-9 place-items-center rounded-full bg-coral-soft text-coral">
-                    <Icon className="h-4 w-4" aria-hidden />
-                  </span>
-                  <p className="text-sm font-semibold text-navy">{item.label}</p>
-                  <p className="min-w-0 text-sm leading-5 text-muted">{item.value}</p>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="mt-5 rounded-[1.25rem] bg-navy p-4 text-white">
-            <p className="flex items-center gap-2 text-sm font-semibold">
-              <Bot className="h-4 w-4 text-coral-soft" aria-hidden />
-              Ask Hosthing
-            </p>
-            <p className="mt-3 text-sm leading-6 text-white/78">
-              &quot;What is the WiFi password and where do I park?&quot;
-            </p>
-            <div className="mt-3 border-t border-white/14 pt-3 text-sm leading-6 text-white/88">
-              The guide answers from this property&apos;s arrival details, rules, and
-              booking context.
-            </div>
-          </div>
+          <Link
+            href={`/${propertyCatalog[0].code}`}
+            className="mt-4 inline-flex text-sm font-semibold text-navy underline-offset-4 transition hover:text-coral hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50"
+          >
+            Preview {propertyCatalog[0].code}
+          </Link>
         </div>
       </div>
     </aside>
   );
 }
 
-function GuideCard({ property }: { property: (typeof propertyCatalog)[number] }) {
+function getMosaicClass(index: number) {
+  const classes = [
+    "sm:col-span-2 sm:row-span-2",
+    "",
+    "",
+    "lg:col-span-2",
+    "",
+    "",
+    "sm:col-span-2 lg:col-span-1",
+    "sm:col-span-2 lg:col-span-1",
+  ];
+
+  return classes[index] ?? "";
+}
+
+function GuideCard({
+  property,
+  className,
+  featured = false,
+}: {
+  property: (typeof propertyCatalog)[number];
+  className?: string;
+  featured?: boolean;
+}) {
   return (
     <Link
       href={`/${property.code}`}
-      className="group overflow-hidden rounded-[1.35rem] border border-line bg-surface shadow-card transition hover:-translate-y-1 hover:border-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2"
+      className={`group relative block h-full overflow-hidden rounded-[1.35rem] border border-line bg-surface shadow-card transition hover:-translate-y-1 hover:border-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2 ${className ?? ""}`}
     >
-      <div className="relative h-40 overflow-hidden bg-sand">
+      <div className={`${featured ? "h-full min-h-[18rem]" : "h-full min-h-[11rem]"} relative overflow-hidden bg-sand`}>
         <Image
           src={property.images[0]}
           alt={property.name}
@@ -210,16 +200,17 @@ function GuideCard({ property }: { property: (typeof propertyCatalog)[number] })
           sizes="(max-width: 1024px) 50vw, 280px"
           className="object-cover transition duration-500 group-hover:scale-105"
         />
+        <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-navy/88 via-navy/38 to-transparent" />
       </div>
-      <div className="p-4">
-        <h3 className="text-lg font-semibold leading-[1.05] tracking-[-0.04em] text-navy">
+      <div className="absolute inset-x-0 bottom-0 p-4 text-white">
+        <h3 className={`${featured ? "text-2xl" : "text-lg"} font-semibold leading-[1.05] tracking-[-0.04em]`}>
           {property.name}
         </h3>
-        <p className="mt-3 flex items-center gap-1.5 text-sm leading-5 text-muted">
-          <MapPin className="h-4 w-4 shrink-0 text-coral" aria-hidden />
+        <p className="mt-3 flex items-center gap-1.5 text-sm leading-5 text-white/82">
+          <MapPin className="h-4 w-4 shrink-0 text-coral-soft" aria-hidden />
           {property.address.neighborhood}, {property.address.city}
         </p>
-        <p className="mt-4 border-t border-line pt-3 text-xs font-semibold text-muted">
+        <p className="mt-3 border-t border-white/20 pt-3 text-xs font-semibold text-white/78">
           Guest guide · {property.code}
         </p>
       </div>
