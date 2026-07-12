@@ -69,7 +69,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="mt-6 grid auto-rows-[19rem] gap-4 sm:mt-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-6 grid auto-rows-[9rem] gap-4 sm:mt-8 sm:grid-cols-2 lg:grid-cols-4">
           {previewProperties.map((property, index) => (
             <GuideCard
               key={property.code}
@@ -154,14 +154,14 @@ function GuideMockup() {
 
 function getMosaicClass(index: number) {
   const classes = [
-    "sm:col-span-2 lg:col-span-2",
+    "sm:col-span-2 sm:row-span-3",
     "",
     "",
     "lg:col-span-2",
     "",
+    "sm:row-span-3",
     "",
-    "",
-    "",
+    "lg:col-span-2",
   ];
 
   return classes[index] ?? "";
@@ -179,7 +179,7 @@ function GuideCard({
   return (
     <Link
       href={`/${property.code}`}
-      className={`group relative grid h-full grid-rows-[minmax(0,1fr)_auto] overflow-hidden rounded-[1.35rem] border border-line bg-surface shadow-card transition hover:-translate-y-1 hover:border-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2 ${className ?? ""}`}
+      className={`group relative row-span-2 grid h-full grid-rows-[minmax(0,1fr)_auto] overflow-hidden rounded-[1.35rem] border border-line bg-surface shadow-card transition hover:-translate-y-1 hover:border-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral/50 focus-visible:ring-offset-2 ${className ?? ""}`}
     >
       <div className="relative min-h-0 overflow-hidden bg-sand">
         <Image
