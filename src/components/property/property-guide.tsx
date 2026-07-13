@@ -14,9 +14,11 @@ import type { Reservation } from "@/lib/validators/reservation";
 export function PropertyGuide({
   property,
   reservation,
+  accessToken,
 }: {
   property: Property;
   reservation: Reservation | null;
+  accessToken?: string;
 }) {
   const heroImage = property.images[0];
   const shouldSkipOptimization =
@@ -128,7 +130,7 @@ export function PropertyGuide({
         <StaySummary property={property} reservation={reservation} />
       </div>
 
-      <ChatWidget propertyCode={property.code} />
+      <ChatWidget propertyCode={property.code} accessToken={accessToken} />
     </main>
   );
 }

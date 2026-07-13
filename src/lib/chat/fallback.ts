@@ -10,8 +10,13 @@ export function buildFallbackAnswer(
   message: string,
 ) {
   const normalized = normalizeMessage(message);
+  const privateDataLocked = isPrivateDataLocked(property);
 
   if (hasAny(normalized, ["wifi", "wi-fi", "password", "network"])) {
+    if (privateDataLocked) {
+      return "I cannot show WiFi passwords or access codes without a valid signed guest link. Open the guide from the link sent for your reservation or contact the host.";
+    }
+
     return `The WiFi network is ${property.operational.wifi_network} and the password is ${property.operational.wifi_password}.`;
   }
 
@@ -22,6 +27,10 @@ export function buildFallbackAnswer(
   }
 
   if (hasAny(normalized, ["check-in", "checkin", "arrival", "arrive"])) {
+    if (privateDataLocked) {
+      return `Check-in starts at ${formatHour(property.rules.check_in_time)}. I cannot show private arrival instructions or access codes without a valid signed guest link.`;
+    }
+
     return `Check-in starts at ${formatHour(property.rules.check_in_time)}. ${property.operational.property_access_instructions}`;
   }
 
@@ -30,6 +39,10 @@ export function buildFallbackAnswer(
   }
 
   if (hasAny(normalized, ["parking", "garage", "car"])) {
+    if (privateDataLocked) {
+      return "I cannot show exact parking instructions without a valid signed guest link. Open the guide from your reservation link or contact the host.";
+    }
+
     if (!property.operational.has_parking_spot) {
       return property.operational.parking_spot_instructions
         ? `This property does not include a dedicated parking spot. ${property.operational.parking_spot_instructions}`
@@ -45,6 +58,10 @@ export function buildFallbackAnswer(
   }
 
   if (hasAny(normalized, ["host", "phone", "contact", "call"])) {
+    if (privateDataLocked) {
+      return "I cannot show private host contact details without a valid signed guest link. Please use the reservation link or contact the booking platform.";
+    }
+
     return `The host is ${property.host.name}. The phone number is ${property.host.phone}.`;
   }
 
@@ -93,6 +110,10 @@ export function buildFallbackAnswer(
   }
 
   return "I can help with WiFi, property access, house rules, host contact, restaurants, attractions, and nearby services. I will not invent private details that are not available in this guide.";
+}
+
+function isPrivateDataLocked(property: Property) {
+  return property.operational.wifi_password.includes("valid guest link");
 }
 
 function formatMoney(value: number, currency: string) {

@@ -2,11 +2,14 @@ import { openai } from "@ai-sdk/openai";
 import { streamText } from "ai";
 import { z } from "zod";
 
+import { enforceAiLimits } from "@/lib/ai/limits";
 import { buildChatSystemPrompt } from "@/lib/ai/prompts";
 import { buildFallbackAnswer } from "@/lib/chat/fallback";
+import { redactPrivatePropertyData } from "@/lib/security/redaction";
+import { verifyGuestAccessToken } from "@/lib/security/guest-access";
+import { recordAuditEvent } from "@/server/audit";
 import { getExperienceGuideForProperty } from "@/server/experience-guides";
 import { getPropertyByCode } from "@/server/properties";
-import { getReservationForProperty } from "@/server/reservations";
 
 export const runtime = "nodejs";
 
@@ -16,6 +19,7 @@ function hasOpenAIKey() {
 
 const chatRequestSchema = z.object({
   propertyCode: z.string().min(1),
+  accessToken: z.string().optional(),
   messages: z.array(
     z.object({
       role: z.enum(["user", "assistant"]),
@@ -37,15 +41,39 @@ export async function POST(request: Request) {
     return Response.json({ error: "Property not found." }, { status: 404 });
   }
 
+  const guestAccess = await verifyGuestAccessToken(body.data.accessToken, property.id);
+  const hasGuestAccess = Boolean(guestAccess);
+  const visibleProperty = hasGuestAccess
+    ? property
+    : redactPrivatePropertyData(property);
   const guide = await getExperienceGuideForProperty(property.id, property.code).catch(() => null);
-  const reservation = await getReservationForProperty(property.id).catch(
-    () => null,
-  );
+  const reservation = guestAccess?.reservation ?? null;
+  const lastUserMessage = getLastUserMessage(body.data.messages) ?? "";
+
+  await recordAuditEvent({
+    propertyId: property.id,
+    reservationId: reservation?.id,
+    eventType: "assistant_question",
+    metadata: {
+      hasGuestAccess,
+      messageLength: lastUserMessage.length,
+    },
+  });
+
+  const limit = enforceAiLimits({
+    key: guestAccess?.tokenHash ?? `public:${property.code}`,
+    messages: body.data.messages,
+  });
+
+  if (!limit.allowed) {
+    return Response.json({ error: limit.reason }, { status: 429 });
+  }
+
   const fallbackAnswer = buildFallbackAnswer(
-    property,
+    visibleProperty,
     guide,
     reservation,
-    getLastUserMessage(body.data.messages) ?? "",
+    lastUserMessage,
   );
 
   if (!hasOpenAIKey()) {
@@ -54,8 +82,9 @@ export async function POST(request: Request) {
 
   const result = streamText({
     model: openai("gpt-4o-mini"),
-    system: buildChatSystemPrompt(property, guide, reservation),
+    system: buildChatSystemPrompt(visibleProperty, guide, reservation),
     messages: body.data.messages,
+    maxOutputTokens: limit.maxOutputTokens,
   });
 
   return streamWithFallback(result.textStream, fallbackAnswer);

@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { createHash, createHmac, randomBytes } from "node:crypto";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
 
@@ -12,6 +13,10 @@ const connectionString =
 const prisma = new PrismaClient({
   adapter: new PrismaPg({ connectionString }),
 });
+
+const tokenVersion = "v1";
+const guestLinkSecret =
+  process.env.GUEST_LINK_SECRET?.trim() || "hosthing-local-demo-secret";
 
 const properties = [
   {
@@ -541,9 +546,12 @@ const reservations = [
 ];
 
 async function main() {
+  await prisma.guestAccessToken.deleteMany();
+  await prisma.auditEvent.deleteMany();
   await prisma.reservation.deleteMany();
   await prisma.experienceGuide.deleteMany();
   await prisma.property.deleteMany();
+  const guestLinks: string[] = [];
 
   for (const property of properties) {
     const createdProperty = await prisma.property.create({ data: property });
@@ -552,7 +560,7 @@ async function main() {
     );
 
     if (reservation) {
-      await prisma.reservation.create({
+      const createdReservation = await prisma.reservation.create({
         data: {
           reservationCode: reservation.reservationCode,
           guestName: reservation.guestName,
@@ -565,8 +573,44 @@ async function main() {
           propertyId: createdProperty.id,
         },
       });
+
+      const expiresAt = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000);
+      const token = signGuestAccessToken(createdReservation.id, expiresAt);
+
+      await prisma.guestAccessToken.create({
+        data: {
+          reservationId: createdReservation.id,
+          tokenHash: hashGuestAccessToken(token),
+          expiresAt,
+        },
+      });
+
+      guestLinks.push(`/${property.code}?token=${token}`);
     }
   }
+
+  console.log("Seeded fictional sample data. Guest links are printed once and only hashed tokens are stored:");
+  for (const link of guestLinks) {
+    console.log(link);
+  }
+}
+
+function signGuestAccessToken(reservationId: string, expiresAt: Date) {
+  const payload = [
+    tokenVersion,
+    reservationId,
+    expiresAt.getTime(),
+    randomBytes(16).toString("base64url"),
+  ].join(".");
+  const signature = createHmac("sha256", guestLinkSecret)
+    .update(payload)
+    .digest("base64url");
+
+  return `${payload}.${signature}`;
+}
+
+function hashGuestAccessToken(token: string) {
+  return createHash("sha256").update(token).digest("hex");
 }
 
 main()

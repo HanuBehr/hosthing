@@ -21,8 +21,10 @@ const initialAssistantMessage =
 
 export function ChatWidget({
   propertyCode,
+  accessToken,
 }: {
   propertyCode: string;
+  accessToken?: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -88,7 +90,7 @@ export function ChatWidget({
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ propertyCode, messages: nextMessages }),
+        body: JSON.stringify({ propertyCode, accessToken, messages: nextMessages }),
       });
 
       if (!response.ok || !response.body) {

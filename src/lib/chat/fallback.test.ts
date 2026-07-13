@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { buildFallbackAnswer } from "@/lib/chat/fallback";
+import { redactPrivatePropertyData } from "@/lib/security/redaction";
 import {
   experienceGuideFixture,
   propertyFixture,
@@ -54,6 +55,19 @@ describe("buildFallbackAnswer", () => {
     expect(answer).toContain("do not have reservation details");
     expect(answer).not.toContain("RSV-SYD-24091");
     expect(answer).not.toContain("A$145.00");
+  });
+
+  it("refuses to reveal private WiFi or access details without guest access", () => {
+    const answer = buildFallbackAnswer(
+      redactPrivatePropertyData(propertyFixture),
+      experienceGuideFixture,
+      null,
+      "What is the WiFi password and door code?",
+    );
+
+    expect(answer).toContain("cannot show WiFi passwords or access codes");
+    expect(answer).not.toContain("harbour2026");
+    expect(answer).not.toContain("4826");
   });
 
   it("answers restaurant questions from the generated guide", () => {
