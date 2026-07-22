@@ -6,7 +6,7 @@ Guests should not need to message a host at midnight to ask for the WiFi passwor
 
 Hosthing gives every property a shareable guest guide with arrival information, house rules, local recommendations and AI-powered stay support.
 
-[Open the live demo](https://hosthing.vercel.app) · Fictional properties and reservations
+[Open the live demo](https://hosthing.vercel.app) 
 
 ![Hosthing host dashboard](public/host-dashboard-macos-readme-window.png)
 
@@ -35,4 +35,3 @@ The AI assistant uses the property, reservation and local-guide context availabl
 **AI:** Vercel AI SDK and OpenAI  
 **Testing and delivery:** Vitest, Vercel and GitHub Actions
 
-The public repository uses fictional guest and property data. Authenticated property management and the complete commercial workflow remain outside the demo.
